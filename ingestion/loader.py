@@ -64,3 +64,26 @@ def derive_total_result(
     if combined < total_close:
         return "under"
     return "push"
+
+
+_PLAYOFF_WEEK_MAP: dict[str, int] = {
+    "Wildcard": 100,
+    "Division": 101,
+    "Conference": 102,
+    "Superbowl": 103,
+}
+
+
+def parse_week(raw: str | int) -> int:
+    """Map Kaggle's schedule_week values to integer weeks.
+
+    Regular season "1"–"18" → integer; playoff strings → 100–103.
+    """
+    if isinstance(raw, int):
+        return raw
+    if raw in _PLAYOFF_WEEK_MAP:
+        return _PLAYOFF_WEEK_MAP[raw]
+    try:
+        return int(raw)
+    except (TypeError, ValueError) as e:
+        raise ValueError(f"Unknown schedule_week value: {raw!r}") from e

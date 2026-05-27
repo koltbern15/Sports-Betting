@@ -1,6 +1,13 @@
 import math
 
-from ingestion.loader import derive_ats_result, derive_spread_home_close, derive_total_result
+import pytest
+
+from ingestion.loader import (
+    derive_ats_result,
+    derive_spread_home_close,
+    derive_total_result,
+    parse_week,
+)
 
 
 def test_home_favored():
@@ -87,3 +94,24 @@ def test_total_missing_returns_none():
     assert derive_total_result(home_score=None, away_score=21, total_close=45.0) is None
     assert derive_total_result(home_score=21, away_score=None, total_close=45.0) is None
     assert derive_total_result(home_score=21, away_score=21, total_close=None) is None
+
+
+def test_parse_regular_season_week():
+    assert parse_week("1") == 1
+    assert parse_week("18") == 18
+
+
+def test_parse_playoff_strings():
+    assert parse_week("Wildcard") == 100
+    assert parse_week("Division") == 101
+    assert parse_week("Conference") == 102
+    assert parse_week("Superbowl") == 103
+
+
+def test_parse_week_integer_input():
+    assert parse_week(5) == 5
+
+
+def test_parse_unknown_raises():
+    with pytest.raises(ValueError):
+        parse_week("Preseason")
