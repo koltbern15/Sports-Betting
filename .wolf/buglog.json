@@ -145,6 +145,70 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-27T16:51:10.185Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-05-27T19:21:21.020Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/superpowers/specs/2026-05-27-nfl-betting-slice3-design.md",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 7→11 lines (6 removed) | Also: → writes data/processed/validation_sample.csv (150; 2. [Manual] Fill ml_home_real / ml_away_real colum",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-27T19:21:30.614Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-05-27T19:48:56.792Z",
+      "error_message": "Wrong reference: test_init_schema_creates_three_tables should be test_init_schema_creates_four_tables",
+      "file": "tests/test_db.py",
+      "root_cause": "Used \"test_init_schema_creates_three_tables\" instead of \"test_init_schema_creates_four_tables\"",
+      "fix": "Changed test_init_schema_creates_three_tables → test_init_schema_creates_four_tables",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T19:48:56.792Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-05-27T20:11:41.278Z",
+      "error_message": "Significant refactor of ",
+      "file": "tests/test_real_ml_loader.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 10→4 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T20:11:41.278Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-05-27T22:52:58.953Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 3→3 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T22:52:58.953Z"
     }
   ]
 }
