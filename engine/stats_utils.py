@@ -29,3 +29,17 @@ def decimal_to_american(decimal_odds: float) -> int:
     if decimal_odds >= 2.0:
         return round((decimal_odds - 1.0) * 100)
     return -round(100.0 / (decimal_odds - 1.0))
+
+
+def roi(wins: int, losses: int, pushes: int = 0, american_odds: int = -110) -> float:
+    """Flat-unit ROI assuming 1 unit risked per bet.
+
+    Pushes return stake (0 PnL) but still count in the denominator
+    because the bettor tied up 1 unit on each.
+    """
+    total = wins + losses + pushes
+    if total == 0:
+        return 0.0
+    profit_per_win = american_to_decimal(american_odds) - 1.0
+    pnl = wins * profit_per_win - losses
+    return pnl / total
