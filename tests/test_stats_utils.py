@@ -142,3 +142,26 @@ def test_kelly_invalid_prob_raises():
         kelly_fraction(-0.1, 2.0)
     with pytest.raises(ValueError):
         kelly_fraction(1.1, 2.0)
+
+
+# === dollar_weighted_roi ===
+
+def test_dollar_weighted_roi_empty_returns_zero():
+    from engine.stats_utils import dollar_weighted_roi
+    assert dollar_weighted_roi([]) == 0.0
+
+
+def test_dollar_weighted_roi_all_wins_at_fixed_price():
+    from engine.stats_utils import dollar_weighted_roi
+    assert dollar_weighted_roi([1.0, 1.0, 1.0, 1.0]) == 1.0
+
+
+def test_dollar_weighted_roi_all_losses():
+    from engine.stats_utils import dollar_weighted_roi
+    assert dollar_weighted_roi([-1.0, -1.0, -1.0]) == -1.0
+
+
+def test_dollar_weighted_roi_mixed_with_pushes():
+    from engine.stats_utils import dollar_weighted_roi
+    payouts = [0.909, -1.0, 0.0, 1.30]
+    assert dollar_weighted_roi(payouts) == sum(payouts) / 4

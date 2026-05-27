@@ -2,7 +2,8 @@ import math
 
 import pytest
 
-from engine.ats import BucketMetrics, ats_by_spread_bucket, bucket_spread, compute_bucket_metrics
+from engine.ats import ats_by_spread_bucket, bucket_spread
+from engine.bucket_analysis import BucketMetrics, compute_metrics
 from engine.db import connect
 from ingestion.loader import load_csv_to_db
 
@@ -45,7 +46,7 @@ def test_bucket_spread_none_returns_none():
 
 def test_metrics_basic_case():
     # 60 covers, 40 losses, 0 pushes → win_rate = 0.60
-    m = compute_bucket_metrics(bucket="home_fav_3.5_7", covers=60, losses=40, pushes=0)
+    m = compute_metrics(bucket="home_fav_3.5_7", wins=60, losses=40, pushes=0)
     assert isinstance(m, BucketMetrics)
     assert m.bucket == "home_fav_3.5_7"
     assert m.n == 100
@@ -61,7 +62,7 @@ def test_metrics_basic_case():
 
 
 def test_metrics_with_pushes():
-    m = compute_bucket_metrics(bucket="pickem", covers=10, losses=10, pushes=5)
+    m = compute_metrics(bucket="pickem", wins=10, losses=10, pushes=5)
     assert m.n == 25
     # win_rate excludes pushes from denominator
     assert math.isclose(m.win_rate, 0.5)
@@ -70,15 +71,15 @@ def test_metrics_with_pushes():
 
 
 def test_metrics_insufficient_sample_flag_below_50():
-    m = compute_bucket_metrics(bucket="home_fav_14.5+", covers=20, losses=20, pushes=0)
+    m = compute_metrics(bucket="home_fav_14.5+", wins=20, losses=20, pushes=0)
     assert m.insufficient_sample is True
-    m2 = compute_bucket_metrics(bucket="home_fav_14.5+", covers=30, losses=20, pushes=0)
+    m2 = compute_metrics(bucket="home_fav_14.5+", wins=30, losses=20, pushes=0)
     # 30+20 = 50, threshold is wins+losses < 50 → exactly 50 is NOT insufficient
     assert m2.insufficient_sample is False
 
 
 def test_metrics_zero_data():
-    m = compute_bucket_metrics(bucket="pickem", covers=0, losses=0, pushes=0)
+    m = compute_metrics(bucket="pickem", wins=0, losses=0, pushes=0)
     assert m.n == 0
     assert m.win_rate == 0.0
     assert m.push_rate == 0.0

@@ -82,6 +82,20 @@ def wilson_ci(wins: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     return (max(0.0, center - half), min(1.0, center + half))
 
 
+def dollar_weighted_roi(payouts: list[float]) -> float:
+    """ROI per unit stake given a list of per-bet net profits.
+
+    Each payout is the net PnL of one unit-staked bet:
+      +N for a winning bet that pays N units profit (e.g. 0.909 at -110, 1.30 at +130)
+      -1.0 for a losing bet
+      0.0 for a push
+    Returns 0.0 if `payouts` is empty.
+    """
+    if not payouts:
+        return 0.0
+    return sum(payouts) / len(payouts)
+
+
 def kelly_fraction(p_win: float, decimal_odds: float) -> float:
     """Optimal Kelly bet fraction.
 
