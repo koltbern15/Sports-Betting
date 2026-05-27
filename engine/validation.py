@@ -10,8 +10,12 @@ from __future__ import annotations
 import sqlite3
 from collections import defaultdict
 from dataclasses import dataclass
+from pathlib import Path
 from statistics import mean, median
 
+from tabulate import tabulate
+
+from engine.bucket_analysis import DISCLAIMER
 from engine.db import fetch_df
 from engine.moneyline import bucket_ml, derive_ml_from_spread
 
@@ -204,3 +208,82 @@ def _build_bucket_comparisons(bucket_rows: list[dict]) -> list[BucketComparison]
         )
     out.sort(key=lambda bc: bc.bucket)
     return out
+
+
+def _format_price_table(stats: dict) -> str:
+    rows = [
+        ["n_sides", stats["n_sides"]],
+        ["mean_error_prob", f"{stats['mean_error_prob']:+.4f}"],
+        ["median_abs_error_prob", f"{stats['median_abs_error_prob']:.4f}"],
+        ["pct_within_2_pct_points", f"{stats['pct_within_2_pct_points']:.4f}"],
+        ["pct_sign_flip", f"{stats['pct_sign_flip']:.4f}"],
+        ["derived_overshades_favorites", stats["derived_overshades_favorites"]],
+        ["mean_error_ml", f"{stats['mean_error_ml']:+.2f}"],
+    ]
+    return tabulate(rows, headers=["metric", "value"], tablefmt="github")
+
+
+def _format_bucket_table(comparisons: list[BucketComparison]) -> str:
+    headers = [
+        "bucket", "n",
+        "derived_roi", "real_roi", "delta_roi",
+        "derived_W", "derived_L", "real_W", "real_L",
+    ]
+    rows = [
+        [
+            bc.bucket, bc.n,
+            f"{bc.derived_roi:+.4f}", f"{bc.real_roi:+.4f}", f"{bc.delta_roi:+.4f}",
+            bc.derived_wins, bc.derived_losses, bc.real_wins, bc.real_losses,
+        ]
+        for bc in comparisons
+    ]
+    return tabulate(rows, headers=headers, tablefmt="github")
+
+
+def write_validation_csv(report: ValidationReport, path: str | Path) -> None:
+    """Write the bucket-comparison table to CSV with comment-line disclaimer + source note."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        f"# Real-line sample: source={report.source}, n_games={report.n_games}",
+        f"# {DISCLAIMER}",
+        "bucket,n,derived_roi,real_roi,delta_roi,derived_wins,derived_losses,real_wins,real_losses",
+    ]
+    for bc in report.bucket_comparisons:
+        lines.append(
+            f"{bc.bucket},{bc.n},"
+            f"{bc.derived_roi:.6f},{bc.real_roi:.6f},{bc.delta_roi:.6f},"
+            f"{bc.derived_wins},{bc.derived_losses},{bc.real_wins},{bc.real_losses}"
+        )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _main() -> int:
+    """CLI: uv run python -m engine.validation"""
+    from engine.db import connect
+
+    conn = connect("data/db/nfl_betting.sqlite")
+    try:
+        report = compare_ml_prices(conn)
+    except ValueError as e:
+        print(f"ERROR: {e}")
+        print("Hint: load real ML first via `python -m ingestion.real_ml_loader <csv>`")
+        return 1
+
+    print(f"Validation report — source={report.source}, n_games={report.n_games}\n")
+    print("Price-level diagnostics:")
+    print(_format_price_table(report.price_stats))
+    print()
+    print("Bucket-ROI comparison (bucket assigned on DERIVED ML):")
+    print(_format_bucket_table(report.bucket_comparisons))
+    print(f"\n{DISCLAIMER}")
+
+    out_path = Path("data/processed/ml_validation_report.csv")
+    write_validation_csv(report, out_path)
+    print(f"\nCSV written to {out_path}")
+    conn.close()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main())

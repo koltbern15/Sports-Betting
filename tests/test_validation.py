@@ -165,3 +165,22 @@ def test_compare_ml_prices_bucket_rows_match_slice2_assignment():
         assert isinstance(bc, BucketComparison)
         assert bc.n >= 1
     conn.close()
+
+
+def test_write_validation_csv_includes_comments(tmp_path):
+    from engine.validation import write_validation_csv
+
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
+    report = compare_ml_prices(conn)
+
+    out_path = tmp_path / "validation.csv"
+    write_validation_csv(report, out_path)
+
+    text = out_path.read_text(encoding="utf-8")
+    assert "# Real-line sample: source=fixture" in text
+    assert "# Past performance does not guarantee future results" in text
+    assert "bucket,n,derived_roi,real_roi,delta_roi" in text
+    conn.close()
