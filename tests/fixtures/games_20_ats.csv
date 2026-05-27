@@ -1,0 +1,21 @@
+schedule_date,schedule_season,schedule_week,schedule_playoff,team_home,team_away,team_favorite_id,score_home,score_away,spread_favorite,over_under_line,weather_temperature,weather_wind_mph,weather_humidity,stadium,stadium_neutral
+2024-09-08,2024,1,FALSE,Buffalo Bills,Miami Dolphins,BUF,30,10,-5.0,45.0,72,5,55,Highmark Stadium,FALSE
+2024-09-15,2024,2,FALSE,Kansas City Chiefs,Cincinnati Bengals,KAN,27,17,-4.0,46.0,75,3,60,Arrowhead Stadium,FALSE
+2024-09-22,2024,3,FALSE,Dallas Cowboys,Baltimore Ravens,DAL,17,28,-6.0,47.0,72,4,40,AT&T Stadium,FALSE
+2024-09-29,2024,4,FALSE,Detroit Lions,Seattle Seahawks,DET,24,21,-3.0,48.0,72,0,50,Ford Field,FALSE
+2024-10-06,2024,5,FALSE,Philadelphia Eagles,Cleveland Browns,PHI,20,17,-2.5,42.0,68,6,45,Lincoln Financial Field,FALSE
+2024-10-13,2024,6,FALSE,Green Bay Packers,Arizona Cardinals,GB,17,14,-2.0,44.0,55,8,60,Lambeau Field,FALSE
+2024-10-20,2024,7,FALSE,Atlanta Falcons,Carolina Panthers,PICK,28,7,0.0,43.0,70,3,55,Mercedes-Benz Stadium,FALSE
+2024-10-27,2024,8,FALSE,Tampa Bay Buccaneers,New Orleans Saints,PICK,17,24,0.0,45.0,80,4,65,Raymond James Stadium,FALSE
+2024-11-03,2024,9,FALSE,Chicago Bears,Detroit Lions,DET,21,18,-2.5,42.0,50,10,55,Soldier Field,FALSE
+2024-11-10,2024,10,FALSE,Houston Texans,Indianapolis Colts,IND,24,20,-1.5,46.0,72,0,50,NRG Stadium,FALSE
+2024-11-17,2024,11,FALSE,Miami Dolphins,Buffalo Bills,BUF,21,28,-3.0,44.0,72,8,75,Hard Rock Stadium,FALSE
+2024-11-24,2024,12,FALSE,Cleveland Browns,Pittsburgh Steelers,PIT,10,16,-5.5,38.0,40,12,55,Cleveland Browns Stadium,FALSE
+2024-12-01,2024,13,FALSE,Minnesota Vikings,Green Bay Packers,GB,17,30,-3.5,44.0,68,0,50,U.S. Bank Stadium,FALSE
+2024-12-08,2024,14,FALSE,Carolina Panthers,Philadelphia Eagles,PHI,21,17,-6.0,42.0,55,10,60,Bank of America Stadium,FALSE
+2024-09-08,2024,1,FALSE,New York Jets,San Francisco 49ers,SF,14,32,-8.0,41.0,72,4,50,MetLife Stadium,FALSE
+2024-09-15,2024,2,FALSE,Las Vegas Raiders,Baltimore Ravens,BAL,10,26,-9.5,43.0,72,0,40,Allegiant Stadium,FALSE
+2024-09-22,2024,3,FALSE,Jacksonville Jaguars,Buffalo Bills,BUF,28,30,-9.0,46.0,85,6,75,EverBank Stadium,FALSE
+2024-09-29,2024,4,FALSE,Tennessee Titans,Houston Texans,HOU,24,21,-7.5,42.0,72,8,55,Nissan Stadium,FALSE
+2024-10-06,2024,5,FALSE,Denver Broncos,Kansas City Chiefs,KC,17,21,-8.0,44.0,55,12,40,Empower Field at Mile High,FALSE
+2024-10-13,2024,6,FALSE,Washington Commanders,Philadelphia Eagles,PHI,30,40,-8.5,48.0,68,5,50,FedExField,FALSE
