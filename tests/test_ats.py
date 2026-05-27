@@ -2,7 +2,9 @@ import math
 
 import pytest
 
-from engine.ats import BucketMetrics, bucket_spread, compute_bucket_metrics
+from engine.ats import BucketMetrics, ats_by_spread_bucket, bucket_spread, compute_bucket_metrics
+from engine.db import connect
+from ingestion.loader import load_csv_to_db
 
 
 @pytest.mark.parametrize(
@@ -84,3 +86,79 @@ def test_metrics_zero_data():
     assert m.ci_low == 0.0
     assert m.ci_high == 1.0
     assert m.insufficient_sample is True
+
+
+def test_ats_by_spread_bucket_end_to_end(tmp_db_path, fixtures_dir):
+    load_csv_to_db(
+        fixtures_dir / "games_20_ats.csv", tmp_db_path,
+        season_min=2024, season_max=2024,
+    )
+    conn = connect(tmp_db_path)
+    try:
+        report = ats_by_spread_bucket(conn)
+    finally:
+        conn.close()
+
+    by_bucket = {row.bucket: row for row in report.rows}
+
+    # Populated buckets
+    fav_3_5_7 = by_bucket["home_fav_3.5_7"]
+    assert (fav_3_5_7.wins, fav_3_5_7.losses, fav_3_5_7.pushes) == (2, 1, 0)
+
+    fav_1_3 = by_bucket["home_fav_1_3"]
+    assert (fav_1_3.wins, fav_1_3.losses, fav_1_3.pushes) == (2, 0, 1)
+    assert fav_1_3.n == 3
+
+    pickem = by_bucket["pickem"]
+    assert (pickem.wins, pickem.losses, pickem.pushes) == (1, 1, 0)
+
+    dog_1_3 = by_bucket["home_dog_1_3"]
+    assert (dog_1_3.wins, dog_1_3.losses, dog_1_3.pushes) == (2, 1, 0)
+
+    dog_3_5_7 = by_bucket["home_dog_3.5_7"]
+    assert (dog_3_5_7.wins, dog_3_5_7.losses, dog_3_5_7.pushes) == (1, 2, 0)
+
+    dog_7_5_10 = by_bucket["home_dog_7.5_10"]
+    assert (dog_7_5_10.wins, dog_7_5_10.losses, dog_7_5_10.pushes) == (3, 3, 0)
+
+    # Empty buckets must still appear in the report (with n=0, insufficient flag)
+    fav_14plus = by_bucket["home_fav_14.5+"]
+    assert fav_14plus.n == 0
+    assert fav_14plus.insufficient_sample is True
+
+    # All 11 buckets must be present
+    assert {row.bucket for row in report.rows} == set(BUCKET_ORDER_LOCAL)
+
+
+# Local copy of expected bucket order — must match engine/ats.py BUCKET_ORDER
+BUCKET_ORDER_LOCAL = [
+    "home_fav_14.5+",
+    "home_fav_10.5_14",
+    "home_fav_7.5_10",
+    "home_fav_3.5_7",
+    "home_fav_1_3",
+    "pickem",
+    "home_dog_1_3",
+    "home_dog_3.5_7",
+    "home_dog_7.5_10",
+    "home_dog_10.5_14",
+    "home_dog_14.5+",
+]
+
+
+def test_ats_report_includes_by_season_for_populated_buckets(tmp_db_path, fixtures_dir):
+    load_csv_to_db(
+        fixtures_dir / "games_20_ats.csv", tmp_db_path,
+        season_min=2024, season_max=2024,
+    )
+    conn = connect(tmp_db_path)
+    try:
+        report = ats_by_spread_bucket(conn)
+    finally:
+        conn.close()
+    by_bucket = {row.bucket: row for row in report.rows}
+    # Fixture is all 2024 → exactly one season key, win_rate matches the aggregate
+    fav_1_3 = by_bucket["home_fav_1_3"]
+    assert list(fav_1_3.by_season.keys()) == [2024]
+    # decided = 2 (2 covers, 0 losses), pushes excluded from win_rate denom
+    assert fav_1_3.by_season[2024] == 1.0

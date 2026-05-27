@@ -6,7 +6,10 @@ the Slice 1 spec, then aggregates wins / losses / pushes / metrics per bucket.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import sqlite3
+from dataclasses import dataclass, field
+
+import pandas as pd
 
 from engine.stats_utils import (
     BREAKEVEN_AT_NEG_110,
@@ -79,6 +82,7 @@ class BucketMetrics:
     ci_low: float
     ci_high: float
     insufficient_sample: bool
+    by_season: dict[int, float] = field(default_factory=dict)
 
 
 def compute_bucket_metrics(
@@ -86,16 +90,13 @@ def compute_bucket_metrics(
     covers: int,
     losses: int,
     pushes: int,
+    by_season: dict[int, float] | None = None,
 ) -> BucketMetrics:
     """Aggregate cover/loss/push counts into a fully-specified metrics row."""
     n = covers + losses + pushes
     decided = covers + losses
-    if decided == 0:
-        win_rate = 0.0
-    else:
-        win_rate = covers / decided
+    win_rate = (covers / decided) if decided > 0 else 0.0
     push_rate = (pushes / n) if n > 0 else 0.0
-
     p = binomial_pvalue(covers, decided, BREAKEVEN_AT_NEG_110)
     lo, hi = wilson_ci(covers, decided)
     return BucketMetrics(
@@ -112,4 +113,49 @@ def compute_bucket_metrics(
         ci_low=lo,
         ci_high=hi,
         insufficient_sample=decided < 50,
+        by_season=by_season or {},
     )
+
+
+@dataclass
+class AtsReport:
+    rows: list[BucketMetrics]
+
+
+def ats_by_spread_bucket(conn: sqlite3.Connection) -> AtsReport:
+    """Aggregate ATS results into the 11 home-spread buckets.
+
+    Joins games and betting_lines on game_id, drops rows where
+    spread_home_close or home_spread_result is NULL.
+    """
+    df = pd.read_sql_query(
+        """
+        SELECT g.season, b.spread_home_close, b.home_spread_result
+        FROM games g
+        JOIN betting_lines b ON b.game_id = g.game_id
+        WHERE b.spread_home_close IS NOT NULL
+          AND b.home_spread_result IS NOT NULL
+        """,
+        conn,
+    )
+    df["bucket"] = df["spread_home_close"].apply(bucket_spread)
+
+    rows: list[BucketMetrics] = []
+    for bucket in BUCKET_ORDER:
+        sub = df[df["bucket"] == bucket]
+        covers = int((sub["home_spread_result"] == "cover").sum())
+        losses = int((sub["home_spread_result"] == "loss").sum())
+        pushes = int((sub["home_spread_result"] == "push").sum())
+
+        by_season: dict[int, float] = {}
+        if len(sub) > 0:
+            for season, group in sub.groupby("season"):
+                c = int((group["home_spread_result"] == "cover").sum())
+                losses_ = int((group["home_spread_result"] == "loss").sum())
+                decided = c + losses_
+                if decided > 0:
+                    by_season[int(season)] = c / decided
+
+        rows.append(compute_bucket_metrics(bucket, covers, losses, pushes, by_season))
+
+    return AtsReport(rows=rows)
