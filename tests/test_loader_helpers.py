@@ -4,6 +4,7 @@ import pytest
 
 from ingestion.loader import (
     derive_ats_result,
+    derive_division_game_flag,
     derive_spread_home_close,
     derive_total_result,
     parse_week,
@@ -115,3 +116,22 @@ def test_parse_week_integer_input():
 def test_parse_unknown_raises():
     with pytest.raises(ValueError):
         parse_week("Preseason")
+
+
+def test_same_division_returns_one():
+    assert derive_division_game_flag("Kansas City Chiefs", "Denver Broncos") == 1
+
+
+def test_same_conference_different_division_returns_zero():
+    assert derive_division_game_flag("Kansas City Chiefs", "Buffalo Bills") == 0
+
+
+def test_different_conference_returns_zero():
+    assert derive_division_game_flag("Kansas City Chiefs", "Dallas Cowboys") == 0
+
+
+def test_historical_name_inputs_handled():
+    # Caller is expected to canonicalize names BEFORE this helper.
+    # We document that requirement by asserting that an unknown (historical) name raises.
+    with pytest.raises(KeyError):
+        derive_division_game_flag("Oakland Raiders", "Kansas City Chiefs")

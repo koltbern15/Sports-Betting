@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import math
 
+from ingestion.divisions import same_division
+
 
 def derive_spread_home_close(
     spread_favorite: float | None,
@@ -87,3 +89,12 @@ def parse_week(raw: str | int) -> int:
         return int(raw)
     except (TypeError, ValueError) as e:
         raise ValueError(f"Unknown schedule_week value: {raw!r}") from e
+
+
+def derive_division_game_flag(home_team: str, away_team: str) -> int:
+    """1 if the two teams are in the same division, else 0.
+
+    Both inputs must be canonical team names. Caller is responsible for
+    running them through ingestion.team_names.canonicalize_team_name first.
+    """
+    return 1 if same_division(home_team, away_team) else 0
