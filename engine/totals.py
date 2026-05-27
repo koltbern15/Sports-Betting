@@ -3,11 +3,20 @@
 from __future__ import annotations
 
 import sqlite3
+import sys
 from dataclasses import dataclass
+from pathlib import Path
 
 import pandas as pd
 
-from engine.bucket_analysis import BucketMetrics, compute_metrics
+from engine.bucket_analysis import (
+    DISCLAIMER,
+    BucketMetrics,
+    compute_metrics,
+    format_table,
+    write_csv,
+)
+from engine.db import connect
 
 BUCKET_ORDER_TOTALS: list[str] = [
     "total_le_39_5",
@@ -75,3 +84,33 @@ def totals_by_line_bucket(conn: sqlite3.Connection) -> TotalsReport:
         rows.append(compute_metrics(bucket, wins, losses, pushes, by_season))
 
     return TotalsReport(rows=rows)
+
+
+def _main(_argv: list[str] | None = None) -> int:
+    db_path = Path("data/db/nfl_betting.sqlite")
+    out_csv = Path("data/processed/totals_by_bucket.csv")
+    if not db_path.exists():
+        print(
+            f"Database not found at {db_path}. "
+            "Run `python -m ingestion.loader data/raw/spreadspoke_scores.csv` first.",
+            file=sys.stderr,
+        )
+        return 2
+
+    conn = connect(db_path)
+    try:
+        report = totals_by_line_bucket(conn)
+    finally:
+        conn.close()
+
+    print(format_table(report.rows))
+    print()
+    print(DISCLAIMER)
+
+    write_csv(report.rows, out_csv)
+    print(f"\nCSV written to {out_csv}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_main(sys.argv[1:]))
