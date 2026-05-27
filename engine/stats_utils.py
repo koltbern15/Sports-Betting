@@ -5,8 +5,6 @@ All functions in this module are deterministic and side-effect-free.
 
 from __future__ import annotations
 
-import math
-
 BREAKEVEN_AT_NEG_110: float = 110 / 210  # ≈ 0.5238095…
 BREAKEVEN_AT_NEG_105: float = 105 / 205  # ≈ 0.5121951…
 

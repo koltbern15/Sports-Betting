@@ -582,6 +582,8 @@ Expected: collection error.
 
 - [ ] **Step 3: Append `wilson_ci` to `engine/stats_utils.py`**
 
+This function needs `math.sqrt` and `scipy.stats.norm`. Add `import math` to the imports block at the top of `engine/stats_utils.py` (right after `from __future__ import annotations`) if it isn't already there. Then append:
+
 ```python
 from scipy.stats import norm as _norm
 
