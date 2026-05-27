@@ -11,6 +11,7 @@ import math
 
 NFL_MARGIN_SIGMA: float = 13.86   # Burke / AdvancedNFL stats consensus
 TARGET_OVERROUND: float = 1.04762  # matches -110/-110 implied probabilities
+_EPS = 1e-6
 
 
 def _prob_to_american(p: float) -> int:
@@ -37,6 +38,6 @@ def derive_ml_from_spread(spread_home_close: float | None) -> tuple[int, int] | 
         return None
     p_home_nv = 0.5 * (1.0 + math.erf(-spread_home_close / (NFL_MARGIN_SIGMA * math.sqrt(2.0))))
     p_away_nv = 1.0 - p_home_nv
-    p_home_vig = p_home_nv * TARGET_OVERROUND
-    p_away_vig = p_away_nv * TARGET_OVERROUND
+    p_home_vig = min(max(p_home_nv * TARGET_OVERROUND, _EPS), 1.0 - _EPS)
+    p_away_vig = min(max(p_away_nv * TARGET_OVERROUND, _EPS), 1.0 - _EPS)
     return (_prob_to_american(p_home_vig), _prob_to_american(p_away_vig))

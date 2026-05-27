@@ -37,3 +37,12 @@ def test_derive_ml_from_spread_symmetric_around_zero():
 
 def test_derive_ml_from_spread_nan_returns_none():
     assert derive_ml_from_spread(float("nan")) is None
+
+
+@pytest.mark.parametrize("spread", [-26.5, -24.5, -22.5, 22.0, 25.0])
+def test_derive_ml_from_spread_does_not_crash_on_extreme_spreads(spread):
+    """Real Kaggle data has spreads as extreme as -26.5; the function must not raise."""
+    result = derive_ml_from_spread(spread)
+    assert result is not None
+    ml_home, ml_away = result
+    assert isinstance(ml_home, int) and isinstance(ml_away, int)
