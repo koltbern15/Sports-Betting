@@ -8,6 +8,7 @@ from engine.stats_utils import (
     binomial_pvalue,
     decimal_to_american,
     roi,
+    wilson_ci,
 )
 
 
@@ -82,3 +83,30 @@ def test_binomial_pvalue_zero_n_is_one():
 def test_binomial_pvalue_default_breakeven_is_neg110():
     expected = _scipy_binomtest(60, 100, BREAKEVEN_AT_NEG_110, alternative="greater").pvalue
     assert math.isclose(binomial_pvalue(60, 100), expected, abs_tol=1e-12)
+
+
+def test_wilson_ci_55_of_100():
+    # Hand-calculated with z=1.96:
+    #   center = (55 + 1.92) / (100 + 3.8416) = 56.9208 / 103.8416 ≈ 0.54815
+    #   half = 1.96 * sqrt(100*0.55*0.45 + 3.8416/4) / 103.8416 ≈ 0.09571
+    # CI ≈ (0.45244, 0.64386)
+    lo, hi = wilson_ci(55, 100, alpha=0.05)
+    assert math.isclose(lo, 0.45244, abs_tol=1e-4)
+    assert math.isclose(hi, 0.64386, abs_tol=1e-4)
+
+
+def test_wilson_ci_zero_n_returns_zero_one():
+    lo, hi = wilson_ci(0, 0)
+    assert (lo, hi) == (0.0, 1.0)
+
+
+def test_wilson_ci_all_wins_does_not_exceed_one():
+    lo, hi = wilson_ci(10, 10)
+    assert 0.0 < lo < 1.0
+    assert hi <= 1.0
+
+
+def test_wilson_ci_all_losses_does_not_go_negative():
+    lo, hi = wilson_ci(0, 10)
+    assert lo >= 0.0
+    assert 0.0 < hi < 1.0

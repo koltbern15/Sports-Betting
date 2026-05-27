@@ -5,7 +5,10 @@ All functions in this module are deterministic and side-effect-free.
 
 from __future__ import annotations
 
+import math
+
 from scipy.stats import binomtest as _binomtest
+from scipy.stats import norm as _norm
 
 BREAKEVEN_AT_NEG_110: float = 110 / 210  # ≈ 0.5238095…
 BREAKEVEN_AT_NEG_105: float = 105 / 205  # ≈ 0.5121951…
@@ -59,3 +62,21 @@ def binomial_pvalue(wins: int, n: int, breakeven: float = BREAKEVEN_AT_NEG_110) 
     if wins < 0 or wins > n:
         raise ValueError(f"wins={wins} must be in [0, n={n}]")
     return _binomtest(wins, n, breakeven, alternative="greater").pvalue
+
+
+def wilson_ci(wins: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
+    """Wilson score interval for a proportion.
+
+    Preferred over the normal approximation at small n and when p_hat is near 0 or 1.
+    Returns (0.0, 1.0) when n == 0 (no information).
+    """
+    if n == 0:
+        return (0.0, 1.0)
+    if wins < 0 or wins > n:
+        raise ValueError(f"wins={wins} must be in [0, n={n}]")
+    z = _norm.ppf(1.0 - alpha / 2.0)
+    p_hat = wins / n
+    denom = 1.0 + z * z / n
+    center = (p_hat + z * z / (2.0 * n)) / denom
+    half = (z * math.sqrt(p_hat * (1.0 - p_hat) / n + z * z / (4.0 * n * n))) / denom
+    return (max(0.0, center - half), min(1.0, center + half))
