@@ -2,13 +2,20 @@
 
 from __future__ import annotations
 
+import sqlite3
+
 import pytest
 
+from engine.db import init_schema
 from engine.validation import (
+    BucketComparison,
+    ValidationReport,
     american_to_implied_prob,
+    compare_ml_prices,
     compute_price_stats,
     side_error,
 )
+from ingestion.real_ml_loader import load_csv_to_db
 
 
 def test_american_to_implied_prob_negative():
@@ -60,3 +67,101 @@ def test_compute_price_stats_sign_flip():
 def test_compute_price_stats_no_data():
     with pytest.raises(ValueError, match="empty"):
         compute_price_stats([])
+
+
+def _seed_full_fixture(conn: sqlite3.Connection) -> None:
+    games = [
+        (
+            "2024_01_KC_BAL", 2024, 1, "2024-09-05",
+            "Kansas City Chiefs", "Baltimore Ravens", 27, 20,
+        ),
+        (
+            "2024_01_BUF_ARI", 2024, 1, "2024-09-08",
+            "Buffalo Bills", "Arizona Cardinals", 34, 28,
+        ),
+        (
+            "2024_02_DET_TB", 2024, 2, "2024-09-15",
+            "Detroit Lions", "Tampa Bay Buccaneers", 20, 16,
+        ),
+        (
+            "2024_02_GB_IND", 2024, 2, "2024-09-15",
+            "Green Bay Packers", "Indianapolis Colts", 16, 10,
+        ),
+        (
+            "2024_03_PIT_LAC", 2024, 3, "2024-09-22",
+            "Pittsburgh Steelers", "Los Angeles Chargers", 13, 20,
+        ),
+    ]
+    conn.executemany(
+        "INSERT INTO games"
+        "(game_id, season, week, game_date, home_team, away_team, home_score, away_score)"
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        games,
+    )
+    lines = [
+        ("2024_01_KC_BAL", -3.0),
+        ("2024_01_BUF_ARI", -7.0),
+        ("2024_02_DET_TB", -3.0),
+        ("2024_02_GB_IND", -0.5),
+        ("2024_03_PIT_LAC", -3.0),
+    ]
+    conn.executemany(
+        "INSERT INTO betting_lines(game_id, spread_home_close) VALUES (?, ?)",
+        lines,
+    )
+    conn.commit()
+
+
+def test_compare_ml_prices_basic_shape():
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
+
+    report = compare_ml_prices(conn)
+
+    assert isinstance(report, ValidationReport)
+    assert report.price_stats["n_sides"] == 8
+    assert report.n_games == 4
+    assert report.source == "fixture"
+    assert isinstance(report.bucket_comparisons, list)
+    conn.close()
+
+
+def test_compare_ml_prices_mean_error_matches_handcalc():
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
+
+    report = compare_ml_prices(conn)
+    assert -0.2 < report.price_stats["mean_error_prob"] < 0.2
+    conn.close()
+
+
+def test_compare_ml_prices_empty_raises():
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    with pytest.raises(ValueError, match="insufficient validation data"):
+        compare_ml_prices(conn)
+    conn.close()
+
+
+def test_compare_ml_prices_bucket_rows_match_slice2_assignment():
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
+
+    report = compare_ml_prices(conn)
+    bucket_names = {bc.bucket for bc in report.bucket_comparisons}
+    assert (
+        "ml_heavy_fav" in bucket_names
+        or "ml_mid_fav" in bucket_names
+        or "ml_big_fav" in bucket_names
+    )
+    for bc in report.bucket_comparisons:
+        assert isinstance(bc, BucketComparison)
+        assert bc.n >= 1
+    conn.close()
