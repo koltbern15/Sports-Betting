@@ -1,6 +1,14 @@
 import math
 
-from engine.stats_utils import american_to_decimal, decimal_to_american, roi
+from scipy.stats import binomtest as _scipy_binomtest
+
+from engine.stats_utils import (
+    BREAKEVEN_AT_NEG_110,
+    american_to_decimal,
+    binomial_pvalue,
+    decimal_to_american,
+    roi,
+)
 
 
 def test_american_to_decimal_negative():
@@ -53,3 +61,24 @@ def test_roi_plus_money():
 
 def test_roi_zero_bets_returns_zero():
     assert roi(0, 0, 0, -110) == 0.0
+
+
+def test_binomial_pvalue_matches_scipy_60_of_100():
+    expected = _scipy_binomtest(60, 100, BREAKEVEN_AT_NEG_110, alternative="greater").pvalue
+    assert math.isclose(binomial_pvalue(60, 100, BREAKEVEN_AT_NEG_110), expected, abs_tol=1e-12)
+
+
+def test_binomial_pvalue_matches_scipy_low_winrate():
+    # Win rate below breakeven → p-value > 0.5
+    expected = _scipy_binomtest(48, 100, BREAKEVEN_AT_NEG_110, alternative="greater").pvalue
+    assert math.isclose(binomial_pvalue(48, 100, BREAKEVEN_AT_NEG_110), expected, abs_tol=1e-12)
+
+
+def test_binomial_pvalue_zero_n_is_one():
+    # No data → cannot reject null → pvalue = 1.0
+    assert binomial_pvalue(0, 0, 0.5238) == 1.0
+
+
+def test_binomial_pvalue_default_breakeven_is_neg110():
+    expected = _scipy_binomtest(60, 100, BREAKEVEN_AT_NEG_110, alternative="greater").pvalue
+    assert math.isclose(binomial_pvalue(60, 100), expected, abs_tol=1e-12)

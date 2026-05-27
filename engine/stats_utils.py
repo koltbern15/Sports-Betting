@@ -5,6 +5,8 @@ All functions in this module are deterministic and side-effect-free.
 
 from __future__ import annotations
 
+from scipy.stats import binomtest as _binomtest
+
 BREAKEVEN_AT_NEG_110: float = 110 / 210  # ≈ 0.5238095…
 BREAKEVEN_AT_NEG_105: float = 105 / 205  # ≈ 0.5121951…
 
@@ -43,3 +45,17 @@ def roi(wins: int, losses: int, pushes: int = 0, american_odds: int = -110) -> f
     profit_per_win = american_to_decimal(american_odds) - 1.0
     pnl = wins * profit_per_win - losses
     return pnl / total
+
+
+def binomial_pvalue(wins: int, n: int, breakeven: float = BREAKEVEN_AT_NEG_110) -> float:
+    """One-sided exact binomial test: P(X >= wins | n, breakeven).
+
+    Asks: "Is this observed win rate significantly better than chance against the
+    breakeven required to profit at the given juice?"
+    Returns 1.0 when n == 0.
+    """
+    if n == 0:
+        return 1.0
+    if wins < 0 or wins > n:
+        raise ValueError(f"wins={wins} must be in [0, n={n}]")
+    return _binomtest(wins, n, breakeven, alternative="greater").pvalue
