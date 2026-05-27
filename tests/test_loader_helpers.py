@@ -1,10 +1,12 @@
 import math
+from datetime import date
 
 import pytest
 
 from ingestion.loader import (
     derive_ats_result,
     derive_division_game_flag,
+    derive_primetime_flag,
     derive_spread_home_close,
     derive_total_result,
     parse_week,
@@ -135,3 +137,30 @@ def test_historical_name_inputs_handled():
     # We document that requirement by asserting that an unknown (historical) name raises.
     with pytest.raises(KeyError):
         derive_division_game_flag("Oakland Raiders", "Kansas City Chiefs")
+
+
+def test_monday_is_primetime():
+    # 2024-10-14 was a Monday (Saints @ Chiefs MNF)
+    assert derive_primetime_flag(date(2024, 10, 14), playoff=False) == 1
+
+
+def test_thursday_is_primetime():
+    # 2024-09-05 was a Thursday (Ravens @ Chiefs season-opener TNF)
+    assert derive_primetime_flag(date(2024, 9, 5), playoff=False) == 1
+
+
+def test_saturday_is_primetime():
+    # Late-season Saturday games are typically primetime broadcasts
+    assert derive_primetime_flag(date(2024, 12, 21), playoff=False) == 1
+
+
+def test_regular_sunday_not_primetime():
+    # A regular Sunday could be 1pm or SNF; without time info we conservatively
+    # call it not primetime. Note: this under-counts SNF games.
+    assert derive_primetime_flag(date(2024, 10, 13), playoff=False) == 0
+
+
+def test_playoff_game_never_primetime_flag():
+    # Playoff games are flagged by playoff_flag, not primetime_flag,
+    # to avoid double-counting in later analyses.
+    assert derive_primetime_flag(date(2024, 1, 13), playoff=True) == 0

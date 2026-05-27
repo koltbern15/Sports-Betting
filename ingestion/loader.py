@@ -7,6 +7,7 @@ The end-to-end orchestrator is ``load_csv_to_db``.
 from __future__ import annotations
 
 import math
+from datetime import date as _date
 
 from ingestion.divisions import same_division
 
@@ -98,3 +99,21 @@ def derive_division_game_flag(home_team: str, away_team: str) -> int:
     running them through ingestion.team_names.canonicalize_team_name first.
     """
     return 1 if same_division(home_team, away_team) else 0
+
+
+_PRIMETIME_WEEKDAYS: set[int] = {0, 3, 5}  # Monday=0, Thursday=3, Saturday=5
+
+
+def derive_primetime_flag(game_date: _date, playoff: bool) -> int:
+    """Coarse primetime heuristic for the regular season.
+
+    Monday, Thursday, and Saturday regular-season games are treated as primetime.
+    Sunday Night Football is NOT captured by this heuristic (no time data in
+    the source CSV) and is therefore under-counted. Slice 2 refines this.
+
+    Playoff games always return 0 here; downstream code should branch on
+    playoff_flag rather than primetime_flag for playoff analyses.
+    """
+    if playoff:
+        return 0
+    return 1 if game_date.weekday() in _PRIMETIME_WEEKDAYS else 0
