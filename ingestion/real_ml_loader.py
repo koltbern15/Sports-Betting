@@ -3,8 +3,6 @@
 Two layers:
   - pure helpers (parse_american_odds, validate_row) — testable without DB
   - orchestrator (load_csv_to_db) — joins to games, upserts, idempotent
-
-This file only contains the pure helpers; the orchestrator is added in T7.
 """
 
 from __future__ import annotations
