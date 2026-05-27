@@ -80,3 +80,19 @@ def wilson_ci(wins: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     center = (p_hat + z * z / (2.0 * n)) / denom
     half = (z * math.sqrt(p_hat * (1.0 - p_hat) / n + z * z / (4.0 * n * n))) / denom
     return (max(0.0, center - half), min(1.0, center + half))
+
+
+def kelly_fraction(p_win: float, decimal_odds: float) -> float:
+    """Optimal Kelly bet fraction.
+
+    f* = (p * b - q) / b, where b = decimal_odds - 1, q = 1 - p.
+    Clamped to >= 0 (do not place negative-EV bets).
+    """
+    if not 0.0 <= p_win <= 1.0:
+        raise ValueError(f"p_win={p_win} must be in [0, 1]")
+    if decimal_odds <= 1.0:
+        raise ValueError(f"decimal_odds={decimal_odds} must be > 1")
+    b = decimal_odds - 1.0
+    q = 1.0 - p_win
+    f_star = (p_win * b - q) / b
+    return max(0.0, f_star)

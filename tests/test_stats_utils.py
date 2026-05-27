@@ -7,6 +7,7 @@ from engine.stats_utils import (
     american_to_decimal,
     binomial_pvalue,
     decimal_to_american,
+    kelly_fraction,
     roi,
     wilson_ci,
 )
@@ -110,3 +111,34 @@ def test_wilson_ci_all_losses_does_not_go_negative():
     lo, hi = wilson_ci(0, 10)
     assert lo >= 0.0
     assert 0.0 < hi < 1.0
+
+
+def test_kelly_at_neg110_with_55pct_winprob():
+    # f* = (0.55 * (10/11) - 0.45) / (10/11) = 0.055 exact
+    assert math.isclose(kelly_fraction(0.55, 1 + 10 / 11), 0.055, abs_tol=1e-12)
+
+
+def test_kelly_clamps_to_zero_when_negative_edge():
+    # p=0.45 at -110 → negative EV; Kelly should clamp to 0 (no bet)
+    assert kelly_fraction(0.45, 1 + 10 / 11) == 0.0
+
+
+def test_kelly_at_plus_odds():
+    # p=0.40 at +150 (decimal 2.5, b=1.5):
+    # f* = (0.4*1.5 - 0.6) / 1.5 = 0.0 / 1.5 = 0.0 (exactly break-even, no bet)
+    assert math.isclose(kelly_fraction(0.40, 2.5), 0.0, abs_tol=1e-12)
+
+
+def test_kelly_at_plus_odds_positive_edge():
+    # p=0.45 at +150 (b=1.5):
+    # f* = (0.45*1.5 - 0.55) / 1.5 = 0.125 / 1.5 ≈ 0.0833...
+    assert math.isclose(kelly_fraction(0.45, 2.5), 0.125 / 1.5, abs_tol=1e-12)
+
+
+def test_kelly_invalid_prob_raises():
+    import pytest
+
+    with pytest.raises(ValueError):
+        kelly_fraction(-0.1, 2.0)
+    with pytest.raises(ValueError):
+        kelly_fraction(1.1, 2.0)
