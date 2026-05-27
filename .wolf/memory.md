@@ -167,3 +167,75 @@
 | 11:17 | Edited tests/test_bucket_analysis.py | added 1 import(s) | ~33 |
 | 11:17 | Edited tests/test_bucket_analysis.py | 2→4 lines | ~57 |
 | 11:19 | T1+T2: extract bucket_analysis + dollar_weighted_roi | engine/bucket_analysis.py engine/ats.py engine/stats_utils.py tests/test_bucket_analysis.py tests/test_stats_utils.py tests/test_ats.py | 129 tests pass, ruff clean | ~8000 |
+| 11:25 | Session end: 10 writes across 4 files (test_ats.py, stats_utils.py, test_stats_utils.py, test_bucket_analysis.py) | 7 reads | ~25904 tok |
+| 11:28 | Created tests/test_moneyline.py | — | ~343 |
+| 11:28 | Created engine/moneyline.py | — | ~497 |
+| 11:31 | Edited tests/test_moneyline.py | 5→3 lines | ~14 |
+| 11:32 | T3: created engine/moneyline.derive_ml_from_spread + 8 tests; ruff caught unused `import math` in plan-spec test file (same as 2026-05-26 DNR), removed it | engine/moneyline.py, tests/test_moneyline.py | 137 passed, ruff clean | ~5k |
+| 11:43 | Edited engine/moneyline.py | 2→3 lines | ~46 |
+| 11:43 | Edited engine/moneyline.py | 2→2 lines | ~42 |
+| 11:43 | Edited tests/test_moneyline.py | modified test_derive_ml_from_spread_nan_returns_none() | ~146 |
+| 11:46 | Edited tests/test_moneyline.py | inline fix | ~23 |
+| 11:47 | Edited tests/test_moneyline.py | modified test_derive_ml_from_spread_does_not_crash_on_extreme_spreads() | ~431 |
+| 11:47 | Edited engine/moneyline.py | modified bucket_ml() | ~368 |
+| 11:48 | T4 bucket_ml + BUCKET_ORDER_ML | engine/moneyline.py, tests/test_moneyline.py | 167 tests pass, ruff clean, commit f71ec2b | ~3k |
+| 11:48 | T4 bucket_ml + BUCKET_ORDER_ML | engine/moneyline.py, tests/test_moneyline.py | 167 tests pass, ruff clean, commit f71ec2b | ~3k |
+| 11:53 | Created tests/test_totals.py | — | ~276 |
+| 11:53 | Created engine/totals.py | — | ~202 |
+| 11:54 | T5: bucket_total 6-bucket totals classifier | engine/totals.py, tests/test_totals.py | 14 new tests, 181 total passed, ruff clean | ~600 |
+| 11:59 | Created tests/fixtures/totals_20.csv | — | ~651 |
+| 12:01 | T6: created tests/fixtures/totals_20.csv (20 rows, 6 buckets) | tests/fixtures/totals_20.csv | loader smoke OK: inserted 20, games 20, totals 20 | ~1.2k |
+| 12:05 | Edited tests/test_totals.py | expanded (+9 lines) | ~90 |
+| 12:05 | Edited tests/test_totals.py | modified test_bucket_order_totals_has_6_unique_buckets() | ~532 |
+| 12:06 | Created engine/totals.py | — | ~622 |
+| 12:06 | Edited tests/test_totals.py | modified items() | ~45 |
+| 12:09 | T7: totals_by_line_bucket aggregator + 3 integration tests | engine/totals.py tests/test_totals.py | 184 passed, ruff clean, commit 82bb862 | ~5k |
+| 12:15 | Created tests/fixtures/moneyline_20.csv | — | ~652 |
+| 16:15 | T8: hand-built moneyline_20.csv fixture | tests/fixtures/moneyline_20.csv | line count 21, smoke check passed (40 bet rows, 9/0/6/3/4/0/3/3/3/3/6) | ~1k |
+| 12:26 | Edited tests/test_moneyline.py | expanded (+10 lines) | ~99 |
+| 12:27 | Edited tests/test_moneyline.py | modified test_bucket_order_ml_has_11_unique_buckets() | ~846 |
+| 12:27 | Edited engine/moneyline.py | expanded (+6 lines) | ~53 |
+| 12:28 | Edited engine/moneyline.py | modified _payout_for_bet() | ~938 |
+| 17:00 | T9 moneyline_by_odds_bucket aggregator + payout/outcome helpers + MoneylineReport | engine/moneyline.py, tests/test_moneyline.py | 191/191 pass, ruff clean, commit e7a9dfb | ~3500 |
+| 12:38 | Edited engine/totals.py | expanded (+9 lines) | ~86 |
+| 12:38 | Edited engine/totals.py | modified _main() | ~244 |
+| 12:39 | T10 totals CLI entry | engine/totals.py | 191 tests pass, ruff clean, smoke test produced 6-bucket table + CSV | ~3k |
+| 12:43 | Edited engine/moneyline.py | expanded (+9 lines) | ~90 |
+| 12:43 | Edited engine/moneyline.py | modified _main() | ~393 |
+| 12:45 | T11 moneyline CLI: imports, DERIVATION_NOTE, _main, __main__ guard | engine/moneyline.py | smoke-test OK, 191 tests, ruff clean, commit 50ec67c | ~3k |
+| 12:50 | Edited README.md | inline fix | ~101 |
+| 12:50 | Edited README.md | "docs/superpowers/specs/20" → "docs/superpowers/specs/" | ~83 |
+| 12:50 | Edited README.md | "spreadspoke_scores.csv" → "NFL Scores and Betting Da" | ~59 |
+| 12:51 | Edited README.md | modified 1() | ~430 |
+| 12:51 | T12: README updated for Slice 2 (totals + moneyline + ML caveat) | README.md | committed 5e428bf | ~1.5k |
+| 13:54 | Session end: 39 writes across 11 files (test_ats.py, stats_utils.py, test_stats_utils.py, test_bucket_analysis.py, test_moneyline.py) | 16 reads | ~45776 tok |
+
+## Session: 2026-05-27 13:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 14:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 14:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 14:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 14:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 14:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

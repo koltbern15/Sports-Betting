@@ -48,6 +48,103 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-26T23:55:17.244Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-05-27T00:48:46.327Z",
+      "error_message": "Significant refactor of ",
+      "file": "engine/ats.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 32→74 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:48:46.327Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-27T10:23:00.000Z",
+      "error_message": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xbe in position 16: invalid start byte",
+      "file": "data/raw/spreadspoke_scores.csv",
+      "root_cause": "Kaggle 'NFL Scores and Betting Data' dataset downloads as a ZIP archive (containing nfl_teams.csv, spreadspoke.R, spreadspoke_scores.csv). User saved the .zip as 'spreadspoke_scores.csv' so pandas tried to read a zip as UTF-8 text.",
+      "fix": "Renamed to .zip, extracted with unzip -o; the real spreadspoke_scores.csv (1.59MB) sits inside the bundle. Documented for future ingestions.",
+      "tags": [
+        "ingestion",
+        "encoding",
+        "kaggle",
+        "user-input"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T10:23:00.000Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-05-27T14:49:25.629Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/superpowers/specs/2026-05-27-nfl-betting-slice2-design.md",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 9→10 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T14:49:25.629Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-05-27T15:46:53.251Z",
+      "error_message": "Wrong reference: derive_ml_from_spread should be BUCKET_ORDER_ML",
+      "file": "tests/test_moneyline.py",
+      "root_cause": "Used \"derive_ml_from_spread\" instead of \"BUCKET_ORDER_ML\"",
+      "fix": "Changed derive_ml_from_spread → BUCKET_ORDER_ML",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T15:46:53.251Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-05-27T16:50:52.621Z",
+      "error_message": "Incorrect value in code",
+      "file": "README.md",
+      "root_cause": "Had `docs/superpowers/specs/2026-05-26-nfl-betting-sli",
+      "fix": "Changed to `docs/superpowers/specs/`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-27T16:50:57.974Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-05-27T16:51:10.185Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→21 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T16:51:10.185Z"
     }
   ]
 }
