@@ -2,9 +2,19 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
-from engine.moneyline import BUCKET_ORDER_ML, bucket_ml, derive_ml_from_spread
+from engine.db import connect, init_schema
+from engine.moneyline import (
+    BUCKET_ORDER_ML,
+    MoneylineReport,
+    bucket_ml,
+    derive_ml_from_spread,
+    moneyline_by_odds_bucket,
+)
+from ingestion.loader import load_csv_to_db
 
 
 @pytest.mark.parametrize(
@@ -87,3 +97,84 @@ def test_bucket_ml_none_returns_none():
 def test_bucket_order_ml_has_11_unique_buckets():
     assert len(BUCKET_ORDER_ML) == 11
     assert len(set(BUCKET_ORDER_ML)) == 11
+
+
+def _build_db_from_fixture(tmp_path: Path, fixture: str) -> Path:
+    db_path = tmp_path / "test.sqlite"
+    conn = connect(db_path)
+    init_schema(conn)
+    conn.close()
+    load_csv_to_db(Path(fixture), db_path)
+    return db_path
+
+
+def test_moneyline_aggregator_returns_report_with_11_buckets(tmp_path: Path):
+    db = _build_db_from_fixture(tmp_path, "tests/fixtures/moneyline_20.csv")
+    conn = connect(db)
+    try:
+        report = moneyline_by_odds_bucket(conn)
+    finally:
+        conn.close()
+    assert isinstance(report, MoneylineReport)
+    assert len(report.rows) == 11
+    assert [r.bucket for r in report.rows] == BUCKET_ORDER_ML
+
+
+def test_moneyline_aggregator_per_bucket_counts_match_fixture(tmp_path: Path):
+    db = _build_db_from_fixture(tmp_path, "tests/fixtures/moneyline_20.csv")
+    conn = connect(db)
+    try:
+        report = moneyline_by_odds_bucket(conn)
+    finally:
+        conn.close()
+    by = {r.bucket: r for r in report.rows}
+
+    # Corrected expected counts (verified by running derive_ml_from_spread + bucket_ml
+    # against the T8 fixture). The plan's original T9 table was off for mid_dog/big_dog.
+    expected = {
+        "ml_heavy_fav":  (9, 6, 3, 0),
+        "ml_big_fav":    (0, 0, 0, 0),
+        "ml_mid_fav":    (6, 4, 2, 0),
+        "ml_small_fav":  (3, 2, 1, 0),
+        "ml_slight_fav": (4, 2, 2, 0),
+        "ml_pickem":     (0, 0, 0, 0),
+        "ml_slight_dog": (3, 1, 2, 0),
+        "ml_small_dog":  (3, 1, 2, 0),
+        "ml_mid_dog":    (3, 1, 2, 0),
+        "ml_big_dog":    (3, 1, 2, 0),
+        "ml_heavy_dog":  (6, 2, 4, 0),
+    }
+    for bucket, (n, w, losses, p) in expected.items():
+        m = by[bucket]
+        assert (m.n, m.wins, m.losses, m.pushes) == (n, w, losses, p), bucket
+
+
+def test_moneyline_aggregator_total_entries_is_40(tmp_path: Path):
+    db = _build_db_from_fixture(tmp_path, "tests/fixtures/moneyline_20.csv")
+    conn = connect(db)
+    try:
+        report = moneyline_by_odds_bucket(conn)
+    finally:
+        conn.close()
+    total_n = sum(r.n for r in report.rows)
+    assert total_n == 40  # 20 games * 2 sides
+
+
+def test_moneyline_payout_helper_loss_returns_minus_one():
+    from engine.moneyline import _payout_for_bet
+    assert _payout_for_bet(ml_price=-150, won=False) == -1.0
+
+
+def test_moneyline_payout_helper_win_at_minus_110_pays_100_over_110():
+    from engine.moneyline import _payout_for_bet
+    assert _payout_for_bet(ml_price=-110, won=True) == pytest.approx(100.0 / 110.0)
+
+
+def test_moneyline_payout_helper_win_at_plus_150_pays_1_50():
+    from engine.moneyline import _payout_for_bet
+    assert _payout_for_bet(ml_price=+150, won=True) == pytest.approx(1.50)
+
+
+def test_moneyline_payout_helper_push_returns_zero():
+    from engine.moneyline import _payout_for_bet
+    assert _payout_for_bet(ml_price=-110, won=None) == 0.0
