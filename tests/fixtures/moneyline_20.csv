@@ -1,0 +1,21 @@
+schedule_date,schedule_season,schedule_week,schedule_playoff,team_home,team_away,team_favorite_id,score_home,score_away,spread_favorite,over_under_line,weather_temperature,weather_wind_mph,weather_humidity,stadium,stadium_neutral
+2022-09-11,2022,1,FALSE,Buffalo Bills,Tampa Bay Buccaneers,BUF,35,7,-15.0,45.0,72,5,55,Highmark Stadium,FALSE
+2022-09-18,2022,2,FALSE,Kansas City Chiefs,Carolina Panthers,KAN,10,20,-15.0,45.0,72,5,55,Arrowhead Stadium,FALSE
+2022-09-25,2022,3,FALSE,Philadelphia Eagles,Houston Texans,PHI,30,10,-12.0,45.0,72,5,55,Lincoln Financial Field,FALSE
+2022-10-02,2022,4,FALSE,San Francisco 49ers,Indianapolis Colts,SF,14,28,-12.0,45.0,72,5,55,Levi's Stadium,FALSE
+2022-10-09,2022,5,FALSE,Baltimore Ravens,New York Giants,BAL,24,14,-9.0,45.0,72,5,55,M&T Bank Stadium,FALSE
+2022-10-16,2022,6,FALSE,Dallas Cowboys,Chicago Bears,DAL,17,21,-9.0,45.0,72,5,55,AT&T Stadium,FALSE
+2022-10-23,2022,7,FALSE,Cincinnati Bengals,Atlanta Falcons,CIN,27,17,-6.0,45.0,72,5,55,Paycor Stadium,FALSE
+2022-10-30,2022,8,FALSE,Miami Dolphins,Washington Commanders,MIA,10,24,-6.0,45.0,72,5,55,Hard Rock Stadium,FALSE
+2022-11-06,2022,9,FALSE,Detroit Lions,Las Vegas Raiders,DET,21,14,-4.0,45.0,72,5,55,Ford Field,FALSE
+2022-11-13,2022,10,FALSE,Pittsburgh Steelers,New England Patriots,PIT,17,20,-4.0,45.0,72,5,55,Acrisure Stadium,FALSE
+2022-11-20,2022,11,FALSE,Seattle Seahawks,Tennessee Titans,SEA,24,20,-2.0,45.0,72,5,55,Lumen Field,FALSE
+2022-11-27,2022,12,FALSE,Denver Broncos,Cleveland Browns,DEN,17,21,-2.0,45.0,72,5,55,Empower Field at Mile High,FALSE
+2022-12-04,2022,13,FALSE,New York Jets,Jacksonville Jaguars,NYJ,21,17,0.0,45.0,72,5,55,MetLife Stadium,FALSE
+2022-12-11,2022,14,FALSE,Arizona Cardinals,Minnesota Vikings,ARI,14,17,0.0,45.0,72,5,55,State Farm Stadium,FALSE
+2022-12-18,2022,15,FALSE,New Orleans Saints,Green Bay Packers,GB,17,24,-2.0,45.0,72,5,55,Caesars Superdome,FALSE
+2022-12-25,2022,16,FALSE,Los Angeles Chargers,Los Angeles Rams,LAR,21,24,-4.0,45.0,72,5,55,SoFi Stadium,FALSE
+2023-01-01,2022,17,FALSE,New York Giants,Buffalo Bills,BUF,17,27,-6.0,45.0,72,5,55,MetLife Stadium,FALSE
+2023-01-08,2022,18,FALSE,Houston Texans,Kansas City Chiefs,KAN,14,24,-9.0,45.0,72,5,55,NRG Stadium,FALSE
+2022-09-12,2022,1,FALSE,Carolina Panthers,Philadelphia Eagles,PHI,10,30,-12.0,45.0,72,5,55,Bank of America Stadium,FALSE
+2022-09-19,2022,2,FALSE,Indianapolis Colts,San Francisco 49ers,SF,7,35,-15.0,45.0,72,5,55,Lucas Oil Stadium,FALSE
