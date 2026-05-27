@@ -9,11 +9,20 @@ from __future__ import annotations
 
 import math
 import sqlite3
+import sys
 from dataclasses import dataclass
+from pathlib import Path
 
 import pandas as pd
 
-from engine.bucket_analysis import BucketMetrics, compute_metrics
+from engine.bucket_analysis import (
+    DISCLAIMER,
+    BucketMetrics,
+    compute_metrics,
+    format_table,
+    write_csv,
+)
+from engine.db import connect
 
 NFL_MARGIN_SIGMA: float = 13.86   # Burke / AdvancedNFL stats consensus
 TARGET_OVERROUND: float = 1.04762  # matches -110/-110 implied probabilities
@@ -183,3 +192,45 @@ def moneyline_by_odds_bucket(conn: sqlite3.Connection) -> MoneylineReport:
         rows.append(compute_metrics(bucket, wins, losses, pushes, by_season, payouts=payouts))
 
     return MoneylineReport(rows=rows)
+
+
+DERIVATION_NOTE = (
+    "NOTE: Moneyline prices derived from closing spreads via normal-CDF + vig "
+    "(SIGMA=13.86, OVERROUND=1.04762). These are NOT real historical sportsbook ML."
+)
+
+
+def _main(_argv: list[str] | None = None) -> int:
+    db_path = Path("data/db/nfl_betting.sqlite")
+    out_csv = Path("data/processed/moneyline_by_bucket.csv")
+    if not db_path.exists():
+        print(
+            f"Database not found at {db_path}. "
+            "Run `python -m ingestion.loader data/raw/spreadspoke_scores.csv` first.",
+            file=sys.stderr,
+        )
+        return 2
+
+    conn = connect(db_path)
+    try:
+        report = moneyline_by_odds_bucket(conn)
+    finally:
+        conn.close()
+
+    print(DERIVATION_NOTE)
+    print()
+    print(format_table(report.rows))
+    print()
+    print(DISCLAIMER)
+
+    # Custom CSV: write standard CSV then prepend the derivation note as an extra comment line
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
+    write_csv(report.rows, out_csv)
+    text = out_csv.read_text(encoding="utf-8")
+    out_csv.write_text(f"# {DERIVATION_NOTE}\n{text}", encoding="utf-8")
+    print(f"\nCSV written to {out_csv}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_main(sys.argv[1:]))
