@@ -3,6 +3,14 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 20:30 | T9: appended compare_ml_prices orchestrator + BucketComparison + ValidationReport to engine/validation.py; 4 new integration tests; fixed E402/E501 ruff violations by consolidating imports to top of test file; fixed test assertion (fixture produces ml_big_fav not ml_heavy_fav/ml_mid_fav) | engine/validation.py, tests/test_validation.py | 11/11 tests pass, 221 total, ruff clean, committed 0ee3399 | ~2500 |
+
+| 2026-05-27 | T6: created ingestion/real_ml_loader.py (parse_american_odds, validate_row) + tests | ingestion/real_ml_loader.py, tests/test_real_ml_loader.py | 7/7 tests pass, 207 total, ruff clean, committed f334f3c | ~800 tok |
+
+| 2026-05-27 | T2: Added real_ml_lines table to _SCHEMA_SQL; appended 2 new tests + updated 2 existing tests for 4-table set | engine/db.py, tests/test_db.py | 193 tests pass, ruff clean, committed 6dc851f | ~800 |
+
+| 19:45 | T1 probe: installed nfl-data-py 0.3.2 (fastparquet, no pyarrow); confirmed home_moneyline/away_moneyline present, 100% coverage 2020-2024 (1408/1408 rows), 32 team codes; wrote probe doc | docs/superpowers/notes/2026-05-27-nflverse-probe.md, pyproject.toml | success | ~400 |
+
 | session | T23: CLI + CSV + disclaimer | engine/ats.py, tests/test_ats.py | 119 passed, ruff clean, commit af6facb | ~800 |
 
 ## Session: 2026-05-26 19:42
@@ -239,3 +247,60 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+| 15:20 | Created docs/superpowers/specs/2026-05-27-nfl-betting-slice3-design.md | — | ~2623 |
+| 15:21 | Edited docs/superpowers/specs/2026-05-27-nfl-betting-slice3-design.md | real() → probability() | ~290 |
+| 15:21 | Edited docs/superpowers/specs/2026-05-27-nfl-betting-slice3-design.md | 11→15 lines | ~171 |
+| 15:21 | Edited docs/superpowers/specs/2026-05-27-nfl-betting-slice3-design.md | 2→2 lines | ~28 |
+| 15:21 | Session end: 4 writes across 1 files (2026-05-27-nfl-betting-slice3-design.md) | 2 reads | ~3416 tok |
+| 15:29 | Created docs/superpowers/plans/2026-05-27-nfl-betting-slice3.md | — | ~15795 |
+| 15:29 | Edited docs/superpowers/plans/2026-05-27-nfl-betting-slice3.md | modified feat() | ~80 |
+| 15:30 | Edited docs/superpowers/plans/2026-05-27-nfl-betting-slice3.md | modified content() | ~294 |
+| 15:30 | Session end: 7 writes across 2 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md) | 5 reads | ~24496 tok |
+| 15:42 | Created docs/superpowers/notes/2026-05-27-nflverse-probe.md | — | ~1336 |
+| 15:44 | Edited tests/test_db.py | modified test_fetch_df_with_params() | ~308 |
+| 15:44 | Edited engine/db.py | expanded (+11 lines) | ~130 |
+| 15:45 | Edited tests/test_db.py | modified test_init_schema_creates_three_tables() | ~102 |
+| 15:45 | Edited tests/test_db.py | modified test_init_schema_is_idempotent() | ~114 |
+| 15:48 | Edited tests/test_db.py | inline fix | ~15 |
+| 15:50 | Edited tests/test_static_data.py | modified test_is_dome_unknown_returns_false() | ~276 |
+| 15:50 | Created ingestion/team_codes.py | — | ~508 |
+| 15:51 | Edited tests/test_static_data.py | added 1 import(s) | ~77 |
+| 15:51 | Edited tests/test_static_data.py | modified test_team_codes_has_all_32_teams() | ~27 |
+| 15:52 | T3: created ingestion/team_codes.py (32-code nflverse map) + 4 tests in test_static_data.py; fixed E402 import order; ruff clean; committed c3ab9e5 | ingestion/team_codes.py, tests/test_static_data.py | 197 tests passing | ~350 tok |
+| 15:57 | Created tests/test_real_ml_source.py | — | ~526 |
+| 15:57 | Created ingestion/real_ml_source.py | — | ~448 |
+| 15:58 | T4 COMPLETE: fetch_real_ml nflverse fetcher — 3 new tests (canonical columns, drop missing ML, seasons passthrough), TDD green first-try, ruff clean, 200/200 total pass, commit 6d7d11f | ingestion/real_ml_source.py, tests/test_real_ml_source.py | success | ~500 |
+| 16:02 | Created tests/fixtures/real_ml_5.csv | — | ~100 |
+| 16:03 | Created tests/test_real_ml_loader.py | — | ~618 |
+| 16:03 | Created ingestion/real_ml_loader.py | — | ~586 |
+| 16:10 | Edited tests/test_real_ml_loader.py | modified test_validate_row_bad_team_raises() | ~832 |
+| 16:10 | Edited ingestion/real_ml_loader.py | added 5 import(s) | ~62 |
+| 16:10 | Edited ingestion/real_ml_loader.py | modified load_csv_to_db() | ~1031 |
+| 16:11 | Edited ingestion/real_ml_loader.py | inline fix | ~20 |
+| 16:11 | Edited ingestion/real_ml_loader.py | inline fix | ~10 |
+| 16:11 | Edited ingestion/real_ml_loader.py | inline fix | ~18 |
+| 16:11 | Edited ingestion/real_ml_loader.py | 4→5 lines | ~76 |
+| 16:11 | Edited tests/test_real_ml_loader.py | added 2 import(s) | ~77 |
+| 16:11 | Edited tests/test_real_ml_loader.py | modified _seed_games() | ~13 |
+| 16:12 | T7: appended LoadReport + load_csv_to_db orchestrator + CLI to ingestion/real_ml_loader.py; 3 integration tests; 210 total passing; ruff clean | ingestion/real_ml_loader.py, tests/test_real_ml_loader.py | committed 1ae054a | ~800 |
+| 16:18 | Edited ingestion/real_ml_loader.py | 8→6 lines | ~67 |
+| 16:20 | Created tests/test_validation.py | — | ~586 |
+| 16:21 | Created engine/validation.py | — | ~765 |
+| 16:21 | Edited tests/test_validation.py | 3→3 lines | ~46 |
+| 16:22 | Edited tests/test_validation.py | 1→2 lines | ~35 |
+| 16:25 | T8 COMPLETE: engine/validation.py pure helpers (american_to_implied_prob, side_error, compute_price_stats) + 7 tests; fixed E501 in test comments; 217 total pass, ruff clean, commit 5c0c9ee | engine/validation.py, tests/test_validation.py | success | ~600 |
+| 17:11 | Session end: 36 writes across 14 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 20 reads | ~42318 tok |
+| 18:41 | Edited tests/test_validation.py | modified test_compute_price_stats_no_data() | ~857 |
+| 18:41 | Edited engine/validation.py | added 5 import(s) | ~153 |
+| 18:42 | Edited engine/validation.py | modified _payout() | ~1282 |
+| 18:42 | Edited tests/test_validation.py | 2→2 lines | ~50 |
+| 18:43 | Created tests/test_validation.py | — | ~1474 |
+| 18:47 | Edited tests/test_validation.py | modified test_compare_ml_prices_bucket_rows_match_slice2_assignment() | ~352 |
+| 18:47 | Edited engine/validation.py | 2→7 lines | ~56 |
+| 18:47 | Edited engine/validation.py | modified _format_price_table() | ~844 |
+| 18:48 | Edited engine/validation.py | 8→7 lines | ~51 |
+|  | T10: appended write_validation_csv + _format_price_table + _format_bucket_table + _main CLI to engine/validation.py; fixed import sort (ruff I001); 1 new test (12 total in file, 222 total); committed 252ca4c | engine/validation.py, tests/test_validation.py | success | ~600 tok |
+| 18:49 | T10: appended write_validation_csv + _format_price_table + _format_bucket_table + _main CLI to engine/validation.py; fixed import sort (ruff I001); 1 new test (12 total in file, 222 total); committed 252ca4c | engine/validation.py, tests/test_validation.py | success | ~600 tok |
+| 18:52 | Edited README.md | modified 1() | ~244 |
+| 18:53 | Edited README.md | modified 1() | ~518 |
+| 18:55 | Slice 3 finding: derived ml_heavy_fav +0.63% does NOT hold under real prices. Real ROI on 2020–2024 nflverse sample (n=237 bets) is **-0.95%**, derived was +1.56%. ml_small_fav (n=562) shows real +1.03% — candidate for follow-up. Derived consistently overshades underdogs (heavy_dog Δ +13.13 pp). 65 of 1408 playoff games unmatched (week-numbering convention diff). | data/processed/ml_validation_report.csv | ~3000 |
