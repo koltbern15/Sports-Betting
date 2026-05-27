@@ -48,3 +48,19 @@ def derive_ats_result(
     if adjusted < 0:
         return "loss"
     return "push"
+
+
+def derive_total_result(
+    home_score: int | None,
+    away_score: int | None,
+    total_close: float | None,
+) -> str | None:
+    """Compute over/under/push for the combined score vs the total line."""
+    if home_score is None or away_score is None or total_close is None:
+        return None
+    combined = home_score + away_score
+    if combined > total_close:
+        return "over"
+    if combined < total_close:
+        return "under"
+    return "push"

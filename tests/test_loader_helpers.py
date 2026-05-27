@@ -1,6 +1,6 @@
 import math
 
-from ingestion.loader import derive_ats_result, derive_spread_home_close
+from ingestion.loader import derive_ats_result, derive_spread_home_close, derive_total_result
 
 
 def test_home_favored():
@@ -69,3 +69,21 @@ def test_ats_missing_inputs_returns_none():
     assert derive_ats_result(home_score=None, away_score=20, spread_home_close=-3.0) is None
     assert derive_ats_result(home_score=20, away_score=None, spread_home_close=-3.0) is None
     assert derive_ats_result(home_score=20, away_score=20, spread_home_close=None) is None
+
+
+def test_total_over():
+    assert derive_total_result(home_score=28, away_score=24, total_close=45.5) == "over"
+
+
+def test_total_under():
+    assert derive_total_result(home_score=10, away_score=7, total_close=45.5) == "under"
+
+
+def test_total_push():
+    assert derive_total_result(home_score=24, away_score=21, total_close=45.0) == "push"
+
+
+def test_total_missing_returns_none():
+    assert derive_total_result(home_score=None, away_score=21, total_close=45.0) is None
+    assert derive_total_result(home_score=21, away_score=None, total_close=45.0) is None
+    assert derive_total_result(home_score=21, away_score=21, total_close=None) is None
