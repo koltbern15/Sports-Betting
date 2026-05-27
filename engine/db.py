@@ -53,6 +53,17 @@ CREATE TABLE IF NOT EXISTS team_divisions (
     conference TEXT NOT NULL,
     division   TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS real_ml_lines (
+    game_id       TEXT PRIMARY KEY REFERENCES games(game_id),
+    ml_home_real  INTEGER,
+    ml_away_real  INTEGER,
+    source        TEXT,
+    source_url    TEXT,
+    collected_at  TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_real_ml_lines_game ON real_ml_lines(game_id);
 """
 
 
