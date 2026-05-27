@@ -2,6 +2,7 @@ import pytest
 
 from ingestion.divisions import DIVISIONS, division_of, same_division
 from ingestion.stadiums import is_dome
+from ingestion.team_codes import NFLVERSE_TEAM_CODES, code_to_canonical
 from ingestion.team_names import CANONICAL_TEAMS, canonicalize_team_name
 
 
@@ -88,3 +89,26 @@ def test_is_dome_known_outdoor():
 def test_is_dome_unknown_returns_false():
     # Unknown stadium → conservative default = outdoor (False)
     assert is_dome("Some Made-Up Stadium") is False
+
+
+def test_team_codes_has_all_32_teams():
+    assert len(NFLVERSE_TEAM_CODES) == 32
+
+
+def test_code_to_canonical_modern():
+    assert code_to_canonical("KC") == "Kansas City Chiefs"
+    assert code_to_canonical("LV") == "Las Vegas Raiders"
+    assert code_to_canonical("WAS") == "Washington Commanders"
+    assert code_to_canonical("LA") == "Los Angeles Rams"
+    assert code_to_canonical("LAC") == "Los Angeles Chargers"
+
+
+def test_code_to_canonical_unknown_raises():
+    with pytest.raises(KeyError):
+        code_to_canonical("ZZZ")
+
+
+def test_all_codes_resolve_to_canonical_set():
+    from ingestion.team_names import CANONICAL_TEAMS
+    for code in NFLVERSE_TEAM_CODES:
+        assert code_to_canonical(code) in CANONICAL_TEAMS
