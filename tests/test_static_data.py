@@ -1,4 +1,7 @@
+import pytest
+
 from ingestion.divisions import DIVISIONS, division_of, same_division
+from ingestion.team_names import CANONICAL_TEAMS, canonicalize_team_name
 
 
 def test_divisions_has_32_teams():
@@ -29,3 +32,38 @@ def test_same_division_false_same_conference():
 
 def test_same_division_false_different_conference():
     assert same_division("Kansas City Chiefs", "Dallas Cowboys") is False
+
+
+def test_canonicalize_modern_name_passthrough():
+    assert canonicalize_team_name("Kansas City Chiefs") == "Kansas City Chiefs"
+
+
+def test_canonicalize_st_louis_rams():
+    assert canonicalize_team_name("St. Louis Rams") == "Los Angeles Rams"
+
+
+def test_canonicalize_san_diego_chargers():
+    assert canonicalize_team_name("San Diego Chargers") == "Los Angeles Chargers"
+
+
+def test_canonicalize_oakland_raiders():
+    assert canonicalize_team_name("Oakland Raiders") == "Las Vegas Raiders"
+
+
+def test_canonicalize_washington_redskins():
+    assert canonicalize_team_name("Washington Redskins") == "Washington Commanders"
+
+
+def test_canonicalize_washington_football_team():
+    assert canonicalize_team_name("Washington Football Team") == "Washington Commanders"
+
+
+def test_canonical_teams_match_divisions():
+    from ingestion.divisions import DIVISIONS
+
+    assert CANONICAL_TEAMS == set(DIVISIONS.keys())
+
+
+def test_canonicalize_unknown_team_raises():
+    with pytest.raises(KeyError):
+        canonicalize_team_name("Cleveland Browns 1971 Edition")
