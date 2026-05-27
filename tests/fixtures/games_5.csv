@@ -1,0 +1,6 @@
+schedule_date,schedule_season,schedule_week,schedule_playoff,team_home,team_away,team_favorite_id,score_home,score_away,spread_favorite,over_under_line,weather_temperature,weather_wind_mph,weather_humidity,stadium,stadium_neutral
+2024-10-14,2024,6,FALSE,Kansas City Chiefs,New Orleans Saints,KAN,26,13,-6.0,46.0,72,5,55,Arrowhead Stadium,FALSE
+2024-12-29,2024,17,FALSE,Green Bay Packers,Minnesota Vikings,MIN,25,27,-3.0,40.0,18,12,60,Lambeau Field,FALSE
+2024-09-15,2024,2,FALSE,Houston Texans,Chicago Bears,PICK,19,13,0.0,42.5,,,,NRG Stadium,FALSE
+2024-01-13,2023,Wildcard,TRUE,Buffalo Bills,Pittsburgh Steelers,BUF,31,17,-9.5,38.0,28,18,70,Highmark Stadium,FALSE
+2024-09-08,2024,1,FALSE,Atlanta Falcons,Pittsburgh Steelers,PIT,10,18,-3.0,,71,3,50,Mercedes-Benz Stadium,FALSE
