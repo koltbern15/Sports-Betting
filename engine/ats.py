@@ -6,11 +6,16 @@ the Slice 1 spec, then aggregates wins / losses / pushes / metrics per bucket.
 
 from __future__ import annotations
 
+import csv
 import sqlite3
+import sys
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import pandas as pd
+from tabulate import tabulate
 
+from engine.db import connect
 from engine.stats_utils import (
     BREAKEVEN_AT_NEG_110,
     binomial_pvalue,
@@ -159,3 +164,89 @@ def ats_by_spread_bucket(conn: sqlite3.Connection) -> AtsReport:
         rows.append(compute_bucket_metrics(bucket, covers, losses, pushes, by_season))
 
     return AtsReport(rows=rows)
+
+
+DISCLAIMER = (
+    "Past performance does not guarantee future results. "
+    "This tool is for informational purposes only. Gamble responsibly."
+)
+
+
+def format_report(report: AtsReport) -> str:
+    """Format the report as a tabulated table for stdout."""
+    headers = [
+        "bucket", "n", "W", "L", "P",
+        "win%", "push%", "ROI -110", "ROI -105",
+        "p-value", "CI low", "CI high", "low_n?",
+    ]
+    rows = []
+    for r in report.rows:
+        rows.append([
+            r.bucket, r.n, r.wins, r.losses, r.pushes,
+            f"{r.win_rate:.4f}" if r.n else "—",
+            f"{r.push_rate:.4f}" if r.n else "—",
+            f"{r.roi_neg110:+.4f}" if r.n else "—",
+            f"{r.roi_neg105:+.4f}" if r.n else "—",
+            f"{r.p_value:.4f}",
+            f"{r.ci_low:.4f}",
+            f"{r.ci_high:.4f}",
+            "*" if r.insufficient_sample else "",
+        ])
+    return tabulate(rows, headers=headers, tablefmt="github")
+
+
+def write_csv(report: AtsReport, out_path: Path) -> None:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", encoding="utf-8", newline="") as f:
+        # Disclaimer comment line at the top of the CSV
+        f.write(f"# {DISCLAIMER}\n")
+        writer = csv.writer(f)
+        writer.writerow([
+            "bucket", "n", "wins", "losses", "pushes",
+            "win_rate", "push_rate", "roi_neg110", "roi_neg105",
+            "p_value", "ci_low", "ci_high", "insufficient_sample",
+            "by_season",
+        ])
+        for r in report.rows:
+            writer.writerow([
+                r.bucket, r.n, r.wins, r.losses, r.pushes,
+                f"{r.win_rate:.6f}",
+                f"{r.push_rate:.6f}",
+                f"{r.roi_neg110:.6f}",
+                f"{r.roi_neg105:.6f}",
+                f"{r.p_value:.6f}",
+                f"{r.ci_low:.6f}",
+                f"{r.ci_high:.6f}",
+                int(r.insufficient_sample),
+                ";".join(f"{s}:{w:.4f}" for s, w in sorted(r.by_season.items())),
+            ])
+
+
+def _main(_argv: list[str] | None = None) -> int:
+    db_path = Path("data/db/nfl_betting.sqlite")
+    out_csv = Path("data/processed/ats_by_bucket.csv")
+    if not db_path.exists():
+        print(
+            f"Database not found at {db_path}. "
+            "Run `python -m ingestion.loader data/raw/spreadspoke_scores.csv` first.",
+            file=sys.stderr,
+        )
+        return 2
+
+    conn = connect(db_path)
+    try:
+        report = ats_by_spread_bucket(conn)
+    finally:
+        conn.close()
+
+    print(format_report(report))
+    print()
+    print(DISCLAIMER)
+
+    write_csv(report, out_csv)
+    print(f"\nCSV written to {out_csv}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_main(sys.argv[1:]))

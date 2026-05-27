@@ -162,3 +162,51 @@ def test_ats_report_includes_by_season_for_populated_buckets(tmp_db_path, fixtur
     assert list(fav_1_3.by_season.keys()) == [2024]
     # decided = 2 (2 covers, 0 losses), pushes excluded from win_rate denom
     assert fav_1_3.by_season[2024] == 1.0
+
+
+def test_ats_csv_output_is_written(fixtures_dir, tmp_path, monkeypatch):
+    # Load fixture into the canonical DB path the CLI expects
+    db_dir = tmp_path / "data" / "db"
+    db_dir.mkdir(parents=True)
+    db_path = db_dir / "nfl_betting.sqlite"
+    load_csv_to_db(
+        fixtures_dir / "games_20_ats.csv", db_path,
+        season_min=2024, season_max=2024,
+    )
+
+    monkeypatch.chdir(tmp_path)
+    out_csv = tmp_path / "data" / "processed" / "ats_by_bucket.csv"
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
+
+    # Call the CLI in-process for speed (avoid subprocess overhead)
+    from engine.ats import _main  # noqa: PLC0415 — internal test API
+
+    rc = _main([])
+
+    assert rc == 0
+    assert out_csv.exists()
+    content = out_csv.read_text(encoding="utf-8")
+    # Disclaimer must be in the file
+    assert "Gamble responsibly." in content
+    # Header line must include the metrics columns
+    assert "bucket" in content
+    assert "roi_neg110" in content
+    assert "p_value" in content
+
+
+def test_ats_stdout_includes_disclaimer(capsys, fixtures_dir, tmp_path, monkeypatch):
+    db_dir = tmp_path / "data" / "db"
+    db_dir.mkdir(parents=True)
+    load_csv_to_db(
+        fixtures_dir / "games_20_ats.csv", db_dir / "nfl_betting.sqlite",
+        season_min=2024, season_max=2024,
+    )
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "data" / "processed").mkdir(parents=True, exist_ok=True)
+
+    from engine.ats import _main
+
+    _main([])
+    captured = capsys.readouterr()
+    assert "Gamble responsibly." in captured.out
+    assert "home_fav_3.5_7" in captured.out
