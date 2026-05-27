@@ -86,17 +86,20 @@ def compute_price_stats(sides: list[dict]) -> dict:
 
 @dataclass(frozen=True)
 class BucketComparison:
-    """Per-bucket ROI comparison: derived prices vs real prices, same outcomes."""
+    """Per-bucket ROI comparison: derived prices vs real prices, same outcomes.
+
+    `wins` and `losses` are price-invariant — game outcomes don't depend on
+    which price you booked the bet at, so we store one pair rather than
+    derived_wins/real_wins duplicates.
+    """
 
     bucket: str
     n: int
     derived_roi: float
     real_roi: float
     delta_roi: float
-    derived_wins: int
-    derived_losses: int
-    real_wins: int
-    real_losses: int
+    wins: int
+    losses: int
 
 
 @dataclass(frozen=True)
@@ -187,10 +190,8 @@ def _build_bucket_comparisons(bucket_rows: list[dict]) -> list[BucketComparison]
     out: list[BucketComparison] = []
     for bucket, rows in grouped.items():
         n = len(rows)
-        derived_wins = sum(1 for r in rows if r["won"] and r["derived_pnl"] > 0)
-        derived_losses = sum(1 for r in rows if not r["won"])
-        real_wins = sum(1 for r in rows if r["won"] and r["real_pnl"] > 0)
-        real_losses = sum(1 for r in rows if not r["won"])
+        wins = sum(1 for r in rows if r["won"])
+        losses = sum(1 for r in rows if not r["won"])
         derived_roi = sum(r["derived_pnl"] for r in rows) / n
         real_roi = sum(r["real_pnl"] for r in rows) / n
         out.append(
@@ -200,10 +201,8 @@ def _build_bucket_comparisons(bucket_rows: list[dict]) -> list[BucketComparison]
                 derived_roi=derived_roi,
                 real_roi=real_roi,
                 delta_roi=real_roi - derived_roi,
-                derived_wins=derived_wins,
-                derived_losses=derived_losses,
-                real_wins=real_wins,
-                real_losses=real_losses,
+                wins=wins,
+                losses=losses,
             )
         )
     out.sort(key=lambda bc: bc.bucket)
@@ -227,13 +226,13 @@ def _format_bucket_table(comparisons: list[BucketComparison]) -> str:
     headers = [
         "bucket", "n",
         "derived_roi", "real_roi", "delta_roi",
-        "derived_W", "derived_L", "real_W", "real_L",
+        "W", "L",
     ]
     rows = [
         [
             bc.bucket, bc.n,
             f"{bc.derived_roi:+.4f}", f"{bc.real_roi:+.4f}", f"{bc.delta_roi:+.4f}",
-            bc.derived_wins, bc.derived_losses, bc.real_wins, bc.real_losses,
+            bc.wins, bc.losses,
         ]
         for bc in comparisons
     ]
@@ -247,13 +246,13 @@ def write_validation_csv(report: ValidationReport, path: str | Path) -> None:
     lines = [
         f"# Real-line sample: source={report.source}, n_games={report.n_games}",
         f"# {DISCLAIMER}",
-        "bucket,n,derived_roi,real_roi,delta_roi,derived_wins,derived_losses,real_wins,real_losses",
+        "bucket,n,derived_roi,real_roi,delta_roi,wins,losses",
     ]
     for bc in report.bucket_comparisons:
         lines.append(
             f"{bc.bucket},{bc.n},"
             f"{bc.derived_roi:.6f},{bc.real_roi:.6f},{bc.delta_roi:.6f},"
-            f"{bc.derived_wins},{bc.derived_losses},{bc.real_wins},{bc.real_losses}"
+            f"{bc.wins},{bc.losses}"
         )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
