@@ -1,0 +1,21 @@
+schedule_date,schedule_season,schedule_week,schedule_playoff,team_home,team_away,team_favorite_id,score_home,score_away,spread_favorite,over_under_line,weather_temperature,weather_wind_mph,weather_humidity,stadium,stadium_neutral
+2023-09-10,2023,1,FALSE,Buffalo Bills,Miami Dolphins,BUF,21,18,-3.0,38.0,72,5,55,Highmark Stadium,FALSE
+2023-09-17,2023,2,FALSE,Kansas City Chiefs,Cincinnati Bengals,KAN,14,21,-3.5,38.0,72,5,55,Arrowhead Stadium,FALSE
+2023-09-24,2023,3,FALSE,Dallas Cowboys,New York Giants,DAL,24,20,-4.5,41.0,72,5,55,AT&T Stadium,FALSE
+2023-10-01,2023,4,FALSE,Green Bay Packers,Detroit Lions,GB,22,21,-3.0,41.0,72,5,55,Lambeau Field,FALSE
+2023-10-08,2023,5,FALSE,Chicago Bears,Minnesota Vikings,MIN,17,21,-2.5,41.0,72,5,55,Soldier Field,FALSE
+2023-10-15,2023,6,FALSE,Philadelphia Eagles,Washington Commanders,PHI,27,21,-7.5,44.0,72,5,55,Lincoln Financial Field,FALSE
+2023-10-22,2023,7,FALSE,New England Patriots,New York Jets,NE,24,22,-3.0,44.0,72,5,55,Gillette Stadium,FALSE
+2023-10-29,2023,8,FALSE,Pittsburgh Steelers,Cleveland Browns,PIT,28,17,-3.5,44.0,72,5,55,Acrisure Stadium,FALSE
+2023-11-05,2023,9,FALSE,Houston Texans,Indianapolis Colts,HOU,20,21,-3.0,44.0,72,5,55,NRG Stadium,FALSE
+2023-11-12,2023,10,FALSE,Atlanta Falcons,New Orleans Saints,ATL,24,25,-2.5,47.0,72,5,55,Mercedes-Benz Stadium,FALSE
+2023-11-19,2023,11,FALSE,Los Angeles Rams,Seattle Seahawks,LAR,28,21,-3.5,47.0,72,5,55,SoFi Stadium,FALSE
+2023-11-26,2023,12,FALSE,Tennessee Titans,Jacksonville Jaguars,JAX,20,21,-3.0,47.0,72,5,55,Nissan Stadium,FALSE
+2023-12-03,2023,13,FALSE,Carolina Panthers,Tampa Bay Buccaneers,TB,21,26,-3.5,47.0,72,5,55,Bank of America Stadium,FALSE
+2023-12-10,2023,14,FALSE,Denver Broncos,Los Angeles Chargers,DEN,27,24,-3.0,50.0,72,5,55,Empower Field at Mile High,FALSE
+2023-12-17,2023,15,FALSE,Baltimore Ravens,Cincinnati Bengals,BAL,30,24,-7.0,50.0,72,5,55,M&T Bank Stadium,FALSE
+2023-12-24,2023,16,FALSE,San Francisco 49ers,Arizona Cardinals,SF,21,28,-13.5,50.0,72,5,55,Levi's Stadium,FALSE
+2023-12-31,2023,17,FALSE,New York Jets,New England Patriots,NYJ,17,20,-3.0,50.0,72,5,55,MetLife Stadium,FALSE
+2023-09-11,2023,1,FALSE,Indianapolis Colts,Houston Texans,IND,31,28,-3.5,53.0,72,5,55,Lucas Oil Stadium,FALSE
+2023-09-18,2023,2,FALSE,Las Vegas Raiders,Buffalo Bills,BUF,23,30,-7.0,53.0,72,5,55,Allegiant Stadium,FALSE
+2023-09-25,2023,3,FALSE,Miami Dolphins,Denver Broncos,MIA,24,21,-6.5,53.0,72,5,55,Hard Rock Stadium,FALSE
