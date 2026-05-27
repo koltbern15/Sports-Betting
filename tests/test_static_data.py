@@ -1,6 +1,7 @@
 import pytest
 
 from ingestion.divisions import DIVISIONS, division_of, same_division
+from ingestion.stadiums import is_dome
 from ingestion.team_names import CANONICAL_TEAMS, canonicalize_team_name
 
 
@@ -67,3 +68,23 @@ def test_canonical_teams_match_divisions():
 def test_canonicalize_unknown_team_raises():
     with pytest.raises(KeyError):
         canonicalize_team_name("Cleveland Browns 1971 Edition")
+
+
+def test_is_dome_known_dome():
+    # State Farm Stadium (Arizona) is a retractable-roof dome
+    assert is_dome("State Farm Stadium") is True
+    # Mercedes-Benz Superdome (New Orleans) is a fixed dome
+    assert is_dome("Mercedes-Benz Superdome") is True
+    # Caesars Superdome — same building, post-2021 rename
+    assert is_dome("Caesars Superdome") is True
+
+
+def test_is_dome_known_outdoor():
+    assert is_dome("Lambeau Field") is False
+    assert is_dome("Heinz Field") is False
+    assert is_dome("Arrowhead Stadium") is False
+
+
+def test_is_dome_unknown_returns_false():
+    # Unknown stadium → conservative default = outdoor (False)
+    assert is_dome("Some Made-Up Stadium") is False
