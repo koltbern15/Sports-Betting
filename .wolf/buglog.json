@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-05-26T23:48:51.232Z",
+      "error_message": "Incorrect value in code",
+      "file": "docs/superpowers/specs/2026-05-26-nfl-betting-slice1-design.md",
+      "root_cause": "Had `+0.0016`",
+      "fix": "Changed to `+0.01182`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T23:48:51.232Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-05-26T23:48:59.579Z",
+      "error_message": "Wrong reference: column should be Map",
+      "file": "docs/superpowers/specs/2026-05-26-nfl-betting-slice1-design.md",
+      "root_cause": "Used \"column\" instead of \"Map\"",
+      "fix": "Changed column → Map",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T23:48:59.579Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-05-26T23:55:17.244Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/superpowers/specs/2026-05-26-nfl-betting-slice1-design.md",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 8→8 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T23:55:17.244Z"
+    }
+  ]
+}
