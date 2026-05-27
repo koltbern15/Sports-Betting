@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from engine.moneyline import derive_ml_from_spread
+from engine.moneyline import BUCKET_ORDER_ML, bucket_ml, derive_ml_from_spread
 
 
 @pytest.mark.parametrize(
@@ -46,3 +46,44 @@ def test_derive_ml_from_spread_does_not_crash_on_extreme_spreads(spread):
     assert result is not None
     ml_home, ml_away = result
     assert isinstance(ml_home, int) and isinstance(ml_away, int)
+
+
+@pytest.mark.parametrize(
+    "ml,expected",
+    [
+        (-400, "ml_heavy_fav"),
+        (-300, "ml_heavy_fav"),      # boundary: <= -300 → heavy
+        (-299, "ml_big_fav"),
+        (-250, "ml_big_fav"),
+        (-249, "ml_mid_fav"),
+        (-180, "ml_mid_fav"),
+        (-179, "ml_small_fav"),
+        (-130, "ml_small_fav"),
+        (-129, "ml_slight_fav"),
+        (-110, "ml_slight_fav"),
+        (-109, "ml_pickem"),
+        (+100, "ml_pickem"),
+        (+109, "ml_pickem"),
+        (+110, "ml_slight_dog"),
+        (+129, "ml_slight_dog"),
+        (+130, "ml_small_dog"),
+        (+179, "ml_small_dog"),
+        (+180, "ml_mid_dog"),
+        (+249, "ml_mid_dog"),
+        (+250, "ml_big_dog"),
+        (+299, "ml_big_dog"),
+        (+300, "ml_heavy_dog"),
+        (+500, "ml_heavy_dog"),
+    ],
+)
+def test_bucket_ml_classification(ml, expected):
+    assert bucket_ml(ml) == expected
+
+
+def test_bucket_ml_none_returns_none():
+    assert bucket_ml(None) is None
+
+
+def test_bucket_order_ml_has_11_unique_buckets():
+    assert len(BUCKET_ORDER_ML) == 11
+    assert len(set(BUCKET_ORDER_ML)) == 11
