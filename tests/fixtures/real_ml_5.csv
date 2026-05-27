@@ -1,0 +1,6 @@
+season,week,home_team,away_team,ml_home_real,ml_away_real,source,source_url
+2024,1,Kansas City Chiefs,Baltimore Ravens,-160,140,fixture,
+2024,1,Buffalo Bills,Arizona Cardinals,-220,180,fixture,
+2024,2,Detroit Lions,Tampa Bay Buccaneers,-200,170,fixture,
+2024,2,Green Bay Packers,Indianapolis Colts,110,-130,fixture,
+2024,3,Pittsburgh Steelers,Los Angeles Chargers,,,fixture,
