@@ -26,3 +26,25 @@ def derive_spread_home_close(
         return None
     magnitude = abs(spread_favorite)
     return -magnitude if favorite_is_home else magnitude
+
+
+def derive_ats_result(
+    home_score: int | None,
+    away_score: int | None,
+    spread_home_close: float | None,
+) -> str | None:
+    """Compute home-side ATS result.
+
+    Adjusts the home margin by the spread (negative = home favored).
+    Returns 'cover' if adjusted > 0, 'loss' if < 0, 'push' if == 0.
+    Returns None if any input is missing.
+    """
+    if home_score is None or away_score is None or spread_home_close is None:
+        return None
+    home_margin = home_score - away_score
+    adjusted = home_margin + spread_home_close
+    if adjusted > 0:
+        return "cover"
+    if adjusted < 0:
+        return "loss"
+    return "push"

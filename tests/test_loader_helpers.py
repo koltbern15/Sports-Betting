@@ -1,6 +1,6 @@
 import math
 
-from ingestion.loader import derive_spread_home_close
+from ingestion.loader import derive_ats_result, derive_spread_home_close
 
 
 def test_home_favored():
@@ -32,3 +32,40 @@ def test_positive_input_normalized():
 
 def test_nan_treated_as_missing():
     assert derive_spread_home_close(spread_favorite=math.nan, favorite_is_home=True) is None
+
+
+def test_ats_home_favored_and_covers():
+    # Home -7, final 28-17 → margin +11, beats the spread → cover for home side
+    assert derive_ats_result(home_score=28, away_score=17, spread_home_close=-7.0) == "cover"
+
+
+def test_ats_home_favored_and_loses():
+    # Home -7, final 21-20 → margin +1, fails to cover → loss
+    assert derive_ats_result(home_score=21, away_score=20, spread_home_close=-7.0) == "loss"
+
+
+def test_ats_home_favored_push():
+    # Home -7, final 24-17 → margin +7 exactly → push
+    assert derive_ats_result(home_score=24, away_score=17, spread_home_close=-7.0) == "push"
+
+
+def test_ats_home_underdog_covers():
+    # Home +3, final 17-20 → margin -3 ; with +3 buffer → 0 exactly → push
+    assert derive_ats_result(home_score=17, away_score=20, spread_home_close=3.0) == "push"
+    # Home +3, final 20-21 → margin -1 + 3 = +2 → cover
+    assert derive_ats_result(home_score=20, away_score=21, spread_home_close=3.0) == "cover"
+
+
+def test_ats_pickem_outright_winner():
+    # Pickem (0), home wins → home covers
+    assert derive_ats_result(home_score=27, away_score=20, spread_home_close=0.0) == "cover"
+    # Pickem (0), home loses → loss
+    assert derive_ats_result(home_score=20, away_score=27, spread_home_close=0.0) == "loss"
+    # Pickem (0), tie → push
+    assert derive_ats_result(home_score=20, away_score=20, spread_home_close=0.0) == "push"
+
+
+def test_ats_missing_inputs_returns_none():
+    assert derive_ats_result(home_score=None, away_score=20, spread_home_close=-3.0) is None
+    assert derive_ats_result(home_score=20, away_score=None, spread_home_close=-3.0) is None
+    assert derive_ats_result(home_score=20, away_score=20, spread_home_close=None) is None
