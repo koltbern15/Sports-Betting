@@ -16,12 +16,15 @@ Run: uv run python scripts/cross_check_ats_totals.py
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
-import nfl_data_py as nfl
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from engine.db import connect, fetch_df
-from ingestion.team_codes import code_to_canonical
+import nfl_data_py as nfl  # noqa: E402
+
+from engine.db import connect, fetch_df  # noqa: E402
+from ingestion.team_codes import code_to_canonical  # noqa: E402
 
 AGREEMENT_TOLERANCE = 0.5  # half-point — anything within this counts as a match
 SEASONS = [2020, 2021, 2022, 2023, 2024]
@@ -46,6 +49,10 @@ def main() -> int:
     ].copy()
     nflv["home_team"] = nflv["home_team"].map(code_to_canonical)
     nflv["away_team"] = nflv["away_team"].map(code_to_canonical)
+    # nflverse spread_line: POSITIVE = home favored (per nflverse docs).
+    # Kaggle spread_home_close: NEGATIVE = home favored (home-perspective signed).
+    # Flip nflverse to match Kaggle's home-perspective convention.
+    nflv["spread_line"] = -nflv["spread_line"]
 
     merged = kaggle.merge(
         nflv,
