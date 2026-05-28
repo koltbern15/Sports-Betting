@@ -132,8 +132,12 @@ def bootstrap_mean_ci(
     n = len(values)
     boots = [sum(rng.choices(values, k=n)) / n for _ in range(n_boot)]
     boots.sort()
+    # Indices placed symmetrically so the interval is exactly (1-alpha) wide.
+    # boots[lo_idx] is the lower-tail cutoff; boots[hi_idx] is the upper-tail
+    # cutoff. Using `n_boot - 1 - lo_idx` for hi_idx makes the trimmed tails
+    # exactly the same size on both ends.
     lo_idx = int(n_boot * (alpha / 2))
-    hi_idx = int(n_boot * (1 - alpha / 2))
+    hi_idx = n_boot - 1 - lo_idx
     return boots[lo_idx], boots[hi_idx]
 
 
