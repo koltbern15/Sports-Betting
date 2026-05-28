@@ -156,6 +156,9 @@ def compare_ml_prices(conn: sqlite3.Connection) -> ValidationReport:
         if derived is None:
             continue
         derived_home, derived_away = derived
+        # NFL ties push moneyline bets — skip rather than book both sides as losses.
+        if row.home_score == row.away_score:
+            continue
         home_won = row.home_score > row.away_score
         away_won = row.away_score > row.home_score
 
