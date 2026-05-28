@@ -7,6 +7,7 @@ implied-probability errors plus per-bucket ROI under both price sets.
 
 from __future__ import annotations
 
+import math
 import sqlite3
 from collections import defaultdict
 from dataclasses import dataclass
@@ -18,6 +19,7 @@ from tabulate import tabulate
 from engine.bucket_analysis import DISCLAIMER
 from engine.db import fetch_df
 from engine.moneyline import bucket_ml, derive_ml_from_spread
+from engine.stats_utils import bootstrap_mean_ci, bootstrap_pvalue_mean_gt_zero
 
 
 def american_to_implied_prob(ml: int) -> float:
@@ -100,6 +102,11 @@ class BucketComparison:
     delta_roi: float
     wins: int
     losses: int
+    ci_low: float
+    ci_high: float
+    p_value: float
+    profitable_seasons_pct: float
+    by_season: dict[int, float]
 
 
 @dataclass(frozen=True)
@@ -165,6 +172,7 @@ def compare_ml_prices(conn: sqlite3.Connection) -> ValidationReport:
             bucket_rows.append(
                 {
                     "bucket": bucket,
+                    "season": int(row.season),
                     "won": won,
                     "derived_pnl": _payout(derived_ml, won),
                     "real_pnl": _payout(real_ml, won),
@@ -192,8 +200,26 @@ def _build_bucket_comparisons(bucket_rows: list[dict]) -> list[BucketComparison]
         n = len(rows)
         wins = sum(1 for r in rows if r["won"])
         losses = sum(1 for r in rows if not r["won"])
-        derived_roi = sum(r["derived_pnl"] for r in rows) / n
-        real_roi = sum(r["real_pnl"] for r in rows) / n
+        derived_pnls = [r["derived_pnl"] for r in rows]
+        real_pnls = [r["real_pnl"] for r in rows]
+        derived_roi = sum(derived_pnls) / n
+        real_roi = sum(real_pnls) / n
+
+        ci_low, ci_high = bootstrap_mean_ci(real_pnls)
+        p_value = bootstrap_pvalue_mean_gt_zero(real_pnls)
+
+        season_groups: dict[int, list[float]] = defaultdict(list)
+        for r in rows:
+            season_groups[r["season"]].append(r["real_pnl"])
+        by_season: dict[int, float] = {
+            s: sum(pnls) / len(pnls) for s, pnls in season_groups.items()
+        }
+        if len(by_season) >= 3:
+            n_profitable = sum(1 for roi_s in by_season.values() if roi_s > 0)
+            profitable_seasons_pct = n_profitable / len(by_season)
+        else:
+            profitable_seasons_pct = math.nan
+
         out.append(
             BucketComparison(
                 bucket=bucket,
@@ -203,6 +229,11 @@ def _build_bucket_comparisons(bucket_rows: list[dict]) -> list[BucketComparison]
                 delta_roi=real_roi - derived_roi,
                 wins=wins,
                 losses=losses,
+                ci_low=ci_low,
+                ci_high=ci_high,
+                p_value=p_value,
+                profitable_seasons_pct=profitable_seasons_pct,
+                by_season=by_season,
             )
         )
     out.sort(key=lambda bc: bc.bucket)
@@ -226,12 +257,16 @@ def _format_bucket_table(comparisons: list[BucketComparison]) -> str:
     headers = [
         "bucket", "n",
         "derived_roi", "real_roi", "delta_roi",
+        "ci_low", "ci_high", "p_value", "prof_seas%",
         "W", "L",
     ]
     rows = [
         [
             bc.bucket, bc.n,
             f"{bc.derived_roi:+.4f}", f"{bc.real_roi:+.4f}", f"{bc.delta_roi:+.4f}",
+            f"{bc.ci_low:+.4f}", f"{bc.ci_high:+.4f}",
+            f"{bc.p_value:.4f}",
+            "—" if math.isnan(bc.profitable_seasons_pct) else f"{bc.profitable_seasons_pct:.4f}",
             bc.wins, bc.losses,
         ]
         for bc in comparisons
@@ -246,13 +281,18 @@ def write_validation_csv(report: ValidationReport, path: str | Path) -> None:
     lines = [
         f"# Real-line sample: source={report.source}, n_games={report.n_games}",
         f"# {DISCLAIMER}",
-        "bucket,n,derived_roi,real_roi,delta_roi,wins,losses",
+        "bucket,n,derived_roi,real_roi,delta_roi,wins,losses,"
+        "ci_low,ci_high,p_value,profitable_seasons_pct,by_season",
     ]
     for bc in report.bucket_comparisons:
+        prof = "" if math.isnan(bc.profitable_seasons_pct) else f"{bc.profitable_seasons_pct:.4f}"
+        season_str = ";".join(f"{s}:{r:.4f}" for s, r in sorted(bc.by_season.items()))
         lines.append(
             f"{bc.bucket},{bc.n},"
             f"{bc.derived_roi:.6f},{bc.real_roi:.6f},{bc.delta_roi:.6f},"
-            f"{bc.wins},{bc.losses}"
+            f"{bc.wins},{bc.losses},"
+            f"{bc.ci_low:.6f},{bc.ci_high:.6f},{bc.p_value:.6f},"
+            f"{prof},{season_str}"
         )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

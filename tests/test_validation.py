@@ -184,3 +184,38 @@ def test_write_validation_csv_includes_comments(tmp_path):
     assert "# Past performance does not guarantee future results" in text
     assert "bucket,n,derived_roi,real_roi,delta_roi" in text
     conn.close()
+
+
+def test_compare_ml_prices_bucket_comparison_has_enriched_fields():
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
+    report = compare_ml_prices(conn)
+    for bc in report.bucket_comparisons:
+        assert hasattr(bc, "ci_low")
+        assert hasattr(bc, "ci_high")
+        assert hasattr(bc, "p_value")
+        assert hasattr(bc, "profitable_seasons_pct")
+        assert hasattr(bc, "by_season")
+    conn.close()
+
+
+def test_compare_ml_prices_csv_has_new_columns(tmp_path):
+    from engine.validation import write_validation_csv
+
+    conn = sqlite3.connect(":memory:")
+    init_schema(conn)
+    _seed_full_fixture(conn)
+    load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
+    report = compare_ml_prices(conn)
+
+    out_path = tmp_path / "validation.csv"
+    write_validation_csv(report, out_path)
+
+    text = out_path.read_text(encoding="utf-8")
+    assert "ci_low" in text
+    assert "ci_high" in text
+    assert "p_value" in text
+    assert "profitable_seasons_pct" in text
+    conn.close()
