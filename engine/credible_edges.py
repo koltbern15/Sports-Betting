@@ -21,6 +21,10 @@ import math
 from dataclasses import dataclass
 from pathlib import Path
 
+from tabulate import tabulate
+
+from engine.bucket_analysis import DISCLAIMER
+
 MIN_N = 100
 MIN_CI_LOW = 0.0
 MAX_P_VALUE = 0.10
@@ -121,3 +125,76 @@ def rank_credible_edges(
         )
         for r in survivors
     ]
+
+
+DEFAULT_ATS_CSV = "data/processed/ats_by_bucket.csv"
+DEFAULT_TOTALS_CSV = "data/processed/totals_by_bucket.csv"
+DEFAULT_ML_CSV = "data/processed/ml_validation_report.csv"
+DEFAULT_OUT_CSV = "data/processed/credible_edges.csv"
+
+_THRESHOLD_NOTE = (
+    f"# Credible-edge thresholds: n>={MIN_N}, ci_low>{MIN_CI_LOW}, "
+    f"p<{MAX_P_VALUE}, profitable_seasons>={MIN_PROFITABLE_SEASONS_PCT}. "
+    f"Ranked by ci_low desc."
+)
+
+
+def _format_edges_table(edges: list[CredibleEdge]) -> str:
+    headers = ["market", "bucket", "n", "roi", "ci_low", "ci_high", "p_value", "prof_seas%"]
+    rows = [
+        [
+            e.market, e.bucket, e.n,
+            f"{e.roi:+.4f}",
+            f"{e.ci_low:+.4f}",
+            f"{e.ci_high:+.4f}",
+            f"{e.p_value:.4f}",
+            f"{e.profitable_seasons_pct:.4f}",
+        ]
+        for e in edges
+    ]
+    return tabulate(rows, headers=headers, tablefmt="github")
+
+
+def write_credible_edges_csv(edges: list[CredibleEdge], path: str | Path) -> None:
+    """Write the ranked credible-edges to CSV with threshold note + disclaimer."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        _THRESHOLD_NOTE,
+        f"# {DISCLAIMER}",
+        "market,bucket,n,roi,ci_low,ci_high,p_value,profitable_seasons_pct",
+    ]
+    for e in edges:
+        lines.append(
+            f"{e.market},{e.bucket},{e.n},"
+            f"{e.roi:.6f},{e.ci_low:.6f},{e.ci_high:.6f},"
+            f"{e.p_value:.6f},{e.profitable_seasons_pct:.4f}"
+        )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _main() -> int:
+    """CLI: uv run python -m engine.credible_edges"""
+    try:
+        edges = rank_credible_edges(DEFAULT_ATS_CSV, DEFAULT_TOTALS_CSV, DEFAULT_ML_CSV)
+    except FileNotFoundError as e:
+        print(f"ERROR: {e}")
+        print("Hint: run `uv run python -m engine.ats`, `uv run python -m engine.totals`, "
+              "and `uv run python -m engine.validation` first.")
+        return 1
+
+    if not edges:
+        print("No buckets meet credibility thresholds.")
+        print(_THRESHOLD_NOTE[2:])  # strip leading "# "
+    else:
+        print(f"Credible edges across all 3 markets ({len(edges)} survivors):\n")
+        print(_format_edges_table(edges))
+
+    write_credible_edges_csv(edges, DEFAULT_OUT_CSV)
+    print(f"\n{DISCLAIMER}")
+    print(f"\nCSV written to {DEFAULT_OUT_CSV}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main())

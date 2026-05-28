@@ -138,3 +138,43 @@ def test_rank_missing_csv_raises(tmp_path):
     ml = tmp_path / "missing_ml.csv"
     with pytest.raises(FileNotFoundError):
         rank_credible_edges(ats, totals, ml)
+
+
+def test_write_credible_edges_csv_includes_threshold_note(tmp_path):
+    from engine.credible_edges import CredibleEdge, write_credible_edges_csv
+
+    edges = [
+        CredibleEdge(
+            market="ats",
+            bucket="ats_a",
+            n=200,
+            roi=0.05,
+            ci_low=0.01,
+            ci_high=0.09,
+            p_value=0.04,
+            profitable_seasons_pct=0.7,
+        ),
+    ]
+    out_path = tmp_path / "credible_edges.csv"
+    write_credible_edges_csv(edges, out_path)
+    text = out_path.read_text(encoding="utf-8")
+    assert "# Credible-edge thresholds:" in text
+    assert "n>=100" in text
+    assert "# Past performance" in text
+    assert "market,bucket,n,roi,ci_low,ci_high,p_value,profitable_seasons_pct" in text
+    assert "ats,ats_a,200" in text
+
+
+def test_write_credible_edges_csv_empty(tmp_path):
+    from engine.credible_edges import write_credible_edges_csv
+
+    out_path = tmp_path / "credible_edges_empty.csv"
+    write_credible_edges_csv([], out_path)
+    text = out_path.read_text(encoding="utf-8")
+    # header still present, but no data rows
+    assert "market,bucket,n,roi" in text
+    data_lines = [
+        ln for ln in text.splitlines()
+        if not ln.startswith("#") and "market" not in ln and ln.strip()
+    ]
+    assert data_lines == []
