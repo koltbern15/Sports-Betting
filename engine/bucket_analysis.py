@@ -8,6 +8,7 @@ delegate display/serialization to this module so output stays consistent.
 from __future__ import annotations
 
 import csv
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -45,6 +46,7 @@ class BucketMetrics:
     ci_high: float
     insufficient_sample: bool
     by_season: dict[int, float] = field(default_factory=dict)
+    profitable_seasons_pct: float = float("nan")
 
 
 def compute_metrics(
@@ -74,6 +76,12 @@ def compute_metrics(
     else:
         roi_110 = roi(wins, losses, pushes, -110)
         roi_105 = roi(wins, losses, pushes, -105)
+    resolved_by_season = by_season or {}
+    if resolved_by_season and len(resolved_by_season) >= 3:
+        n_profitable = sum(1 for rate in resolved_by_season.values() if rate > BREAKEVEN_AT_NEG_110)
+        profitable_seasons_pct = n_profitable / len(resolved_by_season)
+    else:
+        profitable_seasons_pct = math.nan
     return BucketMetrics(
         bucket=bucket,
         n=n,
@@ -88,7 +96,8 @@ def compute_metrics(
         ci_low=lo,
         ci_high=hi,
         insufficient_sample=decided < INSUFFICIENT_SAMPLE_THRESHOLD,
-        by_season=by_season or {},
+        by_season=resolved_by_season,
+        profitable_seasons_pct=profitable_seasons_pct,
     )
 
 
@@ -97,7 +106,7 @@ def format_table(rows: list[BucketMetrics]) -> str:
     headers = [
         "bucket", "n", "W", "L", "P",
         "win%", "push%", "ROI -110", "ROI -105",
-        "p-value", "CI low", "CI high", "low_n?",
+        "p-value", "CI low", "CI high", "low_n?", "prof_seas%",
     ]
     out_rows = []
     for r in rows:
@@ -111,6 +120,7 @@ def format_table(rows: list[BucketMetrics]) -> str:
             f"{r.ci_low:.4f}",
             f"{r.ci_high:.4f}",
             "*" if r.insufficient_sample else "",
+            "—" if math.isnan(r.profitable_seasons_pct) else f"{r.profitable_seasons_pct:.4f}",
         ])
     return tabulate(out_rows, headers=headers, tablefmt="github")
 
@@ -125,7 +135,7 @@ def write_csv(rows: list[BucketMetrics], out_path: Path) -> None:
             "bucket", "n", "wins", "losses", "pushes",
             "win_rate", "push_rate", "roi_neg110", "roi_neg105",
             "p_value", "ci_low", "ci_high", "insufficient_sample",
-            "by_season",
+            "by_season", "profitable_seasons_pct",
         ])
         for r in rows:
             writer.writerow([
@@ -139,4 +149,5 @@ def write_csv(rows: list[BucketMetrics], out_path: Path) -> None:
                 f"{r.ci_high:.6f}",
                 int(r.insufficient_sample),
                 ";".join(f"{s}:{w:.4f}" for s, w in sorted(r.by_season.items())),
+                "" if math.isnan(r.profitable_seasons_pct) else f"{r.profitable_seasons_pct:.4f}",
             ])

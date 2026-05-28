@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from pathlib import Path
 
 import pytest
@@ -74,3 +75,38 @@ def test_bucket_metrics_dataclass_default_by_season_is_empty_dict():
         insufficient_sample=True,
     )
     assert m.by_season == {}
+
+
+def test_profitable_seasons_pct_all_profitable():
+    from engine.bucket_analysis import compute_metrics
+    by_season = {2020: 0.55, 2021: 0.60, 2022: 0.53, 2023: 0.58}
+    m = compute_metrics("test", wins=50, losses=40, pushes=0, by_season=by_season)
+    assert m.profitable_seasons_pct == pytest.approx(1.0)
+
+
+def test_profitable_seasons_pct_none_profitable():
+    from engine.bucket_analysis import compute_metrics
+    by_season = {2020: 0.50, 2021: 0.48, 2022: 0.51, 2023: 0.45}
+    m = compute_metrics("test", wins=50, losses=60, pushes=0, by_season=by_season)
+    assert m.profitable_seasons_pct == pytest.approx(0.0)
+
+
+def test_profitable_seasons_pct_mixed():
+    from engine.bucket_analysis import compute_metrics
+    by_season = {2020: 0.55, 2021: 0.45, 2022: 0.60, 2023: 0.50}
+    # 2/4 seasons strictly above breakeven 0.5238 → 0.5
+    m = compute_metrics("test", wins=50, losses=50, pushes=0, by_season=by_season)
+    assert m.profitable_seasons_pct == pytest.approx(0.5)
+
+
+def test_profitable_seasons_pct_nan_below_three_seasons():
+    from engine.bucket_analysis import compute_metrics
+    by_season = {2020: 0.55, 2021: 0.60}
+    m = compute_metrics("test", wins=50, losses=40, pushes=0, by_season=by_season)
+    assert math.isnan(m.profitable_seasons_pct)
+
+
+def test_profitable_seasons_pct_nan_empty_by_season():
+    from engine.bucket_analysis import compute_metrics
+    m = compute_metrics("test", wins=50, losses=40, pushes=0)
+    assert math.isnan(m.profitable_seasons_pct)
