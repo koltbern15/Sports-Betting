@@ -1,14 +1,14 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T22:53:14.237Z
-> Files: 51 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-28T00:38:55.774Z
+> Files: 57 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
 - `.gitignore` — Git ignore rules (~81 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `pyproject.toml` — NFL historical betting analytics engine (Slice 1: ingestion + ATS) (~142 tok)
-- `README.md` — Project documentation (~1241 tok)
+- `README.md` — Project documentation (~1891 tok)
 
 ## .claude/
 
@@ -33,29 +33,33 @@
 ## docs/superpowers/notes/
 
 - `2026-05-27-nflverse-probe.md` — nflverse import_schedules probe — 2026-05-27 (~1253 tok)
+- `2026-05-28-kaggle-nflverse-crosscheck.md` — Kaggle vs nflverse closing-line cross-check — 2026-05-28 (~865 tok)
 
 ## docs/superpowers/plans/
 
 - `2026-05-26-nfl-betting-slice1.md` — NFL Betting Analytics — Slice 1 Implementation Plan (~23728 tok)
 - `2026-05-27-nfl-betting-slice2.md` — NFL Betting Analytics — Slice 2 Implementation Plan (~17122 tok)
 - `2026-05-27-nfl-betting-slice3.md` — NFL Betting Analytics — Slice 3 Implementation Plan (~14829 tok)
+- `2026-05-27-nfl-betting-slice4.md` — NFL Betting Analytics — Slice 4 Implementation Plan (~12608 tok)
 
 ## docs/superpowers/specs/
 
 - `2026-05-26-nfl-betting-slice1-design.md` — NFL Betting Analytics — Slice 1 Design (~3979 tok)
 - `2026-05-27-nfl-betting-slice2-design.md` — NFL Betting Analytics — Slice 2 Design (~2942 tok)
 - `2026-05-27-nfl-betting-slice3-design.md` — NFL Betting Analytics — Slice 3: Real-Line Moneyline Validation (~2693 tok)
+- `2026-05-27-nfl-betting-slice4-design.md` — NFL Betting Analytics — Slice 4: Real-Line Statistical Workup + Credible Edges Ranker (~2477 tok)
 
 ## engine/
 
 - `__init__.py` (~0 tok)
 - `ats.py` — ATS-by-spread-bucket analysis. (~1066 tok)
-- `bucket_analysis.py` — Shared bucket-analysis machinery used by ATS, totals, and moneyline modules. (~1253 tok)
+- `bucket_analysis.py` — Shared bucket-analysis machinery used by ATS, totals, and moneyline modules. (~1447 tok)
+- `credible_edges.py` — Cross-market credible-edges ranker. (~1856 tok)
 - `db.py` — SQLite connection + schema management for the betting analytics DB. (~892 tok)
 - `moneyline.py` — Moneyline-by-odds-bucket analysis (prices derived from closing spreads). Includes DERIVATION_NOTE + _main CLI (writes data/processed/moneyline_by_bucket.csv with derivation-note comment header above disclaimer). (~2167 tok)
-- `stats_utils.py` — Pure statistics utilities for sports-betting analysis. (~1070 tok)
+- `stats_utils.py` — Pure statistics utilities for sports-betting analysis. Includes american_to_decimal, decimal_to_american, roi, binomial_pvalue, wilson_ci, dollar_weighted_roi, kelly_fraction, bootstrap_mean_ci, bootstrap_pvalue_mean_gt_zero. (~1600 tok)
 - `totals.py` — Totals-by-line-bucket analysis: BUCKET_ORDER_TOTALS + bucket_total + TotalsReport + totals_by_line_bucket aggregator + _main CLI (writes data/processed/totals_by_bucket.csv). (~869 tok)
-- `validation.py` — Real-line moneyline validation — T8 pure helpers (american_to_implied_prob, side_error, compute_price_stats) + T9 orchestrator (compare_ml_prices, ValidationReport, BucketComparison, _build_bucket_comparisons) + T10 CLI (_main, write_validation_csv, _format_price_table, _format_bucket_table). (~2855 tok)
+- `validation.py` — Real-line moneyline validation — comparator + reporting. BucketComparison now includes ci_low, ci_high, p_value, profitable_seasons_pct, by_season (for credible_edges). (~3265 tok)
 
 ## ingestion/
 
@@ -68,12 +72,17 @@
 - `team_codes.py` — nflverse team abbreviation → canonical full-name mapping. (~508 tok)
 - `team_names.py` — Historical NFL team name normalization (covers 2004–2024 window). (~786 tok)
 
+## scripts/
+
+- `cross_check_ats_totals.py` — One-time Kaggle-vs-nflverse cross-check for closing spread + total lines. (~1170 tok)
+
 ## tests/
 
 - `__init__.py` (~0 tok)
 - `conftest.py` — memory_db, fixtures_dir, tmp_db_path (~153 tok)
 - `test_ats.py` — test_bucket_spread_known_values, test_bucket_spread_none_returns_none, test_metrics_basic_case, test (~1977 tok)
-- `test_bucket_analysis.py` — Smoke tests for the shared bucket-analysis helpers. (~646 tok)
+- `test_bucket_analysis.py` — Smoke tests for the shared bucket-analysis helpers. (~1077 tok)
+- `test_credible_edges.py` — Tests for engine.credible_edges — pure ranker tested with synthetic CSVs. (~1718 tok)
 - `test_db.py` — test_init_schema_creates_four_tables, test_init_schema_is_idempotent, test_init_schema_seeds_team_di (~780 tok)
 - `test_loader_helpers.py` — test_home_favored, test_away_favored, test_pickem_returns_zero, test_missing_spread_returns_none (~1728 tok)
 - `test_loader.py` — loaded_db, test_load_report_counts, test_load_creates_all_5_games, test_load_creates_all_5_lines (~1318 tok)
@@ -81,9 +90,9 @@
 - `test_real_ml_loader.py` — Tests for ingestion.real_ml_loader — parse + validate helpers. (~1329 tok)
 - `test_real_ml_source.py` — Tests for ingestion.real_ml_source — nflverse fetcher with mocked HTTP. (~526 tok)
 - `test_static_data.py` — test_divisions_has_32_teams, test_divisions_has_8_divisions_with_4_teams_each, test_division_of_know (~1056 tok)
-- `test_stats_utils.py` — test_american_to_decimal_negative, test_american_to_decimal_positive, test_decimal_to_american_negat (~1494 tok)
+- `test_stats_utils.py` — test_american_to_decimal_negative, test_american_to_decimal_positive, test_decimal_to_american_negat (~1976 tok)
 - `test_totals.py` — Tests for engine.totals. (~819 tok)
-- `test_validation.py` — Tests for engine.validation — pure helpers. (~1659 tok)
+- `test_validation.py` — Tests for engine.validation — pure helpers. (~1973 tok)
 
 ## tests/fixtures/
 

@@ -3,11 +3,15 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 21:30 | Slice 4 finding: ZERO buckets cleared all 4 credibility thresholds (n>=100, ci_low>0, p<0.10, prof_seas>=0.60). ATS/totals fail p_value across the board; ML fails ci_low (bootstrap CI on real ROI crosses zero in every bucket including the n=562 ml_small_fav with real ROI +1.03% but ci_low -5.72%). Static bucket strategies don't survive scrutiny. Future +EV needs CLV/per-game-state/model-based signal. | data/processed/credible_edges.csv | ~3000 |
 | 20:30 | T9: appended compare_ml_prices orchestrator + BucketComparison + ValidationReport to engine/validation.py; 4 new integration tests; fixed E402/E501 ruff violations by consolidating imports to top of test file; fixed test assertion (fixture produces ml_big_fav not ml_heavy_fav/ml_mid_fav) | engine/validation.py, tests/test_validation.py | 11/11 tests pass, 221 total, ruff clean, committed 0ee3399 | ~2500 |
 
 | 2026-05-27 | T6: created ingestion/real_ml_loader.py (parse_american_odds, validate_row) + tests | ingestion/real_ml_loader.py, tests/test_real_ml_loader.py | 7/7 tests pass, 207 total, ruff clean, committed f334f3c | ~800 tok |
 
 | 2026-05-27 | T2: Added real_ml_lines table to _SCHEMA_SQL; appended 2 new tests + updated 2 existing tests for 4-table set | engine/db.py, tests/test_db.py | 193 tests pass, ruff clean, committed 6dc851f | ~800 |
+
+| 2026-05-27 | Slice4 T2: bootstrap_mean_ci + bootstrap_pvalue_mean_gt_zero appended to engine/stats_utils.py; 6 new TDD tests; ruff I001 auto-fixed | engine/stats_utils.py, tests/test_stats_utils.py | 233/233 passed, ruff clean, committed 82ba7e9 | ~1200 |
+| 2026-05-27 | Slice4 T4: created scripts/cross_check_ats_totals.py (Kaggle vs nflverse line agreement checker); fixed E501 by extracting column lists; syntax OK, ruff clean | scripts/cross_check_ats_totals.py | committed 8111f2a | ~600 |
 
 | 19:45 | T1 probe: installed nfl-data-py 0.3.2 (fastparquet, no pyarrow); confirmed home_moneyline/away_moneyline present, 100% coverage 2020-2024 (1408/1408 rows), 32 team codes; wrote probe doc | docs/superpowers/notes/2026-05-27-nflverse-probe.md, pyproject.toml | success | ~400 |
 
@@ -304,3 +308,65 @@
 | 18:52 | Edited README.md | modified 1() | ~244 |
 | 18:53 | Edited README.md | modified 1() | ~518 |
 | 18:55 | Slice 3 finding: derived ml_heavy_fav +0.63% does NOT hold under real prices. Real ROI on 2020–2024 nflverse sample (n=237 bets) is **-0.95%**, derived was +1.56%. ml_small_fav (n=562) shows real +1.03% — candidate for follow-up. Derived consistently overshades underdogs (heavy_dog Δ +13.13 pp). 65 of 1408 playoff games unmatched (week-numbering convention diff). | data/processed/ml_validation_report.csv | ~3000 |
+| 18:54 | Session end: 47 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 21 reads | ~52179 tok |
+| 18:59 | Edited engine/validation.py | 13→16 lines | ~128 |
+| 19:00 | Edited engine/validation.py | modified items() | ~170 |
+| 19:00 | Edited engine/validation.py | modified _format_bucket_table() | ~131 |
+| 19:00 | Edited engine/validation.py | 11→11 lines | ~117 |
+| 19:01 | Session end: 51 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~52725 tok |
+| 19:03 | Session end: 51 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~52725 tok |
+| 19:06 | Session end: 51 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~52725 tok |
+| 19:10 | Session end: 51 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~52725 tok |
+| 19:13 | Session end: 51 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~52725 tok |
+| 19:14 | Session end: 51 writes across 15 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~52725 tok |
+| 19:17 | Created docs/superpowers/specs/2026-05-27-nfl-betting-slice4-design.md | — | ~2643 |
+| 19:17 | Session end: 52 writes across 16 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 22 reads | ~55556 tok |
+| 20:03 | Created docs/superpowers/plans/2026-05-27-nfl-betting-slice4.md | — | ~13448 |
+| 20:04 | Session end: 53 writes across 17 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 24 reads | ~72288 tok |
+| 20:08 | Edited tests/test_bucket_analysis.py | modified test_bucket_metrics_dataclass_default_by_season_is_empty_dict() | ~528 |
+| 20:09 | Edited tests/test_bucket_analysis.py | added 1 import(s) | ~25 |
+| 20:09 | Edited tests/test_bucket_analysis.py | modified test_profitable_seasons_pct_all_profitable() | ~23 |
+| 20:09 | Edited engine/bucket_analysis.py | added 1 import(s) | ~36 |
+| 20:09 | Edited engine/bucket_analysis.py | 2→3 lines | ~40 |
+| 20:09 | Edited engine/bucket_analysis.py | expanded (+7 lines) | ~226 |
+| 20:09 | Edited engine/bucket_analysis.py | 18→19 lines | ~213 |
+| 20:09 | Edited engine/bucket_analysis.py | 19→20 lines | ~254 |
+| 20:30 | T1 (Slice 4): added profitable_seasons_pct to BucketMetrics dataclass + compute_metrics logic + format_table + write_csv columns; 5 new TDD tests | engine/bucket_analysis.py, tests/test_bucket_analysis.py | 227/227 pass, ruff clean, commit 72008f1 | ~1800 |
+| 20:13 | Edited tests/test_stats_utils.py | modified test_dollar_weighted_roi_mixed_with_pushes() | ~541 |
+| 20:13 | Edited engine/stats_utils.py | modified kelly_fraction() | ~547 |
+| 20:17 | Edited tests/test_validation.py | added 1 import(s) | ~37 |
+| 20:17 | Edited tests/test_validation.py | modified test_write_validation_csv_includes_comments() | ~498 |
+| 20:17 | Edited engine/validation.py | added 2 import(s) | ~127 |
+| 20:17 | Edited engine/validation.py | 16→21 lines | ~162 |
+| 20:17 | Edited engine/validation.py | 8→9 lines | ~90 |
+| 20:18 | Edited engine/validation.py | modified _build_bucket_comparisons() | ~531 |
+| 20:18 | Edited engine/validation.py | modified _format_bucket_table() | ~200 |
+| 20:18 | Edited engine/validation.py | modified write_validation_csv() | ~307 |
+| 20:18 | Edited tests/test_validation.py | 2→1 lines | ~4 |
+| 20:19 | T3: Extended BucketComparison with ci_low/ci_high/p_value/profitable_seasons_pct/by_season; updated _build_bucket_comparisons, _format_bucket_table, write_validation_csv | engine/validation.py, tests/test_validation.py | 235 tests pass, ruff clean, committed e667018 | ~150 tok |
+| 20:23 | Created scripts/cross_check_ats_totals.py | — | ~1034 |
+| 20:23 | Edited scripts/cross_check_ats_totals.py | expanded (+6 lines) | ~212 |
+| 20:26 | Created tests/test_credible_edges.py | — | ~1325 |
+| 20:26 | Created engine/credible_edges.py | — | ~1120 |
+| 20:27 | Edited engine/credible_edges.py | 1→2 lines | ~30 |
+| 20:27 | Edited engine/credible_edges.py | 3→7 lines | ~94 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~47 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~50 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~47 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~46 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~45 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~46 |
+| 20:27 | Edited tests/test_credible_edges.py | 4→5 lines | ~46 |
+| 20:27 | Edited engine/credible_edges.py | 3→2 lines | ~38 |
+| 20:28 | Edited engine/credible_edges.py | 3→2 lines | ~36 |
+| 18:45 | T5: created engine/credible_edges.py (rank_credible_edges, CredibleEdge) + tests/test_credible_edges.py | engine/credible_edges.py, tests/test_credible_edges.py | 6 new tests pass, 241 total, ruff clean, committed aee9411 | ~600 |
+| 20:30 | Edited tests/test_credible_edges.py | modified test_rank_missing_csv_raises() | ~439 |
+| 20:31 | Edited engine/credible_edges.py | 6→10 lines | ~56 |
+| 20:31 | Edited engine/credible_edges.py | modified _format_edges_table() | ~806 |
+| 20:31 | Edited tests/test_credible_edges.py | 1→4 lines | ~39 |
+| 20:32 | T6: appended write_credible_edges_csv + _main CLI to credible_edges.py; 2 new tests; fixed ruff E501 | engine/credible_edges.py, tests/test_credible_edges.py | 243 tests pass, ruff clean, committed 541f861 | ~400 tok |
+| 20:34 | Edited scripts/cross_check_ats_totals.py | 8→11 lines | ~85 |
+| 20:35 | Edited scripts/cross_check_ats_totals.py | 6→10 lines | ~158 |
+| 20:36 | Created docs/superpowers/notes/2026-05-28-kaggle-nflverse-crosscheck.md | — | ~923 |
+| 20:38 | Edited README.md | modified 1() | ~305 |
+| 20:38 | Edited README.md | modified 1() | ~768 |

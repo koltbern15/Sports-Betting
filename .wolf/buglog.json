@@ -209,6 +209,86 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-27T22:52:58.953Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-05-27T22:59:58.494Z",
+      "error_message": "Significant refactor of ",
+      "file": "engine/validation.py",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 13→16 lines (5 removed) | Also: derived_wins = sum(1 for r in rows if r[\"won\"] and; derived_losses = sum(1 for r in rows if not r[\"won",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-27T23:00:06.249Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-05-28T00:18:06.406Z",
+      "error_message": "Significant refactor of ",
+      "file": "engine/validation.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 25→48 lines (2 removed) | Also: \"bucket,n,derived_roi,real_roi,delta_roi,wins,loss; f\"{bc.wins},{bc.losses}\"",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-28T00:18:21.860Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-05-28T00:18:41.698Z",
+      "error_message": "Wrong reference: math should be sqlite3",
+      "file": "tests/test_validation.py",
+      "root_cause": "Used \"math\" instead of \"sqlite3\"",
+      "fix": "Changed math → sqlite3",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T00:18:41.698Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-05-28T00:34:23.265Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/cross_check_ats_totals.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 8→11 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T00:34:23.265Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-05-28T00:38:33.361Z",
+      "error_message": "Incorrect value in code",
+      "file": "README.md",
+      "root_cause": "Had `docs/superpowers/specs/`",
+      "fix": "Changed to `credible_edges.csv`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-28T00:38:33.361Z"
     }
   ]
 }
