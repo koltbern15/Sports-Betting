@@ -77,6 +77,11 @@ def compute_metrics(
         roi_110 = roi(wins, losses, pushes, -110)
         roi_105 = roi(wins, losses, pushes, -105)
     resolved_by_season = by_season or {}
+    # `by_season` stores per-season win rates. ATS/totals are analyzed at
+    # uniform -110 pricing, so `win_rate > BREAKEVEN_AT_NEG_110` is exactly
+    # equivalent to `season_roi > 0`. The same threshold concept used for ML
+    # buckets (see engine/validation._build_bucket_comparisons) — different
+    # representation, same semantics under -110.
     if resolved_by_season and len(resolved_by_season) >= 3:
         n_profitable = sum(1 for rate in resolved_by_season.values() if rate > BREAKEVEN_AT_NEG_110)
         profitable_seasons_pct = n_profitable / len(resolved_by_season)

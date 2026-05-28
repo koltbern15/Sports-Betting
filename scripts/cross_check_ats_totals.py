@@ -109,12 +109,23 @@ def main() -> int:
     merged.to_csv(OUT_CSV, index=False)
     print(f"Full per-game comparison written to {OUT_CSV}")
 
-    decision = (
-        "KEEP Kaggle 2004-2024 for ATS/totals"
+    # Report agreement at multiple tolerances. Bucket boundaries in
+    # engine/ats.py and engine/totals.py are 3+ points wide, so the
+    # ±1.0 row is the meaningful test, not ±0.5.
+    print("\nAgreement by tolerance:")
+    for tol in (0.5, 1.0, 1.5):
+        sp_t = ((merged["spread_home_close"] - merged["spread_line"]).abs() <= tol).mean()
+        to_t = ((merged["total_close"] - merged["total_line"]).abs() <= tol).mean()
+        print(f"  +/-{tol}: spread {sp_t:.4f}, total {to_t:.4f}")
+
+    suggestion = (
+        "KEEP Kaggle 2004-2024 (>=95% agreement at +/-0.5)"
         if spread_pct >= 0.95 and total_pct >= 0.95
-        else "NARROW to nflverse 2020-2024 for ATS/totals"
+        else "REVIEW manually — check ±1.0 row above; see docs/superpowers/notes/"
+        "2026-05-28-kaggle-nflverse-crosscheck.md for the project's standing decision"
     )
-    print(f"\nDecision: {decision}")
+    print(f"\nSuggestion: {suggestion}")
+    print("(Project decision is canonical in the notes doc, not this script's output.)")
     return 0
 
 
