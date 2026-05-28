@@ -18,7 +18,7 @@
       "first_read": "2026-05-27T19:24:09.496Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/moneyline.py": {
-      "count": 2,
+      "count": 3,
       "tokens": 2167,
       "first_read": "2026-05-27T19:24:14.832Z"
     },
@@ -68,22 +68,22 @@
       "first_read": "2026-05-27T19:53:36.415Z"
     },
     "C:/Users/ktber/projects/sports-betting/ingestion/real_ml_source.py": {
-      "count": 1,
+      "count": 3,
       "tokens": 448,
       "first_read": "2026-05-27T19:59:36.385Z"
     },
     "C:/Users/ktber/projects/sports-betting/tests/test_real_ml_source.py": {
-      "count": 1,
+      "count": 2,
       "tokens": 526,
       "first_read": "2026-05-27T19:59:36.465Z"
     },
     "C:/Users/ktber/projects/sports-betting/ingestion/real_ml_loader.py": {
-      "count": 5,
+      "count": 6,
       "tokens": 1535,
       "first_read": "2026-05-27T20:06:07.503Z"
     },
     "C:/Users/ktber/projects/sports-betting/tests/test_real_ml_loader.py": {
-      "count": 4,
+      "count": 5,
       "tokens": 1329,
       "first_read": "2026-05-27T20:06:11.547Z"
     },
@@ -93,13 +93,13 @@
       "first_read": "2026-05-27T20:09:56.894Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/validation.py": {
-      "count": 17,
+      "count": 19,
       "tokens": 3265,
       "first_read": "2026-05-27T20:25:25.803Z"
     },
     "C:/Users/ktber/projects/sports-betting/tests/test_validation.py": {
-      "count": 7,
-      "tokens": 1659,
+      "count": 8,
+      "tokens": 1973,
       "first_read": "2026-05-27T20:25:26.187Z"
     },
     "C:/Users/ktber/projects/sports-betting/README.md": {
@@ -113,12 +113,12 @@
       "first_read": "2026-05-27T22:58:19.449Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/bucket_analysis.py": {
-      "count": 7,
+      "count": 9,
       "tokens": 1447,
       "first_read": "2026-05-27T23:59:02.913Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/stats_utils.py": {
-      "count": 4,
+      "count": 6,
       "tokens": 1600,
       "first_read": "2026-05-27T23:59:56.038Z"
     },
@@ -128,24 +128,29 @@
       "first_read": "2026-05-28T00:08:45.244Z"
     },
     "C:/Users/ktber/projects/sports-betting/tests/test_stats_utils.py": {
-      "count": 2,
+      "count": 3,
       "tokens": 1976,
       "first_read": "2026-05-28T00:12:58.812Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/credible_edges.py": {
-      "count": 3,
-      "tokens": 1856,
+      "count": 7,
+      "tokens": 2104,
       "first_read": "2026-05-28T00:29:32.597Z"
     },
     "C:/Users/ktber/projects/sports-betting/tests/test_credible_edges.py": {
-      "count": 2,
+      "count": 4,
       "tokens": 1718,
       "first_read": "2026-05-28T00:30:38.206Z"
     },
     "C:/Users/ktber/projects/sports-betting/scripts/cross_check_ats_totals.py": {
-      "count": 1,
-      "tokens": 1059,
+      "count": 3,
+      "tokens": 1170,
       "first_read": "2026-05-28T00:34:17.290Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/ingestion/loader.py": {
+      "count": 2,
+      "tokens": 3186,
+      "first_read": "2026-05-28T00:43:15.564Z"
     }
   },
   "files_written": [
@@ -724,6 +729,96 @@
       "action": "edit",
       "tokens": 823,
       "at": "2026-05-28T00:38:55.798Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/ingestion/real_ml_source.py",
+      "action": "edit",
+      "tokens": 621,
+      "at": "2026-05-28T00:48:22.944Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_real_ml_source.py",
+      "action": "edit",
+      "tokens": 130,
+      "at": "2026-05-28T00:48:33.609Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_real_ml_source.py",
+      "action": "edit",
+      "tokens": 369,
+      "at": "2026-05-28T00:48:44.375Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/credible_edges.py",
+      "action": "edit",
+      "tokens": 155,
+      "at": "2026-05-28T00:49:11.661Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/credible_edges.py",
+      "action": "edit",
+      "tokens": 232,
+      "at": "2026-05-28T00:49:21.541Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/credible_edges.py",
+      "action": "edit",
+      "tokens": 87,
+      "at": "2026-05-28T00:49:38.479Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_credible_edges.py",
+      "action": "edit",
+      "tokens": 489,
+      "at": "2026-05-28T00:50:00.785Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_credible_edges.py",
+      "action": "edit",
+      "tokens": 497,
+      "at": "2026-05-28T00:50:19.422Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/stats_utils.py",
+      "action": "edit",
+      "tokens": 150,
+      "at": "2026-05-28T00:50:37.812Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/validation.py",
+      "action": "edit",
+      "tokens": 188,
+      "at": "2026-05-28T00:50:56.985Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/scripts/cross_check_ats_totals.py",
+      "action": "edit",
+      "tokens": 315,
+      "at": "2026-05-28T00:51:12.969Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/bucket_analysis.py",
+      "action": "edit",
+      "tokens": 194,
+      "at": "2026-05-28T00:51:22.207Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/README.md",
+      "action": "edit",
+      "tokens": 134,
+      "at": "2026-05-28T00:53:12.260Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/README.md",
+      "action": "edit",
+      "tokens": 124,
+      "at": "2026-05-28T00:53:20.455Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/README.md",
+      "action": "edit",
+      "tokens": 136,
+      "at": "2026-05-28T00:53:28.518Z"
     }
   ],
   "edit_counts": {
@@ -734,28 +829,28 @@
     "engine/db.py": 1,
     "tests/test_static_data.py": 3,
     "ingestion/team_codes.py": 1,
-    "tests/test_real_ml_source.py": 1,
-    "ingestion/real_ml_source.py": 1,
+    "tests/test_real_ml_source.py": 3,
+    "ingestion/real_ml_source.py": 2,
     "tests/fixtures/real_ml_5.csv": 1,
     "tests/test_real_ml_loader.py": 4,
     "ingestion/real_ml_loader.py": 8,
     "tests/test_validation.py": 10,
-    "engine/validation.py": 16,
-    "README.md": 4,
+    "engine/validation.py": 17,
+    "README.md": 7,
     "docs/superpowers/specs/2026-05-27-nfl-betting-slice4-design.md": 1,
     "docs/superpowers/plans/2026-05-27-nfl-betting-slice4.md": 1,
     "tests/test_bucket_analysis.py": 3,
-    "engine/bucket_analysis.py": 5,
+    "engine/bucket_analysis.py": 6,
     "tests/test_stats_utils.py": 1,
-    "engine/stats_utils.py": 1,
-    "scripts/cross_check_ats_totals.py": 4,
-    "tests/test_credible_edges.py": 10,
-    "engine/credible_edges.py": 7,
+    "engine/stats_utils.py": 2,
+    "scripts/cross_check_ats_totals.py": 5,
+    "tests/test_credible_edges.py": 12,
+    "engine/credible_edges.py": 10,
     "docs/superpowers/notes/2026-05-28-kaggle-nflverse-crosscheck.md": 1
   },
-  "anatomy_hits": 24,
+  "anatomy_hits": 25,
   "anatomy_misses": 5,
-  "repeated_reads_warned": 62,
+  "repeated_reads_warned": 85,
   "cerebrum_warnings": 0,
-  "stop_count": 23
+  "stop_count": 25
 }

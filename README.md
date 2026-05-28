@@ -69,9 +69,7 @@ Outputs price-level diagnostics + per-bucket ROI comparison (derived vs real). C
 
 The Slice 2 `ml_heavy_fav` headline (derived ROI +0.63%) does NOT hold under real prices. On the 2020–2024 nflverse sample (n=237 heavy-fav bets), derived ROI was +1.56% but real ROI was **−0.95%** — the apparent edge was an artifact of the spread→ML derivation.
 
-The largest bucket, `ml_small_fav` (n=562), shows derived +0.15% vs real **+1.03%** — a candidate for follow-up real-line slices. Derived prices systematically overshade underdogs (e.g., `ml_heavy_dog` derived ROI −22.75% vs real −9.62%, Δ +13.13 pp).
-
-Caveat: 1,343 of 1,408 nflverse 2020–2024 games matched our DB; 65 playoff games (Wild Card week onward) are unmatched due to a week-numbering convention mismatch between Kaggle and nflverse — a follow-up could reconcile this.
+**Update after audit fix:** the apparent `ml_small_fav` +1.03% real-ROI edge was an artifact of missing playoff games (Kaggle week 100–103 vs nflverse 18–22 numbering mismatch). After remapping (`fix(real_ml_source)` commit `16c555f`), all 1,408 games load. The corrected real ROI for `ml_small_fav` is **−0.36%** (n=588) — the edge is gone. Derived prices still systematically overshade underdogs (e.g., `ml_heavy_dog` derived −25.61% vs real −12.97%, Δ +12.64 pp).
 
 ## Slice 4 — Credible-edge ranker
 
@@ -92,19 +90,19 @@ Adds Wilson CI / bootstrap CI / p-value / per-season stability across all three 
 
 A bucket qualifies if ALL of:
 - `n >= 100`
-- `ci_low > 0` (95% CI lower bound strictly positive)
+- `ci_low > breakeven` — market-aware: `> 0.5238` for ATS/totals (Wilson CI lower on win rate vs -110 breakeven), `> 0` for ML (bootstrap CI lower on real ROI)
 - `p_value < 0.10`
 - `profitable_seasons_pct >= 0.60`
 
-Survivors are ranked by `ci_low` (descending) — most conservative true-edge estimate first. For ML buckets, `roi` is real-line ROI from nflverse, not derived (Slice 3 showed derived is biased).
+Survivors are ranked by `ci_low` (descending). For ML buckets, `roi` is real-line ROI from nflverse, not derived (Slice 3 showed derived is biased).
 
 ### Headline finding
 
 **No buckets cleared all four thresholds.** The NFL market is too efficient for the static bucket-betting strategies we tested.
 
 Mechanism breakdown:
-- **ATS / totals** (Kaggle 2004–2024): every bucket fails `p_value < 0.10` — win rates land near or below the -110 breakeven (52.38%) too consistently to reject the null.
-- **ML** (nflverse 2020–2024): every bucket fails `ci_low > 0` — bootstrap 95% CI on real ROI crosses zero in every bucket, including the n=562 `ml_small_fav` that looked promising in Slice 3 (real ROI +1.03%, but ci_low −5.72%).
+- **ATS / totals** (Kaggle 2004–2024): every bucket fails `p_value < 0.10` — win rates land near or below the -110 breakeven (52.38%) too consistently to reject the null. (No bucket even passes the new ci_low floor of 0.5238 either.)
+- **ML** (nflverse 2020–2024, with playoff fix applied): every bucket fails `ci_low > 0` — bootstrap 95% CI on real ROI crosses zero everywhere. Even ml_small_fav (now n=588 with playoffs included) is centered at −0.36%.
 - **Cross-check note:** Kaggle ATS/totals lines match nflverse on the 2020–2024 overlap at 96%+ within ±1pt — confirms the 21-year Kaggle history is trustworthy at the bucket level. Details in `docs/superpowers/notes/2026-05-28-kaggle-nflverse-crosscheck.md`.
 
 Useful takeaway: static "bet every game in bucket X" strategies don't beat the closing line in this 21-year window. Any future +EV approach needs to incorporate signal beyond historical bucket aggregates — e.g., live-line CLV, per-game state filters, model-based edge detection.

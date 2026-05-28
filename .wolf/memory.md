@@ -3,6 +3,7 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 22:30 | Post-audit fixes: (1) playoff week remap added — was silently dropping 65 nflverse games per 5-season pull; ml_small_fav real ROI corrected from +1.03% to -0.36% (the Slice 3 candidate edge was an artifact); (2) market-aware ci_low threshold in credible_edges (0.5238 for ATS/totals win-rate, 0 for ML ROI); (3) bootstrap symmetric percentile indexing; (4) NFL ties skipped instead of double-loss; (5) cross-check multi-tolerance output. 245 tests pass, ruff clean. Headline still "zero buckets pass" but now for principled reasons. | engine/credible_edges.py, engine/stats_utils.py, engine/validation.py, ingestion/real_ml_source.py, scripts/cross_check_ats_totals.py | ~6000 |
 | 21:30 | Slice 4 finding: ZERO buckets cleared all 4 credibility thresholds (n>=100, ci_low>0, p<0.10, prof_seas>=0.60). ATS/totals fail p_value across the board; ML fails ci_low (bootstrap CI on real ROI crosses zero in every bucket including the n=562 ml_small_fav with real ROI +1.03% but ci_low -5.72%). Static bucket strategies don't survive scrutiny. Future +EV needs CLV/per-game-state/model-based signal. | data/processed/credible_edges.csv | ~3000 |
 | 20:30 | T9: appended compare_ml_prices orchestrator + BucketComparison + ValidationReport to engine/validation.py; 4 new integration tests; fixed E402/E501 ruff violations by consolidating imports to top of test file; fixed test assertion (fixture produces ml_big_fav not ml_heavy_fav/ml_mid_fav) | engine/validation.py, tests/test_validation.py | 11/11 tests pass, 221 total, ruff clean, committed 0ee3399 | ~2500 |
 
@@ -370,3 +371,20 @@
 | 20:36 | Created docs/superpowers/notes/2026-05-28-kaggle-nflverse-crosscheck.md | — | ~923 |
 | 20:38 | Edited README.md | modified 1() | ~305 |
 | 20:38 | Edited README.md | modified 1() | ~768 |
+| 20:39 | Session end: 96 writes across 25 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 29 reads | ~93889 tok |
+| 20:45 | Session end: 96 writes across 25 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 30 reads | ~97500 tok |
+| 20:48 | Edited ingestion/real_ml_source.py | modified _remap_playoff_week() | ~621 |
+| 20:48 | Edited tests/test_real_ml_source.py | modified _fake_nflverse_df() | ~130 |
+| 20:48 | Edited tests/test_real_ml_source.py | modified test_fetch_real_ml_passes_seasons_to_nflverse() | ~369 |
+| 20:49 | Edited engine/credible_edges.py | expanded (+7 lines) | ~155 |
+| 20:49 | Edited engine/credible_edges.py | modified _ci_low_threshold() | ~232 |
+| 20:49 | Edited engine/credible_edges.py | 5→7 lines | ~87 |
+| 20:50 | Edited tests/test_credible_edges.py | modified test_rank_happy_path() | ~489 |
+| 20:50 | Edited tests/test_credible_edges.py | test_rank_rejects_non_positive_ci_low() → test_rank_rejects_ml_non_positive_ci_low() | ~497 |
+| 20:50 | Edited engine/stats_utils.py | 7→11 lines | ~150 |
+| 20:50 | Edited engine/validation.py | modified itertuples() | ~188 |
+| 20:51 | Edited scripts/cross_check_ats_totals.py | modified in() | ~315 |
+| 20:51 | Edited engine/bucket_analysis.py | 6→11 lines | ~194 |
+| 20:53 | Edited README.md | 3→1 lines | ~125 |
+| 20:53 | Edited README.md | 9→9 lines | ~116 |
+| 20:53 | Edited README.md | 3→3 lines | ~127 |
