@@ -26,7 +26,14 @@ from tabulate import tabulate
 from engine.bucket_analysis import DISCLAIMER
 
 MIN_N = 100
-MIN_CI_LOW = 0.0
+# ci_low threshold is market-aware:
+#   - ATS/totals: ci_low is the Wilson CI lower bound on WIN RATE (a [0,1]
+#     proportion). The threshold is "win-rate floor strictly above -110 breakeven"
+#     since every ATS/totals bet is priced at -110.
+#   - ML: ci_low is the bootstrap CI lower bound on real ROI (mean PnL, centered
+#     near 0). The threshold is "ROI floor strictly above 0".
+MIN_CI_LOW_WIN_RATE = 110 / 210  # BREAKEVEN_AT_NEG_110 ~= 0.5238
+MIN_CI_LOW_ROI = 0.0
 MAX_P_VALUE = 0.10
 MIN_PROFITABLE_SEASONS_PCT = 0.60
 
@@ -85,10 +92,22 @@ def _normalize_ml(row: dict) -> dict:
     }
 
 
+def _ci_low_threshold(market: str) -> float:
+    """Pick the ci_low floor based on what ci_low measures in each market.
+
+    ATS/totals' ci_low is a Wilson CI on win rate (compare to -110 breakeven).
+    ML's ci_low is a bootstrap CI on real ROI (compare to 0).
+    """
+    if market == "ml":
+        return MIN_CI_LOW_ROI
+    return MIN_CI_LOW_WIN_RATE
+
+
 def _passes(norm: dict) -> bool:
     if norm["n"] < MIN_N:
         return False
-    if math.isnan(norm["ci_low"]) or norm["ci_low"] <= MIN_CI_LOW:
+    ci_threshold = _ci_low_threshold(norm["market"])
+    if math.isnan(norm["ci_low"]) or norm["ci_low"] <= ci_threshold:
         return False
     if math.isnan(norm["p_value"]) or norm["p_value"] >= MAX_P_VALUE:
         return False
@@ -133,7 +152,9 @@ DEFAULT_ML_CSV = "data/processed/ml_validation_report.csv"
 DEFAULT_OUT_CSV = "data/processed/credible_edges.csv"
 
 _THRESHOLD_NOTE = (
-    f"# Credible-edge thresholds: n>={MIN_N}, ci_low>{MIN_CI_LOW}, "
+    f"# Credible-edge thresholds: n>={MIN_N}, "
+    f"ATS/totals ci_low>{MIN_CI_LOW_WIN_RATE:.4f} (win-rate vs -110 breakeven), "
+    f"ML ci_low>{MIN_CI_LOW_ROI} (real ROI), "
     f"p<{MAX_P_VALUE}, profitable_seasons>={MIN_PROFITABLE_SEASONS_PCT}. "
     f"Ranked by ci_low desc."
 )

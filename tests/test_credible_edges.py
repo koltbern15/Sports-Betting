@@ -49,18 +49,20 @@ def _write_ml_csv(path: Path, rows: list[dict]) -> None:
 
 
 def test_rank_happy_path(tmp_path):
+    """Realistic ci_low values per market: ATS/totals use win-rate floor 0.5238,
+    ML uses ROI floor 0.0. Ranking is by ci_low desc within each."""
     ats_path = tmp_path / "ats.csv"
     totals_path = tmp_path / "totals.csv"
     ml_path = tmp_path / "ml.csv"
     _write_ats_csv(
         ats_path,
         [{"bucket": "ats_a", "n": 200, "roi": 0.05,
-          "ci_low": 0.01, "ci_high": 0.09, "p": 0.04, "prof": 0.7}],
+          "ci_low": 0.55, "ci_high": 0.62, "p": 0.04, "prof": 0.7}],
     )
     _write_totals_csv(
         totals_path,
         [{"bucket": "tot_a", "n": 300, "roi": 0.03,
-          "ci_low": 0.005, "ci_high": 0.06, "p": 0.08, "prof": 0.65}],
+          "ci_low": 0.53, "ci_high": 0.59, "p": 0.08, "prof": 0.65}],
     )
     _write_ml_csv(
         ml_path,
@@ -69,11 +71,26 @@ def test_rank_happy_path(tmp_path):
     )
     edges = rank_credible_edges(ats_path, totals_path, ml_path)
     assert len(edges) == 3
-    # Ranked by ci_low desc
-    assert edges[0].bucket == "ml_a"   # ci_low 0.015
-    assert edges[1].bucket == "ats_a"  # ci_low 0.01
-    assert edges[2].bucket == "tot_a"  # ci_low 0.005
+    # Ranked by ci_low desc (raw values; ATS/totals on [0,1], ML on small floats)
+    assert edges[0].bucket == "ats_a"  # ci_low 0.55
+    assert edges[1].bucket == "tot_a"  # ci_low 0.53
+    assert edges[2].bucket == "ml_a"   # ci_low 0.015
     assert all(isinstance(e, CredibleEdge) for e in edges)
+
+
+def test_rank_rejects_ats_ci_low_at_or_below_breakeven(tmp_path):
+    """ATS ci_low 0.52 fails (below 0.5238 breakeven floor) even though > 0."""
+    ats = tmp_path / "ats.csv"
+    totals = tmp_path / "totals.csv"
+    ml = tmp_path / "ml.csv"
+    _write_ats_csv(
+        ats,
+        [{"bucket": "marginal", "n": 200, "roi": 0.01,
+          "ci_low": 0.52, "ci_high": 0.58, "p": 0.05, "prof": 0.7}],
+    )
+    _write_totals_csv(totals, [])
+    _write_ml_csv(ml, [])
+    assert rank_credible_edges(ats, totals, ml) == []
 
 
 def test_rank_rejects_low_n(tmp_path):
@@ -83,24 +100,25 @@ def test_rank_rejects_low_n(tmp_path):
     _write_ats_csv(
         ats,
         [{"bucket": "small", "n": 50, "roi": 0.05,
-          "ci_low": 0.02, "ci_high": 0.08, "p": 0.03, "prof": 0.7}],
+          "ci_low": 0.55, "ci_high": 0.62, "p": 0.03, "prof": 0.7}],
     )
     _write_totals_csv(totals, [])
     _write_ml_csv(ml, [])
     assert rank_credible_edges(ats, totals, ml) == []
 
 
-def test_rank_rejects_non_positive_ci_low(tmp_path):
+def test_rank_rejects_ml_non_positive_ci_low(tmp_path):
+    """ML uses ROI floor 0.0; ci_low <= 0 fails."""
     ats = tmp_path / "ats.csv"
     totals = tmp_path / "totals.csv"
     ml = tmp_path / "ml.csv"
-    _write_ats_csv(
-        ats,
-        [{"bucket": "flat", "n": 200, "roi": 0.0,
+    _write_ml_csv(
+        ml,
+        [{"bucket": "flat_ml", "n": 200, "roi": 0.0,
           "ci_low": -0.01, "ci_high": 0.01, "p": 0.5, "prof": 0.5}],
     )
+    _write_ats_csv(ats, [])
     _write_totals_csv(totals, [])
-    _write_ml_csv(ml, [])
     assert rank_credible_edges(ats, totals, ml) == []
 
 
@@ -111,7 +129,7 @@ def test_rank_rejects_high_p_value(tmp_path):
     _write_ats_csv(
         ats,
         [{"bucket": "noisy", "n": 200, "roi": 0.05,
-          "ci_low": 0.001, "ci_high": 0.10, "p": 0.30, "prof": 0.7}],
+          "ci_low": 0.55, "ci_high": 0.62, "p": 0.30, "prof": 0.7}],
     )
     _write_totals_csv(totals, [])
     _write_ml_csv(ml, [])
@@ -125,7 +143,7 @@ def test_rank_rejects_low_profitable_seasons(tmp_path):
     _write_ats_csv(
         ats,
         [{"bucket": "spiky", "n": 200, "roi": 0.05,
-          "ci_low": 0.02, "ci_high": 0.08, "p": 0.03, "prof": 0.4}],
+          "ci_low": 0.55, "ci_high": 0.62, "p": 0.03, "prof": 0.4}],
     )
     _write_totals_csv(totals, [])
     _write_ml_csv(ml, [])
