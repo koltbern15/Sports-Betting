@@ -2,9 +2,9 @@
 
 > Past performance does not guarantee future results. This tool is for informational purposes only. Gamble responsibly.
 
-Slices 1–3 of the NFL Sports Betting Analytics Engine. Loads historical NFL games + closing lines from a Kaggle CSV into SQLite and produces three per-bucket historical-edge reports (against-the-spread, totals over/under, and derived moneyline) with full statistical rigor (n, win rate, ROI at -110/-105, p-value vs the 52.38% breakeven, Wilson 95% CI, and by-season trend). Slice 3 validates the derived-ML report against real historical sportsbook moneylines from nflverse (2020–2024).
+Slices 1–4 of the NFL Sports Betting Analytics Engine. Loads historical NFL games + closing lines from a Kaggle CSV into SQLite and produces three per-bucket historical-edge reports (against-the-spread, totals over/under, and derived moneyline) with full statistical rigor (n, win rate, ROI at -110/-105, p-value vs the 52.38% breakeven, Wilson 95% CI, and by-season trend). Slice 3 validates the derived-ML report against real historical sportsbook moneylines from nflverse (2020–2024). Slice 4 adds per-season stability + bootstrap stats for ML and produces a unified cross-market `credible_edges.csv` ranker.
 
-See `docs/superpowers/specs/` for design documents and `docs/superpowers/plans/` for implementation plans. Slice 1 (ATS): `2026-05-26-nfl-betting-slice1-design.md` + `2026-05-26-nfl-betting-slice1.md`. Slice 2 (totals + moneyline): `2026-05-27-nfl-betting-slice2-design.md` + `2026-05-27-nfl-betting-slice2.md`. Slice 3 (real-line validation): `2026-05-27-nfl-betting-slice3-design.md` + `2026-05-27-nfl-betting-slice3.md`.
+See `docs/superpowers/specs/` for design documents and `docs/superpowers/plans/` for implementation plans. Slice 1 (ATS): `2026-05-26-nfl-betting-slice1-design.md` + `2026-05-26-nfl-betting-slice1.md`. Slice 2 (totals + moneyline): `2026-05-27-nfl-betting-slice2-design.md` + `2026-05-27-nfl-betting-slice2.md`. Slice 3 (real-line validation): `2026-05-27-nfl-betting-slice3-design.md` + `2026-05-27-nfl-betting-slice3.md`. Slice 4 (credible edges): `2026-05-27-nfl-betting-slice4-design.md` + `2026-05-27-nfl-betting-slice4.md`.
 
 ## Setup
 
@@ -73,9 +73,46 @@ The largest bucket, `ml_small_fav` (n=562), shows derived +0.15% vs real **+1.03
 
 Caveat: 1,343 of 1,408 nflverse 2020–2024 games matched our DB; 65 playoff games (Wild Card week onward) are unmatched due to a week-numbering convention mismatch between Kaggle and nflverse — a follow-up could reconcile this.
 
+## Slice 4 — Credible-edge ranker
+
+Adds Wilson CI / bootstrap CI / p-value / per-season stability across all three markets and produces a unified ranked report of buckets meeting four credibility thresholds.
+
+    # (one-time) verify Kaggle ATS/totals lines match nflverse on the 2020-2024 overlap
+    uv run python scripts/cross_check_ats_totals.py
+
+    # refresh per-market reports with new profitable_seasons_pct column
+    uv run python -m engine.ats
+    uv run python -m engine.totals
+    uv run python -m engine.validation
+
+    # rank credible edges across all 3 markets
+    uv run python -m engine.credible_edges
+
+### Credibility thresholds
+
+A bucket qualifies if ALL of:
+- `n >= 100`
+- `ci_low > 0` (95% CI lower bound strictly positive)
+- `p_value < 0.10`
+- `profitable_seasons_pct >= 0.60`
+
+Survivors are ranked by `ci_low` (descending) — most conservative true-edge estimate first. For ML buckets, `roi` is real-line ROI from nflverse, not derived (Slice 3 showed derived is biased).
+
+### Headline finding
+
+**No buckets cleared all four thresholds.** The NFL market is too efficient for the static bucket-betting strategies we tested.
+
+Mechanism breakdown:
+- **ATS / totals** (Kaggle 2004–2024): every bucket fails `p_value < 0.10` — win rates land near or below the -110 breakeven (52.38%) too consistently to reject the null.
+- **ML** (nflverse 2020–2024): every bucket fails `ci_low > 0` — bootstrap 95% CI on real ROI crosses zero in every bucket, including the n=562 `ml_small_fav` that looked promising in Slice 3 (real ROI +1.03%, but ci_low −5.72%).
+- **Cross-check note:** Kaggle ATS/totals lines match nflverse on the 2020–2024 overlap at 96%+ within ±1pt — confirms the 21-year Kaggle history is trustworthy at the bucket level. Details in `docs/superpowers/notes/2026-05-28-kaggle-nflverse-crosscheck.md`.
+
+Useful takeaway: static "bet every game in bucket X" strategies don't beat the closing line in this 21-year window. Any future +EV approach needs to incorporate signal beyond historical bucket aggregates — e.g., live-line CLV, per-game state filters, model-based edge detection.
+
 ## Scope
 
 - **Slice 1 (complete):** ingestion, schema, statistics utilities, ATS-by-spread-bucket analysis.
 - **Slice 2 (complete):** totals-by-line-bucket and moneyline-by-odds-bucket analysis (ML prices derived from spreads).
 - **Slice 3 (complete):** real-line moneyline validation against nflverse 2020–2024. Heavy-fav +0.63% finding killed; small-fav real-line edge surfaced for follow-up.
-- **Deferred to later slices:** live odds ingestion, best-bets engine, predictive modeling, interactive dashboard.
+- **Slice 4 (complete):** real-line statistical workup across all 3 markets; unified credible-edge ranker. No buckets clear the 4-threshold credibility bar — static bucket strategies don't survive scrutiny.
+- **Deferred to later slices:** live odds ingestion + this-week pick generator, backtest framework with bankroll/CLV, model-based edge detection, interactive dashboard.
