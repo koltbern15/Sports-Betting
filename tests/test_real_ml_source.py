@@ -14,6 +14,7 @@ def _fake_nflverse_df() -> pd.DataFrame:
         {
             "season": [2024, 2024, 2024],
             "week": [1, 1, 2],
+            "game_type": ["REG", "REG", "REG"],
             "home_team": ["KC", "BUF", "LV"],
             "away_team": ["BAL", "ARI", "LAC"],
             "home_moneyline": [-180, -240, +145],
@@ -58,3 +59,24 @@ def test_fetch_real_ml_passes_seasons_to_nflverse():
     with patch("ingestion.real_ml_source.nfl.import_schedules", side_effect=fake_import):
         fetch_real_ml([2022, 2023, 2024])
     assert captured["seasons"] == [2022, 2023, 2024]
+
+
+def test_fetch_real_ml_remaps_playoff_weeks_to_kaggle_convention():
+    # nflverse encodes playoff games with game_type WC/DIV/CON/SB and sequential
+    # week numbers. Kaggle uses fixed 100-103. fetch_real_ml must remap.
+    fake = pd.DataFrame(
+        {
+            "season": [2024, 2024, 2024, 2024, 2024],
+            "week": [18, 19, 20, 21, 22],
+            "game_type": ["REG", "WC", "DIV", "CON", "SB"],
+            "home_team": ["KC", "BUF", "BAL", "KC", "PHI"],
+            "away_team": ["BAL", "ARI", "LAC", "BUF", "KC"],
+            "home_moneyline": [-180, -240, -150, -200, -110],
+            "away_moneyline": [+155, +200, +130, +170, -110],
+            "spread_line": [-3.0, -6.5, -3.5, -4.5, 0.0],
+        }
+    )
+    with patch("ingestion.real_ml_source.nfl.import_schedules", return_value=fake):
+        df = fetch_real_ml([2024])
+    weeks = df["week"].tolist()
+    assert weeks == [18, 100, 101, 102, 103]
