@@ -165,3 +165,51 @@ def test_dollar_weighted_roi_mixed_with_pushes():
     from engine.stats_utils import dollar_weighted_roi
     payouts = [0.909, -1.0, 0.0, 1.30]
     assert dollar_weighted_roi(payouts) == sum(payouts) / 4
+
+
+# === bootstrap helpers ===
+
+def test_bootstrap_mean_ci_brackets_known_mean():
+    from engine.stats_utils import bootstrap_mean_ci
+    pnls = [0.5, -0.3, 0.4, -0.2, 0.3, -0.1, 0.2, 0.0, 0.2, 0.0]
+    lo, hi = bootstrap_mean_ci(pnls, seed=42)
+    assert lo < hi
+    # Sample mean = 0.10; CI should bracket it
+    assert lo < 0.10 < hi
+
+
+def test_bootstrap_mean_ci_all_positive():
+    from engine.stats_utils import bootstrap_mean_ci
+    pnls = [0.5, 0.4, 0.3, 0.6, 0.5, 0.4]
+    lo, _hi = bootstrap_mean_ci(pnls, seed=42)
+    assert lo > 0  # CI lower bound should be positive when all returns positive
+
+
+def test_bootstrap_mean_ci_empty_raises():
+    import pytest
+
+    from engine.stats_utils import bootstrap_mean_ci
+    with pytest.raises(ValueError, match="empty"):
+        bootstrap_mean_ci([], seed=42)
+
+
+def test_bootstrap_pvalue_mean_gt_zero_clear_positive():
+    from engine.stats_utils import bootstrap_pvalue_mean_gt_zero
+    pnls = [1.0] * 100
+    p = bootstrap_pvalue_mean_gt_zero(pnls, seed=42)
+    assert p < 0.01  # essentially zero — no bootstrap sample has mean <= 0
+
+
+def test_bootstrap_pvalue_mean_gt_zero_clear_negative():
+    from engine.stats_utils import bootstrap_pvalue_mean_gt_zero
+    pnls = [-1.0] * 100
+    p = bootstrap_pvalue_mean_gt_zero(pnls, seed=42)
+    assert p > 0.99  # essentially one — every sample has mean <= 0
+
+
+def test_bootstrap_pvalue_mean_gt_zero_seeded_deterministic():
+    from engine.stats_utils import bootstrap_pvalue_mean_gt_zero
+    pnls = [0.1, -0.1, 0.2, -0.05, 0.15, -0.08]
+    p1 = bootstrap_pvalue_mean_gt_zero(pnls, seed=42)
+    p2 = bootstrap_pvalue_mean_gt_zero(pnls, seed=42)
+    assert p1 == p2  # deterministic given seed

@@ -110,3 +110,50 @@ def kelly_fraction(p_win: float, decimal_odds: float) -> float:
     q = 1.0 - p_win
     f_star = (p_win * b - q) / b
     return max(0.0, f_star)
+
+
+def bootstrap_mean_ci(
+    values: list[float],
+    *,
+    n_boot: int = 2000,
+    alpha: float = 0.05,
+    seed: int = 42,
+) -> tuple[float, float]:
+    """Bootstrap 95% CI for the mean of `values`. Returns (ci_low, ci_high).
+
+    Uses naive percentile bootstrap with deterministic seeding. Defaults give
+    2.5%/97.5% percentile bounds.
+    """
+    import random
+
+    if not values:
+        raise ValueError("bootstrap_mean_ci called with empty values list")
+    rng = random.Random(seed)
+    n = len(values)
+    boots = [sum(rng.choices(values, k=n)) / n for _ in range(n_boot)]
+    boots.sort()
+    lo_idx = int(n_boot * (alpha / 2))
+    hi_idx = int(n_boot * (1 - alpha / 2))
+    return boots[lo_idx], boots[hi_idx]
+
+
+def bootstrap_pvalue_mean_gt_zero(
+    values: list[float],
+    *,
+    n_boot: int = 2000,
+    seed: int = 42,
+) -> float:
+    """Bootstrap p-value for H0: mean(values) <= 0.
+
+    Returns the share of bootstrap resamples whose mean is <= 0.
+    p < 0.05 indicates >95% of resamples show a positive mean (i.e., evidence
+    that the true mean is positive).
+    """
+    import random
+
+    if not values:
+        raise ValueError("bootstrap_pvalue_mean_gt_zero called with empty values list")
+    rng = random.Random(seed)
+    n = len(values)
+    boots = [sum(rng.choices(values, k=n)) / n for _ in range(n_boot)]
+    return sum(1 for b in boots if b <= 0) / n_boot
