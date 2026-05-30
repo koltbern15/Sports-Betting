@@ -385,6 +385,70 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-30T00:52:32.853Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-05-30T01:26:55.386Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/superpowers/specs/2026-05-29-nfl-betting-slice6-design.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 24→26 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-30T01:26:55.386Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-05-30T01:50:38.734Z",
+      "error_message": "Wrong reference: test_init_schema_creates_four_tables should be test_init_schema_creates_all_tables",
+      "file": "tests/test_db.py",
+      "root_cause": "Used \"test_init_schema_creates_four_tables\" instead of \"test_init_schema_creates_all_tables\"",
+      "fix": "Changed test_init_schema_creates_four_tables → test_init_schema_creates_all_tables",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-30T01:50:38.734Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-05-30T02:29:25.232Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/cross_check_openers.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 22→31 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-30T02:29:25.232Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-05-30T02:29:40.844Z",
+      "error_message": "Incorrect value in code",
+      "file": "README.md",
+      "root_cause": "Had `_classify_pair`",
+      "fix": "Changed to `open_total`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-30T02:29:40.844Z"
     }
   ]
 }

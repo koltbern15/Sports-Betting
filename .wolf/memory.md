@@ -502,3 +502,6 @@
 | 22:18 | Created scripts/load_opening_lines.py | — | ~1094 |
 | 22:20 | Edited scripts/cross_check_openers.py | modified in() | ~105 |
 | 22:22 | Edited README.md | modified aussportsbetting() | ~1018 |
+| 22:29 | Edited scripts/cross_check_openers.py | modified outliers() | ~346 |
+| 22:29 | Edited README.md | "_classify_pair" → "open_total" | ~87 |
+| 22:31 | Session end: 62 writes across 28 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 53 reads | ~149197 tok |
