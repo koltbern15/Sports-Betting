@@ -30,8 +30,8 @@ TARGET_OVERROUND: float = 1.04762  # matches -110/-110 implied probabilities
 # probability above 1.0 at spreads steeper than ~-24, which previously produced
 # absurd prices like -99,999,900. Clamp the vigged implied probability to the band
 # that maps to +/-10000 American so heavy-fav payouts stay realistic.
-_MAX_IMPLIED_PROB = 10000 / 10100  # -> -10000 American
-_MIN_IMPLIED_PROB = 100 / 10100    # -> +10000 American
+_MAX_IMPLIED_PROB = 10000 / 10100  # -> -10000 American  (heavy-fav floor)
+_MIN_IMPLIED_PROB = 100 / 10100    # -> +10000 American  (heavy-dog floor)
 
 
 def _prob_to_american(p: float) -> int:

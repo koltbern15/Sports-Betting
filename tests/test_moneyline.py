@@ -68,6 +68,11 @@ def test_derive_ml_steep_spread_price_floors_near_minus_10000():
     # not ~0.000001 as the old -99,999,900 price produced.
     assert _payout_for_bet(ml_home, True) > 0.001
 
+    # Mirror case: at +26.5 the AWAY side is the steep favorite and must also floor
+    ml_home2, ml_away2 = derive_ml_from_spread(+26.5)
+    assert ml_away2 >= -10000, f"away price too extreme: {ml_away2}"
+    assert _payout_for_bet(ml_away2, True) > 0.001
+
 
 @pytest.mark.parametrize(
     "ml,expected",
