@@ -107,6 +107,11 @@ Games with both sbr + aus rows: 2183
    2017   Pittsburgh Steelers      Cleveland Browns             -16.0               -5.0
    2015    Kansas City Chiefs         Detroit Lions              -6.0                3.0
 
+### Total outliers (|close − open| > 14.0): 1 games
+
+                                game_id  season     home_team         away_team  open_total  total_close
+2007_16_Green_Bay_Packers_Chicago_Bears    2007 Chicago Bears Green Bay Packers       541.0         32.0
+
 ## ML Status
 
 source  total_rows  ml_rows

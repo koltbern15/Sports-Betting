@@ -139,8 +139,13 @@ def _section_closer_sanity(conn) -> str:
     to_stats = movement_stats(opens_total, closes_total)
 
     sp_outlier_idx = outliers(opens_spread, closes_spread, threshold=7.0)
-    flagged = df.iloc[sp_outlier_idx][
+    flagged_sp = df.iloc[sp_outlier_idx][
         ["season", "home_team", "away_team", "open_spread_home", "spread_home_close"]
+    ]
+
+    to_outlier_idx = outliers(opens_total, closes_total, threshold=14.0)
+    flagged_to = df.iloc[to_outlier_idx][
+        ["game_id", "season", "home_team", "away_team", "open_total", "total_close"]
     ]
 
     lines = [
@@ -156,8 +161,12 @@ def _section_closer_sanity(conn) -> str:
         f"### Spread outliers (|close − open| > 7.0): {len(sp_outlier_idx)} games",
         "",
     ]
-    if not flagged.empty:
-        lines += [flagged.to_string(index=False), ""]
+    if not flagged_sp.empty:
+        lines += [flagged_sp.to_string(index=False), ""]
+
+    lines += [f"### Total outliers (|close − open| > 14.0): {len(to_outlier_idx)} games", ""]
+    if not flagged_to.empty:
+        lines += [flagged_to.to_string(index=False), ""]
 
     return "\n".join(lines)
 

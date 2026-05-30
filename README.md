@@ -156,7 +156,7 @@ Ingests historical NFL opening lines from two independent sources into the `open
 - SBR: 3,476 rows inserted across 15 seasons (2007–2021), 1 unmatched.
 - AUS: 5,144 rows inserted across 19 seasons (2006–2024), 287 unmatched (2025–2026 games not yet in the games table, as expected).
 - Overlap agreement (2013–2021, 2,183 matched games): spread 61% within 0.5 pts / 75% within 1.0 pt; total 66% within 0.5 pts / 82% within 1.0 pt. The sub-100% agreement is expected — both sources capture independent opening snapshots; ~39% of games differ by 0.5–1.5 pts between sources, consistent with two aggregators capturing the opening line at slightly different timestamps.
-- Closer sanity: mean spread movement open→close is +0.12 pts (healthy near-zero), stdev 1.72 pts. Total stdev is elevated (7.74) due to a small number of SBR games where the `_classify_pair` heuristic misfired (both Open values ≤25 → pair is ambiguous; affects ~26 rows). AUS is the canonical source for 2013+ so these rows do not affect downstream CLV.
+- Closer sanity: mean spread movement open→close is +0.12 pts (healthy near-zero), stdev 1.72 pts. Total stdev is elevated (7.74 raw) due to one corrupted SBR `open_total` (541.0, a 2007 Chicago Bears game); excluding it, open→close total movement stdev is ~1.8 pts — healthy. AUS is canonical for 2013+ so CLV is unaffected.
 - ML: AUS provides 5,144 opening ML rows; SBR provides 0 (not published). ML is back in via aussportsbetting.
 
 ## Scope
