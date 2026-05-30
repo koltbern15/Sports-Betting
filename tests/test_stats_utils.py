@@ -1,5 +1,6 @@
 import math
 
+import pytest
 from scipy.stats import binomtest as _scipy_binomtest
 
 from engine.stats_utils import (
@@ -8,8 +9,14 @@ from engine.stats_utils import (
     binomial_pvalue,
     decimal_to_american,
     kelly_fraction,
+    mde_mean_at_power,
+    mde_winrate_at_power,
+    mean_needed_for_ci,
     roi,
+    roi_from_win_prob,
+    std_from_mean_ci,
     wilson_ci,
+    winrate_needed_for_ci,
 )
 
 
@@ -136,8 +143,6 @@ def test_kelly_at_plus_odds_positive_edge():
 
 
 def test_kelly_invalid_prob_raises():
-    import pytest
-
     with pytest.raises(ValueError):
         kelly_fraction(-0.1, 2.0)
     with pytest.raises(ValueError):
@@ -186,8 +191,6 @@ def test_bootstrap_mean_ci_all_positive():
 
 
 def test_bootstrap_mean_ci_empty_raises():
-    import pytest
-
     from engine.stats_utils import bootstrap_mean_ci
     with pytest.raises(ValueError, match="empty"):
         bootstrap_mean_ci([], seed=42)
@@ -213,3 +216,95 @@ def test_bootstrap_pvalue_mean_gt_zero_seeded_deterministic():
     p1 = bootstrap_pvalue_mean_gt_zero(pnls, seed=42)
     p2 = bootstrap_pvalue_mean_gt_zero(pnls, seed=42)
     assert p1 == p2  # deterministic given seed
+
+
+# === roi_from_win_prob ===
+
+def test_roi_from_win_prob_breakeven_is_zero():
+    # 110/210 win rate at -110 is exactly breakeven → ROI 0
+    assert roi_from_win_prob(110 / 210, -110) == pytest.approx(0.0, abs=1e-9)
+
+
+def test_roi_from_win_prob_55_pct():
+    # 0.55 * 0.909091 - 0.45 = 0.04999...
+    assert roi_from_win_prob(0.55, -110) == pytest.approx(0.05, abs=1e-4)
+
+
+def test_roi_from_win_prob_propagates_nan():
+    assert math.isnan(roi_from_win_prob(float("nan")))
+
+
+# === mde_winrate_at_power ===
+
+def test_mde_winrate_at_power_n100():
+    # At n=100 a static edge must be ~62.8% win rate (~+20% ROI) to be 80%-power
+    # detectable vs the -110 breakeven. (Matches the audit's power table.)
+    p1 = mde_winrate_at_power(100)
+    assert 0.62 < p1 < 0.64
+    assert roi_from_win_prob(p1) == pytest.approx(0.20, abs=0.02)
+
+
+def test_mde_winrate_at_power_n500():
+    p1 = mde_winrate_at_power(500)
+    assert 0.565 < p1 < 0.575
+    assert roi_from_win_prob(p1) == pytest.approx(0.084, abs=0.02)
+
+
+def test_mde_winrate_at_power_shrinks_with_n():
+    # More samples → smaller detectable edge
+    assert mde_winrate_at_power(1000) < mde_winrate_at_power(100)
+
+
+def test_mde_winrate_at_power_zero_n_is_nan():
+    assert math.isnan(mde_winrate_at_power(0))
+
+
+# === winrate_needed_for_ci ===
+
+def test_winrate_needed_for_ci_is_boundary():
+    # The returned win rate's Wilson lower bound clears breakeven, and one fewer
+    # win does not. Tests the inversion is exact, not off-by-one.
+    n = 500
+    p0 = 110 / 210
+    p_needed = winrate_needed_for_ci(n, p0)
+    w = round(p_needed * n)
+    lo_at, _ = wilson_ci(w, n)
+    lo_below, _ = wilson_ci(w - 1, n)
+    assert lo_at > p0
+    assert lo_below <= p0
+
+
+def test_winrate_needed_for_ci_zero_n_is_nan():
+    assert math.isnan(winrate_needed_for_ci(0))
+
+
+# === mde_mean_at_power ===
+
+def test_mde_mean_at_power_closed_form():
+    # (z_a + z_b) * std / sqrt(n) = (1.281552 + 0.841621) * 1.0 / 20 = 0.106159
+    assert mde_mean_at_power(400, 1.0) == pytest.approx(0.106159, abs=1e-4)
+
+
+def test_mde_mean_at_power_bad_input_is_nan():
+    assert math.isnan(mde_mean_at_power(0, 1.0))
+    assert math.isnan(mde_mean_at_power(400, float("nan")))
+
+
+# === mean_needed_for_ci ===
+
+def test_mean_needed_for_ci_closed_form():
+    # z_{0.975} * std / sqrt(n) = 1.959964 * 1.0 / 20 = 0.097998
+    assert mean_needed_for_ci(400, 1.0) == pytest.approx(0.097998, abs=1e-4)
+
+
+# === std_from_mean_ci ===
+
+def test_std_from_mean_ci_roundtrips_mean_needed():
+    # A symmetric 95% CI of half-width 0.097998 at n=400 implies std=1.0
+    std = std_from_mean_ci(-0.097998, 0.097998, 400)
+    assert std == pytest.approx(1.0, abs=1e-3)
+
+
+def test_std_from_mean_ci_bad_input_is_nan():
+    assert math.isnan(std_from_mean_ci(float("nan"), 0.1, 400))
+    assert math.isnan(std_from_mean_ci(-0.1, 0.1, 0))
