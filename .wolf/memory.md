@@ -3,7 +3,13 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 2026-05-29 slice6-T8 | Slice 6 complete: created scripts/load_opening_lines.py; real load — SBR 3476 inserted/1 unmatched (15 seasons), AUS 5144 inserted/287 unmatched; overlap agreement spread 61%@tol0.5 / 75%@tol1.0, total 66%/82% (independent snapshots, expected); ML via AUS: 5144 rows; 296 tests pass, ruff clean; committed | scripts/load_opening_lines.py, README.md, docs/superpowers/notes/2026-05-29-opening-line-audit.md | ~2000 |
+| 2026-05-29 slice6-T7 | TDD: created tests/fixtures/aus_sample.xlsx (3-row fixture), tests/test_opening_line_aus.py (3 tests), ingestion/opening_line_aus.py (parse_aus_xlsx + load_local); real-file sanity: 5431 records, 5431 with_ml, 0 skips; 290 tests pass, ruff clean, committed a92543a | ingestion/opening_line_aus.py, tests/test_opening_line_aus.py, tests/fixtures/aus_sample.xlsx | ~600 |
+| 2026-05-29 slice6-QA | Quality review diff a76aae5..1b786e5 (T4+T5): 5 files, 473 insertions only. 11/11 tests pass, ruff clean. Math hand-verified correct. SQL column names validated against schema. Import-clean without DB. No issues found — spec compliant. | ingestion/opening_line_loader.py, tests/test_opening_line_loader.py, engine/opener_audit.py, tests/test_opener_audit.py, scripts/cross_check_openers.py | ~1500 |
+| 2026-05-29 slice6-T5 | TDD: created tests/test_opener_audit.py (5 tests), engine/opener_audit.py (agreement_rate, movement_stats, outliers), scripts/cross_check_openers.py (orchestration, import-safe); 287 tests pass, ruff clean, committed 1b786e5 | engine/opener_audit.py, tests/test_opener_audit.py, scripts/cross_check_openers.py | ~1200 |
+| 2026-05-29 slice6-T4 | Created ingestion/opening_line_loader.py (load_records, _find_game_id, canonical_opener_source, OpeningLoadReport) + tests/test_opening_line_loader.py (6 tests); fixed 3 ruff E501 line-length issues in test file; full suite 262 tests pass, ruff clean; committed 52bea66 | ingestion/opening_line_loader.py, tests/test_opening_line_loader.py | ~500 |
 | 20:50 | Added two coverage tests to test_edge_report.py (NaN sort + ML std reconstruction) | tests/test_edge_report.py | 9 tests pass, ruff clean, committed 962a270 | ~300 |
+| 2026-05-29 slice6-probe | Opening-line source probe (Task 1). SBR: fetch OK (117KB, 285 games, 15 seasons 2007-22), dual-column layout documented, opening ML present. Aussportsbetting: BLOCKED (Cloudflare 403, all approaches). Added openpyxl+lxml deps. Committed 9e1f9ec. | pyproject.toml, docs/superpowers/notes/2026-05-29-opening-line-probe.md, data/raw/sbr_2021.html | ~2500 |
 | 2026-05-29 slice5-T4 | Slice 5 complete: README reframed (Slice 4 superseded, Slice 5 added), cross_check comment updated, stale credible_edges.csv removed, pipeline ran end-to-end (edge_report.csv written, 28 buckets), wolf bookkeeping updated | README.md, scripts/cross_check_ats_totals.py, .wolf/anatomy.md, .wolf/memory.md, .wolf/cerebrum.md | 261 tests pass, ruff clean | ~2000 |
 
 | 2026-05-29 slice5-T2 | fix(moneyline): replaced _EPS clamp with _MAX/_MIN_IMPLIED_PROB clamping vigged prob to band mapping to +/-10000 American; added test_derive_ml_steep_spread_price_floors_near_minus_10000; 261 tests pass, ruff clean, committed bbcb57f | engine/moneyline.py, tests/test_moneyline.py | ~500 |
@@ -456,3 +462,43 @@
 | 20:53 | Edited README.md | modified 4() | ~131 |
 | 21:00 | Edited README.md | inline fix | ~15 |
 | 21:00 | Session end: 28 writes across 10 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 30 reads | ~86833 tok |
+| 21:04 | Session end: 28 writes across 10 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 30 reads | ~86833 tok |
+| 21:13 | Session end: 28 writes across 10 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 32 reads | ~86833 tok |
+| 21:22 | Session end: 28 writes across 10 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 32 reads | ~86833 tok |
+| 21:26 | Created docs/superpowers/specs/2026-05-29-nfl-betting-slice6-design.md | — | ~3683 |
+| 21:26 | Edited docs/superpowers/specs/2026-05-29-nfl-betting-slice6-design.md | 24→26 lines | ~388 |
+| 21:27 | Edited docs/superpowers/specs/2026-05-29-nfl-betting-slice6-design.md | 2→2 lines | ~54 |
+| 21:27 | Session end: 31 writes across 11 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 34 reads | ~94825 tok |
+| 21:34 | Created docs/superpowers/plans/2026-05-29-nfl-betting-slice6.md | — | ~11202 |
+| 21:34 | Session end: 32 writes across 12 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 35 reads | ~106827 tok |
+| 21:43 | Created docs/superpowers/notes/2026-05-29-opening-line-probe.md | — | ~1942 |
+| 21:47 | Edited tests/test_db.py | added 1 import(s) | ~25 |
+| 21:47 | Edited tests/test_db.py | modified test_init_schema_creates_four_tables() | ~107 |
+| 21:47 | Edited tests/test_db.py | modified test_init_schema_is_idempotent() | ~118 |
+| 21:47 | Edited tests/test_db.py | modified test_init_schema_real_ml_lines_idempotent() | ~527 |
+| 21:47 | Edited engine/db.py | expanded (+14 lines) | ~154 |
+| 21:48 | Edited tests/test_db.py | 4→4 lines | ~25 |
+| 21:49 | Task 2 slice6: added opening_lines DDL + 3 tests; updated table-count assertions; fixed isort; 264/264 green | engine/db.py, tests/test_db.py | commit 04d0830 | ~2800 |
+| 21:50 | Edited tests/test_db.py | inline fix | ~15 |
+| 21:52 | Edited docs/superpowers/notes/2026-05-29-opening-line-probe.md | expanded (+27 lines) | ~475 |
+| 21:53 | Created tests/test_opening_line_common.py | — | ~573 |
+| 21:53 | Created ingestion/opening_line_common.py | — | ~648 |
+| 21:54 | Edited tests/test_opening_line_common.py | added 1 import(s) | ~121 |
+| slice6-T3 | Created ingestion/opening_line_common.py (OpeningLineRecord frozen dataclass + 5 pure helpers) + tests/test_opening_line_common.py (12 tests). Fixed ruff B017 by narrowing raises to dataclasses.FrozenInstanceError. canonicalize_team_name export name matched exactly. 12/12 new tests pass; 280 total full suite pass; ruff clean. Committed a76aae5. | ingestion/opening_line_common.py, tests/test_opening_line_common.py | ~800 |
+| 21:57 | Created tests/test_opening_line_loader.py | — | ~991 |
+| 21:57 | Created ingestion/opening_line_loader.py | — | ~792 |
+| 21:58 | Edited tests/test_opening_line_loader.py | 3→5 lines | ~52 |
+| 21:58 | Edited tests/test_opening_line_loader.py | 2→4 lines | ~43 |
+| 21:58 | Edited tests/test_opening_line_loader.py | 2→4 lines | ~43 |
+| 21:59 | Created tests/test_opener_audit.py | — | ~327 |
+| 22:00 | Created engine/opener_audit.py | — | ~395 |
+| 22:01 | Created scripts/cross_check_openers.py | — | ~2103 |
+| 22:06 | Created tests/test_opening_line_aus.py | — | ~323 |
+| 22:07 | Created ingestion/opening_line_aus.py | — | ~910 |
+| 22:12 | Created ingestion/opening_line_sbr.py | — | ~2207 |
+| 22:13 | Created tests/fixtures/sbr_sample.html | — | ~564 |
+| 22:13 | Created tests/test_opening_line_sbr.py | — | ~715 |
+| 03:30 | Task6: SBR opening-line HTML parser (TDD) | ingestion/opening_line_sbr.py, tests/test_opening_line_sbr.py, tests/fixtures/sbr_sample.html | 6 fixture tests + 296 suite green; real file parses 285/285 games; commit d39c9a2 | ~9k |
+| 22:18 | Created scripts/load_opening_lines.py | — | ~1094 |
+| 22:20 | Edited scripts/cross_check_openers.py | modified in() | ~105 |
+| 22:22 | Edited README.md | modified aussportsbetting() | ~1018 |

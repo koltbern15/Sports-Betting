@@ -10,8 +10,13 @@ Run: uv run python scripts/cross_check_openers.py
 
 from __future__ import annotations
 
+import io
 import sys
 from pathlib import Path
+
+# Force UTF-8 stdout on Windows so pandas' minus sign (U+2212) doesn't crash cp1252.
+if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 

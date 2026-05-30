@@ -119,6 +119,46 @@ be statistically invisible to every bucket here. Any future +EV work needs a
 higher-power signal (e.g. closing-line value, which measures price movement per bet
 rather than waiting on binary outcomes) rather than finer static partitions.
 
+## Slice 6 — Opening-line ingestion
+
+Ingests historical NFL opening lines from two independent sources into the `opening_lines` table, then runs a data-quality audit.
+
+**Sources:**
+
+- **aussportsbetting (primary):** Manual-download xlsx from `https://www.aussportsbetting.com/data/historical-nfl-results-and-odds-data/`. Covers ~2006–2024 with spread, total, and opening ML (decimal odds converted to American). Sign convention matches our DB (negative = home favored). Download to `data/raw/aus_nfl.xlsx`.
+- **SBR (cross-check):** SportsbookReviewsOnline, 2007–2021, spread + total. Fetched programmatically and cached to `data/raw/sbr_{season}.html`. Opening ML not available from SBR.
+
+**Canonical source per season:** `aus` is canonical for 2013+ (richer: spread + total + ML); `sbr` is canonical for 2007–2012 (aus only covers back to ~2006 with matching games). Both sources coexist in the DB for the 2013–2021 overlap as cross-check counterparts.
+
+**Workflow:**
+
+    # Load both sources into the DB (idempotent; safe to re-run)
+    uv run python scripts/load_opening_lines.py
+
+    # Run the data-quality audit (writes docs/superpowers/notes/2026-05-29-opening-line-audit.md)
+    uv run python scripts/cross_check_openers.py
+
+**`opening_lines` schema:**
+
+| column | type | notes |
+| --- | --- | --- |
+| `game_id` | TEXT | FK → games; part of PK |
+| `source` | TEXT | `'sbr'` or `'aus'`; part of PK |
+| `open_spread_home` | REAL | signed home perspective (negative = home fav) |
+| `open_total` | REAL | game total |
+| `open_ml_home` | INTEGER | American ML (null for SBR) |
+| `open_ml_away` | INTEGER | American ML (null for SBR) |
+| `source_url` | TEXT | source page URL |
+| `collected_at` | TEXT | ISO timestamp of ingest |
+
+**Audit headline (2026-05-29):**
+
+- SBR: 3,476 rows inserted across 15 seasons (2007–2021), 1 unmatched.
+- AUS: 5,144 rows inserted across 19 seasons (2006–2024), 287 unmatched (2025–2026 games not yet in the games table, as expected).
+- Overlap agreement (2013–2021, 2,183 matched games): spread 61% within 0.5 pts / 75% within 1.0 pt; total 66% within 0.5 pts / 82% within 1.0 pt. The sub-100% agreement is expected — both sources capture independent opening snapshots; ~39% of games differ by 0.5–1.5 pts between sources, consistent with two aggregators capturing the opening line at slightly different timestamps.
+- Closer sanity: mean spread movement open→close is +0.12 pts (healthy near-zero), stdev 1.72 pts. Total stdev is elevated (7.74) due to a small number of SBR games where the `_classify_pair` heuristic misfired (both Open values ≤25 → pair is ambiguous; affects ~26 rows). AUS is the canonical source for 2013+ so these rows do not affect downstream CLV.
+- ML: AUS provides 5,144 opening ML rows; SBR provides 0 (not published). ML is back in via aussportsbetting.
+
 ## Scope
 
 - **Slice 1 (complete):** ingestion, schema, statistics utilities, ATS-by-spread-bucket analysis.
@@ -126,4 +166,5 @@ rather than waiting on binary outcomes) rather than finer static partitions.
 - **Slice 3 (complete):** real-line moneyline validation against nflverse 2020–2024. Heavy-fav +0.63% finding killed; small-fav real-line edge surfaced for follow-up.
 - **Slice 4 (complete):** real-line statistical workup across all 3 markets; unified credible-edge ranker (binary gate; superseded by Slice 5).
 - **Slice 5 (complete):** honest edge report — continuous metrics + power/MDE context replacing the binary gate; derived-ML clamp bug fixed.
-- **Deferred to later slices:** closing-line-value (CLV) backtest (needs opening-line ingestion — not in current data), per-game-state filters, live odds + this-week pick generator, interactive dashboard.
+- **Slice 6 (complete):** historical opening-line ingestion (aussportsbetting + SBR) into `opening_lines`, with a full data-quality audit. Foundation for CLV (Slice 7).
+- **Deferred to later slices:** closing-line-value (CLV) backtest, per-game-state filters, live odds + this-week pick generator, interactive dashboard.

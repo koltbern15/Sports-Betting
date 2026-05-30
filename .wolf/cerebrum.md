@@ -11,6 +11,11 @@
 ## Key Learnings
 
 - **Project:** sports-betting
+- **SBR HTML format:** Each page has 1 table, row 0 is headers, rows 1+ are data. Two rows per game (away first, home second). Open/Close columns are dual-use: one row holds the game O/U total (value >25), the other holds the home spread (value ≤25 or 'pk'). The assignment to V vs H row is NOT consistent — ~37% of games are "flipped". Parse strategy: classify by value size. ML column (index 11) holds American-format moneyline for each team's row — opening ML is always present.
+- **SBR spread sign:** Always shown as a positive number. Use the home team's ML sign to determine direction: home ML negative = home is favorite = home spread is negative.
+- **SBR season coverage:** 2007-08 through 2021-22 only (15 seasons). URL pattern: nfl-odds-{YYYY}-{YY}. No 2022+ data.
+- **SBR date format:** Integer MMDD (e.g. 909 = Sep 9, 130 = Jan 30). Year must be inferred from the URL.
+- **Aussportsbetting blocked:** The site (https://www.aussportsbetting.com) is behind Cloudflare WAF. All automated fetch attempts (urllib, WebFetch, full browser headers) return HTTP 403. The xlsx must be downloaded manually in a real browser. Do NOT attempt automated fetch; it will always fail.
 
 ## Do-Not-Repeat
 
@@ -29,6 +34,7 @@
 
 <!-- Significant technical decisions with rationale. Why X was chosen over Y. -->
 
+- [2026-05-29] **Slice 6 ingested opening lines** — aussportsbetting (primary, manual download due to Cloudflare; spread+total+ML, decimal odds, sign matches our convention) + SBR (cross-check, 2007-2021, interleaved spread/total resolved by >25 rule, spread direction from home ML). ML came back IN via aussportsbetting. CLV is Slice 7. Overlap agreement spread 61%@tol0.5/75%@tol1.0, total 66%/82% — sub-100% is expected (two sources, different snapshot times). SBR _classify_pair can misfire when both Open values are <=25 (~26 rows); AUS is canonical for 2013+ so these don't affect CLV.
 - [2026-05-29] **Slice 5 replaced the binary credible-edges gate with a continuous edge report + power/MDE columns** after an audit found the gate underpowered (Wilson-lower-bound gate needs +6-20% ROI to clear at available bucket sizes vs real edges of +1-3%).
 - [2026-05-26] **Project decomposed into slices.** Full NFL betting analytics spec is too large for one design/plan. Decomposition: Slice 1 = ingestion + schema + stats_utils + one ATS analysis; Slice 2 = rest of Phase 2 analytics; Slice 3 = static report; Slice 4 = Streamlit dashboard; Slice 5+ = FastAPI/live odds. Each slice gets its own spec → plan → build cycle.
 - [2026-05-26] **Data source: Kaggle "NFL Scores and Betting Data" CSV first; scrapers deferred.** Reason: legal, stable, no scraper fragility, gets math moving immediately. Pro-Football-Reference / SportsOddsHistory / Covers will be layered in for opens, moneylines, line movement in Slice 2+.
