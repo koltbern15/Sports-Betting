@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head><title>SBR sample fixture (NFL 2021-22)</title></head>
+<body>
+<!--
+  Trimmed copy of the SportsbookReviewsOnline NFL 2021-22 odds table.
+  4 games (8 team rows) lifted verbatim from data/raw/sbr_2021.html:
+    - Dallas @ TampaBay   : normal layout (V row = total, H row = spread)
+    - Jacksonville @ Houston : FLIPPED + 'pk' (V row = 'pk' spread, H row = total)
+    - Minnesota @ Cincinnati : FLIPPED (V row = spread, H row = total)
+    - SanFrancisco @ Detroit : FLIPPED (V row = spread, H row = total)
+  Header row mirrors SBR: pandas reads it as data row 0 (no <thead>).
+-->
+<table>
+  <tr><td>Date</td><td>Rot</td><td>VH</td><td>Team</td><td>1st</td><td>2nd</td><td>3rd</td><td>4th</td><td>Final</td><td>Open</td><td>Close</td><td>ML</td><td>2H</td></tr>
+
+  <tr><td>909</td><td>451</td><td>V</td><td>Dallas</td><td>7</td><td>9</td><td>10</td><td>3</td><td>29</td><td>52.5</td><td>52.5</td><td>375</td><td>27</td></tr>
+  <tr><td>909</td><td>452</td><td>H</td><td>TampaBay</td><td>7</td><td>14</td><td>7</td><td>3</td><td>31</td><td>7</td><td>10</td><td>-450</td><td>2</td></tr>
+
+  <tr><td>912</td><td>457</td><td>V</td><td>Jacksonville</td><td>0</td><td>7</td><td>7</td><td>7</td><td>21</td><td>pk</td><td>3</td><td>-170</td><td>5.5</td></tr>
+  <tr><td>912</td><td>458</td><td>H</td><td>Houston</td><td>3</td><td>13</td><td>0</td><td>21</td><td>37</td><td>46</td><td>45.5</td><td>150</td><td>2.5</td></tr>
+
+  <tr><td>912</td><td>467</td><td>V</td><td>Minnesota</td><td>0</td><td>7</td><td>7</td><td>10</td><td>24</td><td>3</td><td>3</td><td>-155</td><td>3</td></tr>
+  <tr><td>912</td><td>468</td><td>H</td><td>Cincinnati</td><td>0</td><td>14</td><td>7</td><td>3</td><td>27</td><td>48.5</td><td>47.5</td><td>135</td><td>23.5</td></tr>
+
+  <tr><td>912</td><td>469</td><td>V</td><td>SanFrancisco</td><td>7</td><td>24</td><td>7</td><td>3</td><td>41</td><td>9</td><td>10</td><td>-430</td><td>4</td></tr>
+  <tr><td>912</td><td>470</td><td>H</td><td>Detroit</td><td>0</td><td>10</td><td>7</td><td>16</td><td>33</td><td>46</td><td>46</td><td>360</td><td>21</td></tr>
+</table>
+</body>
+</html>
