@@ -148,3 +148,30 @@ def test_write_edge_report_csv_has_new_schema(tmp_path):
     assert "ats,ats_hi,300" in text
     # ML row has a blank win_rate cell (two consecutive commas after n)
     assert "ml,ml_a,500,," in text
+
+
+def test_nan_point_roi_sorts_to_end(tmp_path):
+    """A bucket with NaN point_roi must sort after all real-valued buckets."""
+    ats, totals, ml = _three_csvs(tmp_path)
+    rows = build_edge_report(ats, totals, ml)
+    nan_row = EdgeRow(
+        market="ats", bucket="nan_bucket", n=10, win_rate=math.nan,
+        point_roi=math.nan, ci_low=math.nan, ci_high=math.nan,
+        p_value=math.nan, profitable_seasons_pct=math.nan,
+        mde80_roi=math.nan, breakeven_needed_roi=math.nan,
+    )
+    ranked = sorted(
+        rows + [nan_row],
+        key=lambda r: r.point_roi if not math.isnan(r.point_roi) else float("-inf"),
+        reverse=True,
+    )
+    assert ranked[-1].bucket == "nan_bucket"
+
+
+def test_ml_mde80_matches_reconstructed_std(tmp_path):
+    """ML mde80_roi flows from std reconstructed from the bootstrap CI.
+    ci width 0.08 at n=500 -> std ~= 0.456 -> mde80 ~= 0.043."""
+    ats, totals, ml = _three_csvs(tmp_path)
+    report = build_edge_report(ats, totals, ml)
+    ml_row = next(r for r in report if r.bucket == "ml_a")
+    assert ml_row.mde80_roi == pytest.approx(0.043, abs=0.003)
