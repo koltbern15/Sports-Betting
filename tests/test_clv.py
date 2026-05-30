@@ -5,7 +5,9 @@ from __future__ import annotations
 import math
 
 from engine.clv import (
+    ClvRow,
     aggregate_clv,
+    build_bets_from_db,
     clamp_ok_spread,
     clamp_ok_total,
     clv_bucket,
@@ -13,7 +15,9 @@ from engine.clv import (
     clv_total,
     spread_bet_result,
     total_bet_result,
+    write_clv_csv,
 )
+from engine.db import connect, init_schema
 
 
 def test_clv_spread_positive_when_close_more_home_favored():
@@ -124,3 +128,64 @@ def test_aggregate_rows_sorted_market_then_bucket_order():
     rows = aggregate_clv(bets)
     spread_buckets = [r.clv_bucket for r in rows if r.market == "spread"]
     assert spread_buckets.index("clv_le_neg2") < spread_buckets.index("clv_gt_2")
+
+
+def _seed(conn, game_id, season, hs, as_, src, open_sp, open_tot, close_sp, close_tot):
+    conn.execute(
+        "INSERT OR IGNORE INTO games"
+        " (game_id, season, week, game_date, home_team, away_team, home_score, away_score)"
+        " VALUES (?,?,?,?,?,?,?,?)",
+        (game_id, season, 1, f"{season}-09-13", "Home Team X", "Away Team Y", hs, as_),
+    )
+    conn.execute(
+        "INSERT OR IGNORE INTO betting_lines"
+        " (game_id, spread_home_close, total_close) VALUES (?,?,?)",
+        (game_id, close_sp, close_tot),
+    )
+    conn.execute(
+        "INSERT INTO opening_lines"
+        " (game_id, source, open_spread_home, open_total) VALUES (?,?,?,?)",
+        (game_id, src, open_sp, open_tot),
+    )
+
+
+def test_build_bets_from_db_uses_canonical_source_and_clamp():
+    conn = connect(":memory:")
+    init_schema(conn)
+    _seed(conn, "g1", 2018, 27, 20, "aus", -3.0, 45.0, -5.0, 47.0)
+    _seed(conn, "g1", 2018, 27, 20, "sbr", -10.0, 99.0, -5.0, 47.0)
+    bets = build_bets_from_db(conn)
+    spread_bets = [b for b in bets if b["market"] == "spread"]
+    total_bets = [b for b in bets if b["market"] == "total"]
+    assert len(spread_bets) == 1
+    assert spread_bets[0]["clv"] == 2.0
+    assert spread_bets[0]["result"] == "win"
+    assert total_bets[0]["clv"] == 2.0
+    conn.close()
+
+
+def test_build_bets_skips_bad_opener_total_only_for_that_market():
+    conn = connect(":memory:")
+    init_schema(conn)
+    _seed(conn, "g1", 2018, 27, 20, "aus", -3.0, 541.0, -5.0, 47.0)
+    bets = build_bets_from_db(conn)
+    assert any(b["market"] == "spread" for b in bets)
+    assert not any(b["market"] == "total" for b in bets)
+    conn.close()
+
+
+def test_write_clv_csv_has_header_and_disclaimer(tmp_path):
+    rows = [
+        ClvRow("spread", "clv_gt_2", 100, 55, 3.2, 0.55, 0.05, 0.01, 0.10, 0.03, 0.6, 0.2, 0.18)
+    ]
+    out = tmp_path / "clv_report.csv"
+    write_clv_csv(rows, out)
+    text = out.read_text(encoding="utf-8")
+    header = (
+        "market,clv_bucket,n,mean_clv,win_rate,roi,ci_low,ci_high,"
+        "p_value,profitable_seasons_pct,mde80,breakeven_needed"
+    )
+    assert header in text
+    assert "# CLV report" in text
+    assert "signal test" in text.lower()
+    assert "spread,clv_gt_2,100" in text

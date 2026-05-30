@@ -14,16 +14,21 @@ Reference bets: spread = HOME at the opener; total = OVER at the opener.
 from __future__ import annotations
 
 import math
+import sqlite3
 from dataclasses import dataclass
+from pathlib import Path
 from statistics import mean
 
-from engine.bucket_analysis import compute_metrics
+import pandas as pd
+
+from engine.bucket_analysis import DISCLAIMER, compute_metrics
 from engine.stats_utils import (
     mde_winrate_at_power,
     roi_from_win_prob,
     winrate_needed_for_ci,
 )
 from ingestion.loader import derive_ats_result, derive_total_result
+from ingestion.opening_line_loader import canonical_opener_source
 
 _SPREAD_CLAMP = 28.0
 _TOTAL_LO, _TOTAL_HI = 25.0, 75.0
@@ -159,3 +164,117 @@ def aggregate_clv(bets: list[dict]) -> list[ClvRow]:
 
     rows.sort(key=lambda r: (r.market, CLV_BUCKET_ORDER.index(r.clv_bucket)))
     return rows
+
+
+_JOIN_SQL = """
+SELECT g.game_id, g.season, g.home_score, g.away_score,
+       o.source, o.open_spread_home, o.open_total,
+       b.spread_home_close, b.total_close
+FROM games g
+JOIN opening_lines o ON o.game_id = g.game_id
+JOIN betting_lines b ON b.game_id = g.game_id
+WHERE g.home_score IS NOT NULL AND g.away_score IS NOT NULL
+"""
+
+
+def _f(v) -> float | None:
+    return None if v is None or (isinstance(v, float) and math.isnan(v)) else float(v)
+
+
+def build_bets_from_db(conn: sqlite3.Connection) -> list[dict]:
+    """Build per-game reference-bet records (spread + total) using the canonical opener.
+
+    Picks the canonical opener source per game, applies the sanity clamp per market,
+    computes CLV, and grades each bet at the OPENING number.
+    """
+    df = pd.read_sql_query(_JOIN_SQL, conn)
+    bets: list[dict] = []
+    for _game_id, grp in df.groupby("game_id"):
+        season = int(grp["season"].iloc[0])
+        want = canonical_opener_source(season)
+        canon = grp[grp["source"] == want]
+        if canon.empty:
+            continue
+        row = canon.iloc[0]
+        hs = int(row["home_score"])
+        as_ = int(row["away_score"])
+
+        open_sp = _f(row["open_spread_home"])
+        close_sp = _f(row["spread_home_close"])
+        if clamp_ok_spread(open_sp) and clamp_ok_spread(close_sp):
+            res = spread_bet_result(hs, as_, open_sp)
+            if res is not None:
+                bets.append({"market": "spread", "clv": clv_spread(open_sp, close_sp),
+                             "result": res, "season": season})
+
+        open_tot = _f(row["open_total"])
+        close_tot = _f(row["total_close"])
+        if clamp_ok_total(open_tot) and clamp_ok_total(close_tot):
+            res = total_bet_result(hs, as_, open_tot)
+            if res is not None:
+                bets.append({"market": "total", "clv": clv_total(open_tot, close_tot),
+                             "result": res, "season": season})
+    return bets
+
+
+_HEADER = (
+    "market,clv_bucket,n,mean_clv,win_rate,roi,ci_low,ci_high,"
+    "p_value,profitable_seasons_pct,mde80,breakeven_needed"
+)
+
+
+def _fmt(x: float, prec: int = 6) -> str:
+    return "" if isinstance(x, float) and math.isnan(x) else f"{x:.{prec}f}"
+
+
+def write_clv_csv(rows: list[ClvRow], path: str | Path) -> None:
+    """Write the CLV report with explanatory note + disclaimer."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "# CLV report: per-CLV-bucket win rate at the opener. Tests whether the close "
+        "is sharper than the open (positive CLV -> covers the opener more often).",
+        "# This is a SIGNAL TEST, not a tradeable strategy: CLV is unknown until the line closes.",
+        f"# {DISCLAIMER}",
+        _HEADER,
+    ]
+    for r in rows:
+        lines.append(
+            f"{r.market},{r.clv_bucket},{r.n},{_fmt(r.mean_clv,4)},{_fmt(r.win_rate,4)},"
+            f"{_fmt(r.roi)},{_fmt(r.ci_low)},{_fmt(r.ci_high)},{_fmt(r.p_value)},"
+            f"{_fmt(r.profitable_seasons_pct,4)},{_fmt(r.mde80)},{_fmt(r.breakeven_needed)}"
+        )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+DEFAULT_OUT_CSV = "data/processed/clv_report.csv"
+
+
+def _main() -> int:
+    """CLI: uv run python -m engine.clv"""
+    from engine.db import connect
+
+    conn = connect("data/db/nfl_betting.sqlite")
+    try:
+        bets = build_bets_from_db(conn)
+    finally:
+        conn.close()
+    if not bets:
+        print("No joinable opener+closer games found. Load Slice 6 opening lines first.")
+        return 1
+    rows = aggregate_clv(bets)
+    write_clv_csv(rows, DEFAULT_OUT_CSV)
+    n_spread = sum(1 for b in bets if b["market"] == "spread")
+    n_total = sum(1 for b in bets if b["market"] == "total")
+    print(f"CLV report: {n_spread} spread bets, {n_total} total bets across "
+          f"{len(rows)} CLV buckets.")
+    for r in rows:
+        print(f"  {r.market:6} {r.clv_bucket:14} n={r.n:5} mean_clv={r.mean_clv:+.2f} "
+              f"win%={r.win_rate:.4f} roi={r.roi:+.4f} p={r.p_value:.3f}")
+    print(f"\n{DISCLAIMER}")
+    print(f"\nCSV written to {DEFAULT_OUT_CSV}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main())
