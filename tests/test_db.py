@@ -4,7 +4,7 @@ import pytest
 from engine.db import connect, fetch_df, init_schema
 
 
-def test_init_schema_creates_four_tables(memory_db):
+def test_init_schema_creates_all_tables(memory_db):
     init_schema(memory_db)
     tables = {
         row["name"]
