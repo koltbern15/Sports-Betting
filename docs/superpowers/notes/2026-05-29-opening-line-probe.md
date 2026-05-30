@@ -7,6 +7,33 @@ for Slice 6 (CLV analysis). This is a discovery note, not a build artifact.
 
 ---
 
+## UPDATE (2026-05-29, post manual download) — aussportsbetting CONFIRMED, ML IS IN
+
+The initial probe could not auto-download aussportsbetting (Cloudflare 403). The user
+downloaded the xlsx manually to `data/raw/aus_nfl.xlsx` (847 KB). Inspected directly:
+
+- **Shape:** 5,431 rows × 45 columns. Covers through the 2025 season (dates into Feb 2026).
+- **Odds format:** DECIMAL (convert to American via `decimal_to_american`).
+- **Key columns → OpeningLineRecord mapping:**
+  | xlsx column | maps to | notes |
+  |---|---|---|
+  | `Date` | `game_date` | datetime → ISO; `season` = year if month≥8 else year−1 |
+  | `Home Team` / `Away Team` | `home_team` / `away_team` | full names → `canonical_team` |
+  | `Home Line Open` | `open_spread_home` | **sign already matches ours** (negative = home favored); no flip |
+  | `Total Score Open` | `open_total` | direct |
+  | `Home Odds Open` | `open_ml_home` | decimal → American |
+  | `Away Odds Open` | `open_ml_away` | decimal → American |
+- **Opening MONEYLINE present** for every recent game → **ML VERDICT FLIPS TO: ML IN.**
+- Older seasons (pre-~2013) may have blank/NaN opens → parser yields `None` for those; counted, not crashed.
+- `Playoff Game?` / `Neutral Venue?` flags available (not needed for the record, but useful context).
+
+**Revised source roles:** aussportsbetting is the PRIMARY/canonical source (spread+total+ML opening,
+~2006–2026). SBR (2007–2021, spread+total opening) becomes the independent CROSS-CHECK for the
+full-audit overlap agreement. SBR's single `ML` column is treated as closing/uncertain and NOT used
+for opening ML.
+
+---
+
 ## Source 1: SportsbookReviewsOnline (SBR)
 
 ### Fetch result
