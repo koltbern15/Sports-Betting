@@ -10,6 +10,7 @@ from engine.db import connect, init_schema
 from engine.moneyline import (
     BUCKET_ORDER_ML,
     MoneylineReport,
+    _payout_for_bet,
     bucket_ml,
     derive_ml_from_spread,
     moneyline_by_odds_bucket,
@@ -56,6 +57,21 @@ def test_derive_ml_from_spread_does_not_crash_on_extreme_spreads(spread):
     assert result is not None
     ml_home, ml_away = result
     assert isinstance(ml_home, int) and isinstance(ml_away, int)
+
+
+def test_derive_ml_steep_spread_price_floors_near_minus_10000():
+    """Bug fix: at spreads steeper than ~-24 the proportional vig pushed implied
+    prob above 1.0, producing -99,999,900. The price must now floor near -10000."""
+    ml_home, ml_away = derive_ml_from_spread(-26.5)
+    assert ml_home >= -10000, f"home price too extreme: {ml_home}"
+    # A winning heavy-fav bet must pay a realistic (small but non-trivial) amount,
+    # not ~0.000001 as the old -99,999,900 price produced.
+    assert _payout_for_bet(ml_home, True) > 0.001
+
+    # Mirror case: at +26.5 the AWAY side is the steep favorite and must also floor
+    ml_home2, ml_away2 = derive_ml_from_spread(+26.5)
+    assert ml_away2 >= -10000, f"away price too extreme: {ml_away2}"
+    assert _payout_for_bet(ml_away2, True) > 0.001
 
 
 @pytest.mark.parametrize(

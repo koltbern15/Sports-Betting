@@ -26,7 +26,12 @@ from engine.db import connect
 
 NFL_MARGIN_SIGMA: float = 13.86   # Burke / AdvancedNFL stats consensus
 TARGET_OVERROUND: float = 1.04762  # matches -110/-110 implied probabilities
-_EPS = 1e-6
+# Proportional vig (p_novig * overround) can push a heavy favorite's implied
+# probability above 1.0 at spreads steeper than ~-24, which previously produced
+# absurd prices like -99,999,900. Clamp the vigged implied probability to the band
+# that maps to +/-10000 American so heavy-fav payouts stay realistic.
+_MAX_IMPLIED_PROB = 10000 / 10100  # -> -10000 American  (heavy-fav floor)
+_MIN_IMPLIED_PROB = 100 / 10100    # -> +10000 American  (heavy-dog floor)
 
 
 def _prob_to_american(p: float) -> int:
@@ -53,8 +58,8 @@ def derive_ml_from_spread(spread_home_close: float | None) -> tuple[int, int] | 
         return None
     p_home_nv = 0.5 * (1.0 + math.erf(-spread_home_close / (NFL_MARGIN_SIGMA * math.sqrt(2.0))))
     p_away_nv = 1.0 - p_home_nv
-    p_home_vig = min(max(p_home_nv * TARGET_OVERROUND, _EPS), 1.0 - _EPS)
-    p_away_vig = min(max(p_away_nv * TARGET_OVERROUND, _EPS), 1.0 - _EPS)
+    p_home_vig = min(max(p_home_nv * TARGET_OVERROUND, _MIN_IMPLIED_PROB), _MAX_IMPLIED_PROB)
+    p_away_vig = min(max(p_away_nv * TARGET_OVERROUND, _MIN_IMPLIED_PROB), _MAX_IMPLIED_PROB)
     return (_prob_to_american(p_home_vig), _prob_to_american(p_away_vig))
 
 

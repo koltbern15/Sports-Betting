@@ -3,6 +3,14 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 20:50 | Added two coverage tests to test_edge_report.py (NaN sort + ML std reconstruction) | tests/test_edge_report.py | 9 tests pass, ruff clean, committed 962a270 | ~300 |
+| 2026-05-29 slice5-T4 | Slice 5 complete: README reframed (Slice 4 superseded, Slice 5 added), cross_check comment updated, stale credible_edges.csv removed, pipeline ran end-to-end (edge_report.csv written, 28 buckets), wolf bookkeeping updated | README.md, scripts/cross_check_ats_totals.py, .wolf/anatomy.md, .wolf/memory.md, .wolf/cerebrum.md | 261 tests pass, ruff clean | ~2000 |
+
+| 2026-05-29 slice5-T2 | fix(moneyline): replaced _EPS clamp with _MAX/_MIN_IMPLIED_PROB clamping vigged prob to band mapping to +/-10000 American; added test_derive_ml_steep_spread_price_floors_near_minus_10000; 261 tests pass, ruff clean, committed bbcb57f | engine/moneyline.py, tests/test_moneyline.py | ~500 |
+| 2026-05-29 hardening | TDD guard: std_from_mean_ci returns NaN on inverted CI (ci_low > ci_high). 1 failing test added, guard `if half < 0: return math.nan` inserted, 260 tests pass, ruff clean. Committed ee990ba. | engine/stats_utils.py, tests/test_stats_utils.py | ~400 |
+| 2026-05-29 spec-fix | TDD guard fix: `not math.isfinite(std)` replaces `std != std` in mde_mean_at_power and mean_needed_for_ci — catches +inf as well as NaN, matching docstring 'non-finite' contract. 2 assertions added to test_mde_mean_at_power_bad_input_is_nan. 259 tests pass, ruff clean. Committed 263b87e. | engine/stats_utils.py, tests/test_stats_utils.py | ~800 |
+| 2026-05-29 slice5-T1 | Appended 6 pure stat helpers to engine/stats_utils.py (roi_from_win_prob, mde_winrate_at_power, winrate_needed_for_ci, mde_mean_at_power, mean_needed_for_ci, std_from_mean_ci); added 14 new golden-value tests + moved pytest to top-level import; removed inline `import pytest` from two existing tests to satisfy ruff. 48 tests pass in stats_utils; 259 total full suite. Committed c8b4dc8. | engine/stats_utils.py, tests/test_stats_utils.py | ~1800 |
+| audit | Full 4-agent audit (stats methodology / code correctness / data quality / tests+roadmap). KEY FINDING: "zero credible edges" is statistically TRUE but overclaimed — the Wilson-lower-bound>breakeven gate is so conservative it needs +6-20% ROI to clear at available bucket sizes, while real NFL edges are +1-3% ROI. Tests are underpowered; "zero survivors" is largely a foregone conclusion, not evidence no edge exists. Stats agent: CLV is right move (continuous=more power); per-game-state is a power trap (smaller cells). Data agent: CLV BLOCKED — no opening lines in schema, nflverse doesn't supply them. Code: 1 latent bug (moneyline.py:56-57 derived price -99999900 at spreads steeper than ~-24, silently understates ml_heavy_fav ROI); else clean, 245 tests pass. Tests: bootstrap only direction-tested (no golden values), no end-to-end producer->credible_edges contract test. DECISION: Slice 5 = honest-metrics reframe (continuous estimates + CI + power/MDE, drop binary gate). | (audit only, no file changes) | ~8000 |
 | 22:30 | Post-audit fixes: (1) playoff week remap added — was silently dropping 65 nflverse games per 5-season pull; ml_small_fav real ROI corrected from +1.03% to -0.36% (the Slice 3 candidate edge was an artifact); (2) market-aware ci_low threshold in credible_edges (0.5238 for ATS/totals win-rate, 0 for ML ROI); (3) bootstrap symmetric percentile indexing; (4) NFL ties skipped instead of double-loss; (5) cross-check multi-tolerance output. 245 tests pass, ruff clean. Headline still "zero buckets pass" but now for principled reasons. | engine/credible_edges.py, engine/stats_utils.py, engine/validation.py, ingestion/real_ml_source.py, scripts/cross_check_ats_totals.py | ~6000 |
 | 21:30 | Slice 4 finding: ZERO buckets cleared all 4 credibility thresholds (n>=100, ci_low>0, p<0.10, prof_seas>=0.60). ATS/totals fail p_value across the board; ML fails ci_low (bootstrap CI on real ROI crosses zero in every bucket including the n=562 ml_small_fav with real ROI +1.03% but ci_low -5.72%). Static bucket strategies don't survive scrutiny. Future +EV needs CLV/per-game-state/model-based signal. | data/processed/credible_edges.csv | ~3000 |
 | 20:30 | T9: appended compare_ml_prices orchestrator + BucketComparison + ValidationReport to engine/validation.py; 4 new integration tests; fixed E402/E501 ruff violations by consolidating imports to top of test file; fixed test assertion (fixture produces ml_big_fav not ml_heavy_fav/ml_mid_fav) | engine/validation.py, tests/test_validation.py | 11/11 tests pass, 221 total, ruff clean, committed 0ee3399 | ~2500 |
@@ -388,3 +396,63 @@
 | 20:53 | Edited README.md | 3→1 lines | ~125 |
 | 20:53 | Edited README.md | 9→9 lines | ~116 |
 | 20:53 | Edited README.md | 3→3 lines | ~127 |
+| 20:54 | Session end: 111 writes across 25 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 30 reads | ~101569 tok |
+| 20:55 | Session end: 111 writes across 25 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 30 reads | ~101569 tok |
+| 20:57 | Session end: 111 writes across 25 files (2026-05-27-nfl-betting-slice3-design.md, 2026-05-27-nfl-betting-slice3.md, 2026-05-27-nflverse-probe.md, test_db.py, db.py) | 30 reads | ~101569 tok |
+
+## Session: 2026-05-28 20:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-29 19:44
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-29 19:48
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-29 19:48
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-29 19:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:08 | Created docs/superpowers/specs/2026-05-29-nfl-betting-slice5-design.md | — | ~3468 |
+| 20:08 | Session end: 1 writes across 1 files (2026-05-29-nfl-betting-slice5-design.md) | 19 reads | ~42573 tok |
+| 20:19 | Created docs/superpowers/plans/2026-05-29-nfl-betting-slice5.md | — | ~10369 |
+| 20:20 | Session end: 2 writes across 2 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md) | 20 reads | ~55623 tok |
+| 20:22 | Edited tests/test_stats_utils.py | expanded (+6 lines) | ~92 |
+| 20:22 | Edited tests/test_stats_utils.py | modified test_bootstrap_pvalue_mean_gt_zero_seeded_deterministic() | ~904 |
+| 20:22 | Edited tests/test_stats_utils.py | added 1 import(s) | ~23 |
+| 20:22 | Edited tests/test_stats_utils.py | modified test_kelly_invalid_prob_raises() | ~21 |
+| 20:23 | Edited tests/test_stats_utils.py | modified test_bootstrap_mean_ci_empty_raises() | ~28 |
+| 20:23 | Edited engine/stats_utils.py | modified roi_from_win_prob() | ~1191 |
+| 20:28 | Edited tests/test_stats_utils.py | modified test_mde_mean_at_power_bad_input_is_nan() | ~79 |
+| 20:28 | Edited engine/stats_utils.py | 5→5 lines | ~52 |
+| 20:28 | Edited engine/stats_utils.py | 4→4 lines | ~42 |
+| 20:32 | Edited tests/test_stats_utils.py | modified test_std_from_mean_ci_bad_input_is_nan() | ~96 |
+| 20:32 | Edited engine/stats_utils.py | 2→4 lines | ~33 |
+| 20:33 | Edited tests/test_moneyline.py | 7→8 lines | ~48 |
+| 20:34 | Edited tests/test_moneyline.py | modified test_derive_ml_steep_spread_price_floors_near_minus_10000() | ~179 |
+| 20:34 | Edited engine/moneyline.py | 1→6 lines | ~121 |
+| 20:34 | Edited engine/moneyline.py | 2→2 lines | ~54 |
+| 20:38 | Edited engine/moneyline.py | 2→2 lines | ~43 |
+| 20:38 | Edited tests/test_moneyline.py | 1→6 lines | ~88 |
+| 20:41 | Created tests/test_edge_report.py | — | ~1649 |
+| 20:42 | Created engine/edge_report.py | — | ~2305 |
+| 20:44 | Task3 slice5: git mv credible_edges->edge_report, rewrote as measure-and-annotate, 7 tests pass, 259 full suite, ruff clean | engine/edge_report.py, tests/test_edge_report.py | commit de55b9a | ~3200 |
+| 20:50 | Edited tests/test_edge_report.py | modified test_nan_point_roi_sorts_to_end() | ~348 |
+| 20:52 | Edited scripts/cross_check_ats_totals.py | inline fix | ~15 |
+| 20:52 | Edited README.md | "credible_edges.csv" → "edge_report.csv" | ~73 |
+| 20:52 | Edited README.md | inline fix | ~58 |
+| 20:53 | Edited README.md | expanded (+12 lines) | ~651 |
+| 20:53 | Edited README.md | modified 4() | ~131 |
+| 21:00 | Edited README.md | inline fix | ~15 |
+| 21:00 | Session end: 28 writes across 10 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 30 reads | ~86833 tok |
