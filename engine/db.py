@@ -64,6 +64,20 @@ CREATE TABLE IF NOT EXISTS real_ml_lines (
 );
 
 CREATE INDEX IF NOT EXISTS idx_real_ml_lines_game ON real_ml_lines(game_id);
+
+CREATE TABLE IF NOT EXISTS opening_lines (
+    game_id          TEXT NOT NULL REFERENCES games(game_id),
+    source           TEXT NOT NULL CHECK (source IN ('sbr','aus')),
+    open_spread_home REAL,
+    open_total       REAL,
+    open_ml_home     INTEGER,
+    open_ml_away     INTEGER,
+    source_url       TEXT,
+    collected_at     TEXT,
+    PRIMARY KEY (game_id, source)
+);
+
+CREATE INDEX IF NOT EXISTS idx_opening_lines_game ON opening_lines(game_id);
 """
 
 

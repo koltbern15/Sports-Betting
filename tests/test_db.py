@@ -1,9 +1,10 @@
 import pandas as pd
+import pytest
 
 from engine.db import connect, fetch_df, init_schema
 
 
-def test_init_schema_creates_four_tables(memory_db):
+def test_init_schema_creates_all_tables(memory_db):
     init_schema(memory_db)
     tables = {
         row["name"]
@@ -11,7 +12,7 @@ def test_init_schema_creates_four_tables(memory_db):
             "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         ).fetchall()
     }
-    assert tables == {"games", "betting_lines", "team_divisions", "real_ml_lines"}
+    assert tables == {"games", "betting_lines", "team_divisions", "real_ml_lines", "opening_lines"}
 
 
 def test_init_schema_is_idempotent(memory_db):
@@ -23,7 +24,7 @@ def test_init_schema_is_idempotent(memory_db):
             "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         ).fetchall()
     }
-    assert tables == {"games", "betting_lines", "team_divisions", "real_ml_lines"}
+    assert tables == {"games", "betting_lines", "team_divisions", "real_ml_lines", "opening_lines"}
 
 
 def test_init_schema_seeds_team_divisions(memory_db):
@@ -83,4 +84,50 @@ def test_init_schema_real_ml_lines_idempotent():
     init_schema(conn)  # second call must not raise
     cursor = conn.execute("SELECT COUNT(*) FROM real_ml_lines")
     assert cursor.fetchone()[0] == 0
+    conn.close()
+
+
+def test_init_schema_creates_opening_lines_table():
+    conn = connect(":memory:")
+    init_schema(conn)
+    cur = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='opening_lines'"
+    )
+    assert cur.fetchone() is not None
+    conn.close()
+
+
+def test_opening_lines_composite_key_allows_two_sources_one_game():
+    conn = connect(":memory:")
+    init_schema(conn)
+    conn.execute(
+        "INSERT INTO games (game_id, season, week, game_date, home_team, away_team)"
+        " VALUES ('g1', 2015, 1, '2015-09-13', 'Dallas Cowboys', 'New York Giants')"
+    )
+    conn.execute(
+        "INSERT INTO opening_lines (game_id, source, open_spread_home, open_total)"
+        " VALUES ('g1','sbr',-3.0,47.0)"
+    )
+    conn.execute(
+        "INSERT INTO opening_lines (game_id, source, open_spread_home, open_total)"
+        " VALUES ('g1','aus',-3.5,47.5)"
+    )
+    n = conn.execute("SELECT COUNT(*) FROM opening_lines WHERE game_id='g1'").fetchone()[0]
+    assert n == 2
+    conn.close()
+
+
+def test_opening_lines_rejects_bad_source():
+    import sqlite3
+    conn = connect(":memory:")
+    init_schema(conn)
+    conn.execute(
+        "INSERT INTO games (game_id, season, week, game_date, home_team, away_team)"
+        " VALUES ('g1', 2015, 1, '2015-09-13', 'Dallas Cowboys', 'New York Giants')"
+    )
+    with pytest.raises(sqlite3.IntegrityError):
+        conn.execute(
+            "INSERT INTO opening_lines (game_id, source, open_spread_home)"
+            " VALUES ('g1','espn',-3.0)"
+        )
     conn.close()
