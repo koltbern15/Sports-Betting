@@ -159,6 +159,43 @@ Ingests historical NFL opening lines from two independent sources into the `open
 - Closer sanity: mean spread movement open→close is +0.12 pts (healthy near-zero), stdev 1.72 pts. Total stdev is elevated (7.74 raw) due to one corrupted SBR `open_total` (541.0, a 2007 Chicago Bears game); excluding it, open→close total movement stdev is ~1.8 pts — healthy. AUS is canonical for 2013+ so CLV is unaffected.
 - ML: AUS provides 5,144 opening ML rows; SBR provides 0 (not published). ML is back in via aussportsbetting.
 
+## Slice 7 — CLV engine + validation
+
+Computes per-game closing-line value (CLV) for spread and total markets, grades reference bets at the opener, buckets by CLV, and validates whether positive CLV predicts covering the opening number.
+
+**CLV definitions:**
+
+- `clv_spread = open_spread_home - close_spread_home` — positive means the close moved toward the home side (you opened on the sharp side of the home bet)
+- `clv_total = close_total - open_total` — positive means the close moved up (favoring the over)
+
+**Reference bets:** one per game per market — HOME at opener for spread, OVER at opener for total. Graded at the opening number, not the close.
+
+**Workflow:**
+
+    uv run python -m engine.clv
+
+Prints a per-bucket table to stdout and writes `data/processed/clv_report.csv`.
+
+**`clv_report.csv` columns:**
+
+| column | description |
+|---|---|
+| `market` | `spread` or `total` |
+| `clv_bucket` | `clv_le_neg2`, `clv_neg2_neg05`, `clv_pm05`, `clv_05_2`, `clv_gt_2` |
+| `n` | bets in bucket (pushes included in n, excluded from win_rate) |
+| `mean_clv` | average CLV in points for bets in this bucket |
+| `win_rate` | fraction of non-push bets that covered the opener |
+| `roi` | ROI at -110 odds (all bets including pushes in denominator) |
+| `ci_low` / `ci_high` | 95% Wilson CI on win rate, expressed in ROI units |
+| `p_value` | one-sided binomial p-value vs 52.38% breakeven |
+| `profitable_seasons_pct` | fraction of seasons where this bucket was profitable |
+| `mde80` | smallest true ROI edge detectable at 80% power for this n |
+| `breakeven_needed` | observed ROI needed for 95% CI lower bound to clear breakeven |
+
+**Headline finding (2026-05-30):** Win rate rises **perfectly monotonically** with CLV in both markets (spread: 39.9% → 44.7% → 51.9% → 55.3% → 57.6%; total: 36.4% → 47.4% → 51.7% → 53.9% → 57.2%). Positive-CLV buckets (`clv_05_2`, `clv_gt_2`) clear the 52.38% breakeven in both markets. The close is sharper than the open in this data — but this is a **signal test, not a strategy**: CLV is unknown until the line closes.
+
+See `docs/superpowers/notes/2026-05-30-clv-findings.md` for the full analysis including power assessment and ML follow-on recommendation.
+
 ## Scope
 
 - **Slice 1 (complete):** ingestion, schema, statistics utilities, ATS-by-spread-bucket analysis.
@@ -167,4 +204,5 @@ Ingests historical NFL opening lines from two independent sources into the `open
 - **Slice 4 (complete):** real-line statistical workup across all 3 markets; unified credible-edge ranker (binary gate; superseded by Slice 5).
 - **Slice 5 (complete):** honest edge report — continuous metrics + power/MDE context replacing the binary gate; derived-ML clamp bug fixed.
 - **Slice 6 (complete):** historical opening-line ingestion (aussportsbetting + SBR) into `opening_lines`, with a full data-quality audit. Foundation for CLV (Slice 7).
-- **Deferred to later slices:** closing-line-value (CLV) backtest, per-game-state filters, live odds + this-week pick generator, interactive dashboard.
+- **Slice 7 (complete):** CLV engine — per-game CLV (spread+total) + validation of whether positive CLV predicts covering the opener; honest-metrics shape. Signal test, not a strategy.
+- **Deferred to later slices:** ML-CLV extension (Slice 8 candidate), per-game-state filters, live odds + this-week pick generator, interactive dashboard.

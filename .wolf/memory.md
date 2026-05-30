@@ -3,6 +3,9 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 22:30 slice7-T3 | TDD: appended build_bets_from_db + write_clv_csv + _main to engine/clv.py; appended 3 new tests to tests/test_clv.py; fixed _seed INSERT OR IGNORE (games PK), ruff fixes (import sort, F401/F811, E501); 16 CLV tests pass, full suite green, ruff clean; committed 59d3f15 | engine/clv.py, tests/test_clv.py | ~800 |
+| 2026-05-30 slice7-T2 | TDD: appended ClvRow dataclass + aggregate_clv to engine/clv.py; appended 4 new tests to tests/test_clv.py; ruff caught unused ClvRow import in test file (removed); 13 CLV tests pass, full suite 309 pass, ruff clean; committed 860cd0a | engine/clv.py, tests/test_clv.py | ~600 |
+| 2026-05-30 slice7-T1 | TDD: created engine/clv.py (clv_spread, clv_total, clamp_ok_spread, clamp_ok_total, spread_bet_result, total_bet_result, clv_bucket, CLV_BUCKET_ORDER) + tests/test_clv.py (9 tests); removed unused `import math` from test file (cerebrum DNR); 9/9 CLV tests pass, full suite green, ruff clean; committed ea7844a | engine/clv.py, tests/test_clv.py | ~400 |
 | 2026-05-29 slice6-T8 | Slice 6 complete: created scripts/load_opening_lines.py; real load — SBR 3476 inserted/1 unmatched (15 seasons), AUS 5144 inserted/287 unmatched; overlap agreement spread 61%@tol0.5 / 75%@tol1.0, total 66%/82% (independent snapshots, expected); ML via AUS: 5144 rows; 296 tests pass, ruff clean; committed | scripts/load_opening_lines.py, README.md, docs/superpowers/notes/2026-05-29-opening-line-audit.md | ~2000 |
 | 2026-05-29 slice6-T7 | TDD: created tests/fixtures/aus_sample.xlsx (3-row fixture), tests/test_opening_line_aus.py (3 tests), ingestion/opening_line_aus.py (parse_aus_xlsx + load_local); real-file sanity: 5431 records, 5431 with_ml, 0 skips; 290 tests pass, ruff clean, committed a92543a | ingestion/opening_line_aus.py, tests/test_opening_line_aus.py, tests/fixtures/aus_sample.xlsx | ~600 |
 | 2026-05-29 slice6-QA | Quality review diff a76aae5..1b786e5 (T4+T5): 5 files, 473 insertions only. 11/11 tests pass, ruff clean. Math hand-verified correct. SQL column names validated against schema. Import-clean without DB. No issues found — spec compliant. | ingestion/opening_line_loader.py, tests/test_opening_line_loader.py, engine/opener_audit.py, tests/test_opener_audit.py, scripts/cross_check_openers.py | ~1500 |
@@ -505,3 +508,32 @@
 | 22:29 | Edited scripts/cross_check_openers.py | modified outliers() | ~346 |
 | 22:29 | Edited README.md | "_classify_pair" → "open_total" | ~87 |
 | 22:31 | Session end: 62 writes across 28 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 53 reads | ~149197 tok |
+| 22:34 | Session end: 62 writes across 28 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 53 reads | ~149197 tok |
+| 23:34 | Session end: 62 writes across 28 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 53 reads | ~149197 tok |
+| 07:55 | Created docs/superpowers/specs/2026-05-30-nfl-betting-slice7-design.md | — | ~2903 |
+| 07:55 | Session end: 63 writes across 29 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 53 reads | ~149121 tok |
+| 07:57 | Created ../../.claude/projects/C--Users-ktber-projects-sports-betting/memory/dashboard-priority-capstone.md | — | ~293 |
+| 07:57 | Created ../../.claude/projects/C--Users-ktber-projects-sports-betting/memory/MEMORY.md | — | ~47 |
+| 08:00 | Created docs/superpowers/plans/2026-05-30-nfl-betting-slice7.md | — | ~7400 |
+| 08:00 | Session end: 66 writes across 32 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 54 reads | ~155866 tok |
+| 18:17 | Created tests/test_clv.py | — | ~562 |
+| 18:18 | Created engine/clv.py | — | ~844 |
+| 18:18 | Edited tests/test_clv.py | 5→3 lines | ~18 |
+| 18:19 | quality-review slice7 CLV engine | engine/clv.py tests/test_clv.py | 9/9 pass, ruff clean, spec compliant | ~400 |
+| 18:21 | Edited tests/test_clv.py | 13→17 lines | ~87 |
+| 18:21 | Edited tests/test_clv.py | modified test_clv_bucket_edges() | ~655 |
+| 18:21 | Edited engine/clv.py | expanded (+8 lines) | ~98 |
+| 18:21 | Edited engine/clv.py | modified clv_bucket() | ~811 |
+| 18:22 | Edited tests/test_clv.py | 4→3 lines | ~19 |
+| 18:25 | Edited tests/test_clv.py | 16→19 lines | ~108 |
+| 18:25 | Edited tests/test_clv.py | modified test_aggregate_rows_sorted_market_then_bucket_order() | ~737 |
+| 18:25 | Edited engine/clv.py | added 4 import(s) | ~137 |
+| 18:26 | Edited engine/clv.py | modified _f() | ~1227 |
+| 18:26 | Edited tests/test_clv.py | modified _seed() | ~198 |
+| 18:26 | Edited engine/clv.py | inline fix | ~18 |
+| 18:26 | Edited tests/test_clv.py | 12→13 lines | ~67 |
+| 18:26 | Edited tests/test_clv.py | modified test_write_clv_csv_has_header_and_disclaimer() | ~166 |
+| 18:26 | Edited tests/test_clv.py | modified _seed() | ~208 |
+| 18:32 | Created docs/superpowers/notes/2026-05-30-clv-findings.md | — | ~1784 |
+| 18:32 | Edited README.md | modified finding() | ~903 |
+| 2026-05-30 slice7-T4 | Ran CLV engine on real DB (4570 spread + 4569 total bets); WIN RATE MONOTONIC in both markets — spread 39.9%→44.7%→51.9%→55.3%→57.6%, total 36.4%→47.4%→51.7%→53.9%→57.2%; positive-CLV buckets clear 52.38% breakeven in both; effect is real but borderline underpowered at tails (mde80~12% vs observed ~10% ROI for clv_gt_2); wrote clv findings note + README Slice 7 section + bookkeeping; 312 tests pass, ruff clean; committed | docs/superpowers/notes/2026-05-30-clv-findings.md, README.md, .wolf/memory.md, .wolf/cerebrum.md | ~3000 |
