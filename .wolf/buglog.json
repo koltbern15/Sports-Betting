@@ -353,6 +353,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-28T00:53:12.269Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-05-30T00:52:27.786Z",
+      "error_message": "Wrong reference: credible_edges should be edge_report",
+      "file": "scripts/cross_check_ats_totals.py",
+      "root_cause": "Used \"credible_edges\" instead of \"edge_report\"",
+      "fix": "Changed credible_edges → edge_report",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-30T00:52:27.786Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-05-30T00:52:32.853Z",
+      "error_message": "Incorrect value in code",
+      "file": "README.md",
+      "root_cause": "Had `credible_edges.csv`",
+      "fix": "Changed to `edge_report.csv`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-30T00:52:32.853Z"
     }
   ]
 }
