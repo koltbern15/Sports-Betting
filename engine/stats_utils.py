@@ -243,7 +243,7 @@ def mde_mean_at_power(
     for n observations with per-observation std `std`.  mde = (z_a + z_b)*std/sqrt(n).
     Returns NaN on n <= 0 or non-finite/negative std.
     """
-    if n <= 0 or std != std or std < 0:
+    if n <= 0 or not math.isfinite(std) or std < 0:
         return math.nan
     z_a = _norm.ppf(1.0 - alpha)
     z_b = _norm.ppf(power)
@@ -260,7 +260,7 @@ def mean_needed_for_ci(
     given n observations with per-observation std `std`.  needed = z*std/sqrt(n),
     z = norm.ppf(1 - alpha/2). Returns NaN on n <= 0 or non-finite/negative std.
     """
-    if n <= 0 or std != std or std < 0:
+    if n <= 0 or not math.isfinite(std) or std < 0:
         return math.nan
     z = _norm.ppf(1.0 - alpha / 2.0)
     return z * std / math.sqrt(n)

@@ -288,6 +288,8 @@ def test_mde_mean_at_power_closed_form():
 def test_mde_mean_at_power_bad_input_is_nan():
     assert math.isnan(mde_mean_at_power(0, 1.0))
     assert math.isnan(mde_mean_at_power(400, float("nan")))
+    assert math.isnan(mde_mean_at_power(400, float("inf")))
+    assert math.isnan(mean_needed_for_ci(400, float("inf")))
 
 
 # === mean_needed_for_ci ===
