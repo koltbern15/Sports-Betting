@@ -7,7 +7,7 @@ Outputs:
   - stdout: agreement %, sample sizes, top 10 worst disagreements per market
   - data/processed/kaggle_vs_nflverse_lines.csv: full per-game comparison
 
-Decision rule for downstream (engine.credible_edges):
+Decision rule for downstream (engine.edge_report):
   - If spread agreement >= 95% AND total agreement >= 95% -> keep Kaggle 2004-2024
   - Else -> narrow to 2020-2024 nflverse-confirmed
 
