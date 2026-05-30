@@ -310,3 +310,8 @@ def test_std_from_mean_ci_roundtrips_mean_needed():
 def test_std_from_mean_ci_bad_input_is_nan():
     assert math.isnan(std_from_mean_ci(float("nan"), 0.1, 400))
     assert math.isnan(std_from_mean_ci(-0.1, 0.1, 0))
+
+
+def test_std_from_mean_ci_inverted_interval_is_nan():
+    # ci_low > ci_high is bad input → NaN, not a negative std
+    assert math.isnan(std_from_mean_ci(0.2, 0.1, 100))

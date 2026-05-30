@@ -282,5 +282,7 @@ def std_from_mean_ci(
     if n <= 0 or ci_low != ci_low or ci_high != ci_high:
         return math.nan
     half = (ci_high - ci_low) / 2.0
+    if half < 0:
+        return math.nan
     z = _norm.ppf(1.0 - alpha / 2.0)
     return half * math.sqrt(n) / z
