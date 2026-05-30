@@ -14,7 +14,15 @@ Reference bets: spread = HOME at the opener; total = OVER at the opener.
 from __future__ import annotations
 
 import math
+from dataclasses import dataclass
+from statistics import mean
 
+from engine.bucket_analysis import compute_metrics
+from engine.stats_utils import (
+    mde_winrate_at_power,
+    roi_from_win_prob,
+    winrate_needed_for_ci,
+)
 from ingestion.loader import derive_ats_result, derive_total_result
 
 _SPREAD_CLAMP = 28.0
@@ -84,3 +92,70 @@ def clv_bucket(clv: float) -> str | None:
         if lo < clv <= hi:
             return label
     return None
+
+
+@dataclass(frozen=True)
+class ClvRow:
+    market: str  # 'spread' | 'total'
+    clv_bucket: str
+    n: int
+    wins: int
+    mean_clv: float
+    win_rate: float
+    roi: float  # roi_neg110 at the opener
+    ci_low: float  # ROI units (win-rate Wilson bound -> ROI)
+    ci_high: float
+    p_value: float
+    profitable_seasons_pct: float
+    mde80: float  # smallest detectable edge at this n (ROI)
+    breakeven_needed: float  # observed edge needed to clear breakeven CI (ROI)
+
+
+def aggregate_clv(bets: list[dict]) -> list[ClvRow]:
+    """Aggregate per-bet records into CLV-bucket report rows.
+
+    Each bet dict: {market, clv (float), result ('win'|'loss'|'push'), season (int)}.
+    Reuses compute_metrics for win rate / ROI / CI / p-value / by-season, then adds
+    mean_clv and the Slice 5 power columns. CIs are expressed in ROI for comparability.
+    """
+    groups: dict[tuple[str, str], list[dict]] = {}
+    for b in bets:
+        bucket = clv_bucket(b["clv"])
+        if bucket is None:
+            continue
+        groups.setdefault((b["market"], bucket), []).append(b)
+
+    rows: list[ClvRow] = []
+    for (market, bucket), items in groups.items():
+        wins = sum(1 for b in items if b["result"] == "win")
+        losses = sum(1 for b in items if b["result"] == "loss")
+        pushes = sum(1 for b in items if b["result"] == "push")
+        by_season_counts: dict[int, list[int]] = {}
+        for b in items:
+            if b["result"] in ("win", "loss"):
+                cur = by_season_counts.setdefault(b["season"], [0, 0])
+                cur[0] += 1 if b["result"] == "win" else 0
+                cur[1] += 1
+        by_season = {s: wl[0] / wl[1] for s, wl in by_season_counts.items() if wl[1] > 0}
+
+        m = compute_metrics(bucket, wins, losses, pushes, by_season)
+        rows.append(
+            ClvRow(
+                market=market,
+                clv_bucket=bucket,
+                n=m.n,
+                wins=m.wins,
+                mean_clv=mean(b["clv"] for b in items),
+                win_rate=m.win_rate,
+                roi=m.roi_neg110,
+                ci_low=roi_from_win_prob(m.ci_low),
+                ci_high=roi_from_win_prob(m.ci_high),
+                p_value=m.p_value,
+                profitable_seasons_pct=m.profitable_seasons_pct,
+                mde80=roi_from_win_prob(mde_winrate_at_power(m.n)),
+                breakeven_needed=roi_from_win_prob(winrate_needed_for_ci(m.n)),
+            )
+        )
+
+    rows.sort(key=lambda r: (r.market, CLV_BUCKET_ORDER.index(r.clv_bucket)))
+    return rows
