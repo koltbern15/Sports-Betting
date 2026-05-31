@@ -148,3 +148,27 @@ def fetch_odds(api_key: str | None = None) -> list[GameOdds]:
     Path("data/raw").mkdir(parents=True, exist_ok=True)
     Path("data/raw/odds_api_latest.json").write_text(json.dumps(payload), encoding="utf-8")
     return parse_odds_payload(payload)
+
+
+def _main() -> int:
+    from datetime import UTC, datetime
+
+    from engine.db import connect, init_schema
+    from ingestion.live_odds_store import store_snapshot
+
+    try:
+        games = fetch_odds()
+    except RuntimeError as e:
+        print(f"ERROR: {e}")
+        return 1
+    conn = connect("data/db/nfl_betting.sqlite")
+    init_schema(conn)
+    now = datetime.now(UTC).isoformat(timespec="seconds")
+    n = store_snapshot(conn, games, captured_at=now)
+    conn.close()
+    print(f"Fetched {len(games)} games; stored {n} consensus snapshots at {now}.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main())

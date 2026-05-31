@@ -1,0 +1,55 @@
+"""Render the This Week board (thin view over engine.this_week.build_board)."""
+
+from __future__ import annotations
+
+import streamlit as st
+
+from app.theme import HONESTY_BANNER
+from engine.this_week import ThisWeekGame
+
+
+def _fmt_best(b) -> str:
+    if b is None:
+        return "—"
+    book, point, price = b
+    sign = "+" if price > 0 else ""
+    pt = "" if point is None else f"{point:+g} @ "
+    return f"{pt}{sign}{price} ({book})"
+
+
+def _move_html(move) -> str:
+    if move is None:
+        return '<span class="twg-ctx">no opener captured yet</span>'
+    cls = "twg-move-down" if move < 0 else "twg-move-up"
+    arrow = "▼" if move < 0 else "▲"
+    return f'<span class="{cls}">{arrow} {move:+g} since open</span>'
+
+
+def render(board: list[ThisWeekGame]) -> None:
+    st.markdown(f'<div class="twg-banner">{HONESTY_BANNER}</div>', unsafe_allow_html=True)
+    if not board:
+        st.info("No upcoming games / no odds captured yet. Pull odds with "
+                "`uv run python -m ingestion.live_odds` (needs ODDS_API_KEY).")
+        return
+    st.caption(f"{len(board)} upcoming games · sorted by biggest line move")
+    for g in board:
+        spread_ctx = (f" · historical: {g.spread_ctx['win_rate']:.1%} cover "
+                      f"(n={g.spread_ctx['n']}, not certified)") if g.spread_ctx else ""
+        st.markdown(
+            f'<div class="twg-card">'
+            f'<div class="twg-matchup">{g.matchup}</div>'
+            f'<div class="twg-time">{g.commence_time}</div>'
+            f'<div style="margin-top:8px">'
+            f'<b>Spread</b> (home): consensus {g.cons_spread_home:+g} · '
+            f'best home <span class="twg-best">{_fmt_best(g.best_spread_home)}</span> · '
+            f'best away <span class="twg-best">{_fmt_best(g.best_spread_away)}</span> · '
+            f'{_move_html(g.spread_move)}<span class="twg-ctx">{spread_ctx}</span></div>'
+            f'<div><b>Total</b>: consensus {g.cons_total:g} · '
+            f'best over <span class="twg-best">{_fmt_best(g.best_total_over)}</span> · '
+            f'best under <span class="twg-best">{_fmt_best(g.best_total_under)}</span></div>'
+            f'<div><b>Moneyline</b>: best home '
+            f'<span class="twg-best">{_fmt_best(g.best_ml_home)}</span> · '
+            f'best away <span class="twg-best">{_fmt_best(g.best_ml_away)}</span></div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
