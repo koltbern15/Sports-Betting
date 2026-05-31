@@ -595,3 +595,5 @@
 | 22:18 | Edited app/this_week_view.py | 2→3 lines | ~61 |
 | 22:25 | Created data/raw/odds_api_latest.json | — | ~2761 |
 | 22:25 | Edited README.md | modified 1() | ~1034 |
+| 22:30 | Edited README.md | inline fix | ~15 |
+| 22:30 | Edited README.md | inline fix | ~105 |

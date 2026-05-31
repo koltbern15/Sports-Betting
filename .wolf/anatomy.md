@@ -1,14 +1,14 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-31T00:53:23.590Z
-> Files: 525 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-31T02:30:49.367Z
+> Files: 553 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~113 tok)
+- `.gitignore` — Git ignore rules (~171 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `pyproject.toml` — Python project configuration (~181 tok)
-- `README.md` — Project documentation (~3435 tok)
+- `README.md` — Project documentation (~4198 tok)
 
 ## .claude/
 
@@ -43,6 +43,19 @@
 - `4984603096342604088` (~116 tok)
 - `5097575850762102353` (~128 tok)
 - `7326634881096271668` (~23 tok)
+
+## .streamlit/
+
+- `config.toml` (~42 tok)
+- `config.toml` — Streamlit theme config: dark base, primaryColor #6c8cff, backgroundColor #14161c. (~50 tok)
+
+## .superpowers/brainstorm/965-1780189118/content/
+
+- `finding-tab.html` (~1834 tok)
+- `layout.html` (~1138 tok)
+- `visual-style.html` (~1368 tok)
+- `waiting.html` (~77 tok)
+- `welcome.html` (~257 tok)
 
 ## .venv/
 
@@ -707,3 +720,48 @@
 - `arrayprint.py` — Array printing function (~19158 tok)
 - `arrayprint.pyi` — Using a private class is by no means ideal, but it is simply a consequence (~1251 tok)
 - `cversions.py` — Simple script to compute the api hash of the current API. (~103 tok)
+
+## app/
+
+- `__init__.py` (~0 tok)
+- `__init__.py` — Empty package init. (~0 tok)
+- `main.py` — NFL Betting Analytics — live This Week odds board (Streamlit entry point). (~360 tok)
+- `main.py` — Streamlit entry point: NFL This Week odds board. Loads board from data/raw/odds_api_latest.json (no live call), calls render_this_week. (~200 tok)
+- `theme.py` — Refined-dark CSS polish injected into the Streamlit app. (~355 tok)
+- `theme.py` — Refined-dark CSS injection (inject()) + HONESTY_BANNER constant for the Streamlit app. (~150 tok)
+- `this_week_view.py` — Render the This Week board (thin view over engine.this_week.build_board). (~690 tok)
+- `this_week_view.py` — Streamlit view for the This Week board: render(board), _fmt_best, _move_html helpers. (~250 tok)
+
+## data/raw/
+
+- `odds_api_latest.json` (~2761 tok)
+
+## docs/superpowers/plans/
+
+- `2026-05-30-nfl-betting-slice8.md` — NFL Betting Analytics — Slice 8: Live "This Week" Odds Board — Implementation Plan (~9925 tok)
+
+## docs/superpowers/specs/
+
+- `2026-05-30-nfl-betting-slice8-design.md` — NFL Betting Analytics — Slice 8: Live "This Week" Odds Board (~2873 tok)
+
+## engine/
+
+- `db.py` — SQLite connection + schema management for the betting analytics DB. (~1201 tok)
+- `this_week.py` — Build the 'This Week' board from current GameOdds + stored opener consensus. (~1021 tok)
+
+## ingestion/
+
+- `live_odds_store.py` — Persist live-odds consensus snapshots and read opener (earliest) / current (latest). (~576 tok)
+- `live_odds.py` — The Odds API client for live NFL odds. (~1824 tok)
+
+## tests/
+
+- `test_app_smoke.py` — Smoke test: the Streamlit app boots and renders without error (no live network). (~108 tok)
+- `test_db.py` — test_init_schema_creates_all_tables, test_init_schema_is_idempotent, test_init_schema_seeds_team_div (~1557 tok)
+- `test_live_odds_store.py` — test_store_and_read_opener_vs_current, test_store_returns_count (~413 tok)
+- `test_live_odds.py` — Tests for ingestion.live_odds — parse a saved Odds API payload (no network). (~502 tok)
+- `test_this_week.py` — test_historical_spread_context_looks_up_bucket, test_build_board_movement_and_best_price, test_build (~668 tok)
+
+## tests/fixtures/
+
+- `odds_api_sample.json` (~368 tok)
