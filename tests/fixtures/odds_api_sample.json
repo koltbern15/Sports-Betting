@@ -1,0 +1,32 @@
+[
+  {
+    "id": "evt1",
+    "commence_time": "2026-09-07T17:00:00Z",
+    "home_team": "Kansas City Chiefs",
+    "away_team": "Buffalo Bills",
+    "bookmakers": [
+      {"key": "draftkings", "title": "DraftKings", "markets": [
+        {"key": "spreads", "outcomes": [
+          {"name": "Kansas City Chiefs", "price": -110, "point": -2.5},
+          {"name": "Buffalo Bills", "price": -110, "point": 2.5}]},
+        {"key": "totals", "outcomes": [
+          {"name": "Over", "price": -110, "point": 48.5},
+          {"name": "Under", "price": -110, "point": 48.5}]},
+        {"key": "h2h", "outcomes": [
+          {"name": "Kansas City Chiefs", "price": -140},
+          {"name": "Buffalo Bills", "price": 120}]}
+      ]},
+      {"key": "fanduel", "title": "FanDuel", "markets": [
+        {"key": "spreads", "outcomes": [
+          {"name": "Kansas City Chiefs", "price": -108, "point": -3.0},
+          {"name": "Buffalo Bills", "price": -112, "point": 3.0}]},
+        {"key": "totals", "outcomes": [
+          {"name": "Over", "price": -105, "point": 49.0},
+          {"name": "Under", "price": -115, "point": 49.0}]},
+        {"key": "h2h", "outcomes": [
+          {"name": "Kansas City Chiefs", "price": -150},
+          {"name": "Buffalo Bills", "price": 130}]}
+      ]}
+    ]
+  }
+]
