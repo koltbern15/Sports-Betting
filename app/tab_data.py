@@ -15,8 +15,9 @@ def render() -> None:
     c1.metric("Opening-line rows", f"{s['opening_rows_total']:,}")
     c2.metric("Cross-source agree (spread, ±1pt)", f"{s['overlap_spread_within_1pt']:.0%}")
     c3.metric("Cross-source agree (total, ±1pt)", f"{s['overlap_total_within_1pt']:.0%}")
-    st.caption(f"Two independent opening-line sources agree on ~{s['overlap_games']:,} overlap "
-               "games (2013–2021). Sub-100% is expected — openers vary across books/timestamps.")
+    st.caption(f"Agreement measured across ~{s['overlap_games']:,} games where both opening-line "
+               "sources overlap (2013–2021). Sub-100% is expected — openers vary across "
+               "books/timestamps.")
 
     st.markdown("##### Data sources")
     st.dataframe(pd.DataFrame(s["sources"]), use_container_width=True, hide_index=True)
