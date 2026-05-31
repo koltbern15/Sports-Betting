@@ -3,8 +3,8 @@
   "started": "2026-05-29T23:57:52.910Z",
   "files_read": {
     "C:/Users/ktber/projects/sports-betting/engine/ats.py": {
-      "count": 3,
-      "tokens": 1066,
+      "count": 4,
+      "tokens": 0,
       "first_read": "2026-05-29T23:58:18.994Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/bucket_analysis.py": {
@@ -13,7 +13,7 @@
       "first_read": "2026-05-29T23:58:19.181Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/totals.py": {
-      "count": 2,
+      "count": 3,
       "tokens": 0,
       "first_read": "2026-05-29T23:58:19.410Z"
     },
@@ -38,13 +38,13 @@
       "first_read": "2026-05-29T23:58:23.086Z"
     },
     "C:/Users/ktber/projects/sports-betting/README.md": {
-      "count": 12,
-      "tokens": 0,
+      "count": 14,
+      "tokens": 4115,
       "first_read": "2026-05-29T23:58:23.240Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/db.py": {
-      "count": 9,
-      "tokens": 0,
+      "count": 13,
+      "tokens": 1201,
       "first_read": "2026-05-29T23:58:26.847Z"
     },
     "C:/Users/ktber/projects/sports-betting/engine/stats_utils.py": {
@@ -163,8 +163,8 @@
       "first_read": "2026-05-30T01:07:09.501Z"
     },
     "C:/Users/ktber/projects/sports-betting/pyproject.toml": {
-      "count": 2,
-      "tokens": 0,
+      "count": 4,
+      "tokens": 181,
       "first_read": "2026-05-30T01:25:08.543Z"
     },
     "C:/Users/ktber/projects/sports-betting/docs/superpowers/specs/2026-05-29-nfl-betting-slice6-design.md": {
@@ -178,8 +178,8 @@
       "first_read": "2026-05-30T01:30:26.543Z"
     },
     "C:/Users/ktber/projects/sports-betting/tests/test_db.py": {
-      "count": 3,
-      "tokens": 1235,
+      "count": 5,
+      "tokens": 1557,
       "first_read": "2026-05-30T01:47:08.190Z"
     },
     "C:/Users/ktber/projects/sports-betting/docs/superpowers/notes/2026-05-29-opening-line-probe.md": {
@@ -318,9 +318,89 @@
       "first_read": "2026-05-31T00:43:52.824Z"
     },
     "C:/Users/ktber/projects/sports-betting/.gitignore": {
+      "count": 4,
+      "tokens": 171,
+      "first_read": "2026-05-31T00:52:19.944Z"
+    },
+    "C:/Users/ktber/.claude/plugins/cache/superpowers-marketplace/superpowers/5.1.0/skills/brainstorming/visual-companion.md": {
       "count": 1,
       "tokens": 0,
-      "first_read": "2026-05-31T00:52:19.944Z"
+      "first_read": "2026-05-31T00:58:08.543Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/ingestion/live_odds.py": {
+      "count": 7,
+      "tokens": 1824,
+      "first_read": "2026-05-31T02:05:46.046Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/tests/test_live_odds.py": {
+      "count": 1,
+      "tokens": 502,
+      "first_read": "2026-05-31T02:05:46.430Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/tests/fixtures/odds_api_sample.json": {
+      "count": 3,
+      "tokens": 368,
+      "first_read": "2026-05-31T02:05:46.681Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/ingestion/live_odds_store.py": {
+      "count": 1,
+      "tokens": 576,
+      "first_read": "2026-05-31T02:13:30.222Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/engine/this_week.py": {
+      "count": 2,
+      "tokens": 1021,
+      "first_read": "2026-05-31T02:13:30.620Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/tests/test_live_odds_store.py": {
+      "count": 1,
+      "tokens": 413,
+      "first_read": "2026-05-31T02:13:30.994Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/tests/test_this_week.py": {
+      "count": 1,
+      "tokens": 668,
+      "first_read": "2026-05-31T02:13:31.432Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/app/main.py": {
+      "count": 2,
+      "tokens": 360,
+      "first_read": "2026-05-31T02:22:05.474Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/app/theme.py": {
+      "count": 1,
+      "tokens": 355,
+      "first_read": "2026-05-31T02:22:05.833Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/app/this_week_view.py": {
+      "count": 1,
+      "tokens": 690,
+      "first_read": "2026-05-31T02:22:06.240Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/tests/test_app_smoke.py": {
+      "count": 1,
+      "tokens": 108,
+      "first_read": "2026-05-31T02:22:06.328Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/.env.example": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-31T02:22:08.862Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/.streamlit/config.toml": {
+      "count": 1,
+      "tokens": 42,
+      "first_read": "2026-05-31T02:22:09.579Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/docs/superpowers/specs/2026-05-30-nfl-betting-slice8-design.md": {
+      "count": 1,
+      "tokens": 2873,
+      "first_read": "2026-05-31T02:27:53.725Z"
+    },
+    "C:/Users/ktber/projects/sports-betting/docs/superpowers/plans/2026-05-30-nfl-betting-slice8.md": {
+      "count": 1,
+      "tokens": 9925,
+      "first_read": "2026-05-31T02:27:54.650Z"
     }
   },
   "files_written": [
@@ -851,6 +931,234 @@
       "action": "edit",
       "tokens": 50,
       "at": "2026-05-31T00:53:16.147Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.gitignore",
+      "action": "edit",
+      "tokens": 20,
+      "at": "2026-05-31T00:58:39.023Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.superpowers/brainstorm/965-1780189118/content/welcome.html",
+      "action": "create",
+      "tokens": 276,
+      "at": "2026-05-31T00:59:25.765Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.superpowers/brainstorm/965-1780189118/content/layout.html",
+      "action": "create",
+      "tokens": 1219,
+      "at": "2026-05-31T01:00:59.575Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.superpowers/brainstorm/965-1780189118/content/visual-style.html",
+      "action": "create",
+      "tokens": 1466,
+      "at": "2026-05-31T01:06:00.868Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.superpowers/brainstorm/965-1780189118/content/finding-tab.html",
+      "action": "create",
+      "tokens": 1965,
+      "at": "2026-05-31T01:07:22.913Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.superpowers/brainstorm/965-1780189118/content/waiting.html",
+      "action": "create",
+      "tokens": 83,
+      "at": "2026-05-31T01:08:36.981Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/docs/superpowers/specs/2026-05-30-nfl-betting-slice8-design.md",
+      "action": "create",
+      "tokens": 3284,
+      "at": "2026-05-31T01:30:50.845Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/docs/superpowers/plans/2026-05-30-nfl-betting-slice8.md",
+      "action": "create",
+      "tokens": 11342,
+      "at": "2026-05-31T01:35:57.684Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_db.py",
+      "action": "edit",
+      "tokens": 399,
+      "at": "2026-05-31T01:59:51.430Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/db.py",
+      "action": "edit",
+      "tokens": 165,
+      "at": "2026-05-31T02:00:00.335Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_db.py",
+      "action": "edit",
+      "tokens": 174,
+      "at": "2026-05-31T02:00:08.524Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/fixtures/odds_api_sample.json",
+      "action": "create",
+      "tokens": 368,
+      "at": "2026-05-31T02:03:03.368Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_live_odds.py",
+      "action": "create",
+      "tokens": 505,
+      "at": "2026-05-31T02:03:13.288Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/ingestion/live_odds.py",
+      "action": "create",
+      "tokens": 1633,
+      "at": "2026-05-31T02:03:42.876Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_live_odds.py",
+      "action": "edit",
+      "tokens": 15,
+      "at": "2026-05-31T02:04:19.012Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/ingestion/live_odds.py",
+      "action": "edit",
+      "tokens": 39,
+      "at": "2026-05-31T02:04:19.835Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_live_odds_store.py",
+      "action": "create",
+      "tokens": 413,
+      "at": "2026-05-31T02:07:14.191Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/ingestion/live_odds_store.py",
+      "action": "create",
+      "tokens": 570,
+      "at": "2026-05-31T02:07:28.797Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/ingestion/live_odds_store.py",
+      "action": "edit",
+      "tokens": 72,
+      "at": "2026-05-31T02:07:39.927Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_this_week.py",
+      "action": "create",
+      "tokens": 667,
+      "at": "2026-05-31T02:10:46.747Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/this_week.py",
+      "action": "create",
+      "tokens": 1015,
+      "at": "2026-05-31T02:11:08.739Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/engine/this_week.py",
+      "action": "edit",
+      "tokens": 36,
+      "at": "2026-05-31T02:11:35.845Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_this_week.py",
+      "action": "edit",
+      "tokens": 20,
+      "at": "2026-05-31T02:11:38.931Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_this_week.py",
+      "action": "edit",
+      "tokens": 65,
+      "at": "2026-05-31T02:11:42.259Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.gitignore",
+      "action": "edit",
+      "tokens": 60,
+      "at": "2026-05-31T02:16:34.299Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/.streamlit/config.toml",
+      "action": "create",
+      "tokens": 44,
+      "at": "2026-05-31T02:16:43.831Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_app_smoke.py",
+      "action": "create",
+      "tokens": 107,
+      "at": "2026-05-31T02:16:51.631Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/tests/test_app_smoke.py",
+      "action": "edit",
+      "tokens": 39,
+      "at": "2026-05-31T02:17:18.276Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/app/__init__.py",
+      "action": "create",
+      "tokens": 0,
+      "at": "2026-05-31T02:17:23.547Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/app/theme.py",
+      "action": "create",
+      "tokens": 355,
+      "at": "2026-05-31T02:17:31.614Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/app/this_week_view.py",
+      "action": "create",
+      "tokens": 685,
+      "at": "2026-05-31T02:17:45.588Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/app/main.py",
+      "action": "create",
+      "tokens": 360,
+      "at": "2026-05-31T02:17:54.686Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/ingestion/live_odds.py",
+      "action": "edit",
+      "tokens": 418,
+      "at": "2026-05-31T02:18:06.436Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/app/this_week_view.py",
+      "action": "edit",
+      "tokens": 61,
+      "at": "2026-05-31T02:18:35.264Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/data/raw/odds_api_latest.json",
+      "action": "create",
+      "tokens": 2761,
+      "at": "2026-05-31T02:25:15.544Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/README.md",
+      "action": "edit",
+      "tokens": 1108,
+      "at": "2026-05-31T02:25:57.773Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/README.md",
+      "action": "edit",
+      "tokens": 16,
+      "at": "2026-05-31T02:30:43.513Z"
+    },
+    {
+      "file": "C:/Users/ktber/projects/sports-betting/README.md",
+      "action": "edit",
+      "tokens": 113,
+      "at": "2026-05-31T02:30:49.394Z"
     }
   ],
   "edit_counts": {
@@ -863,12 +1171,12 @@
     "tests/test_edge_report.py": 2,
     "engine/edge_report.py": 1,
     "scripts/cross_check_ats_totals.py": 1,
-    "README.md": 9,
+    "README.md": 12,
     "docs/superpowers/specs/2026-05-29-nfl-betting-slice6-design.md": 3,
     "docs/superpowers/plans/2026-05-29-nfl-betting-slice6.md": 1,
     "docs/superpowers/notes/2026-05-29-opening-line-probe.md": 2,
-    "tests/test_db.py": 6,
-    "engine/db.py": 1,
+    "tests/test_db.py": 8,
+    "engine/db.py": 2,
     "tests/test_opening_line_common.py": 2,
     "ingestion/opening_line_common.py": 1,
     "tests/test_opening_line_loader.py": 4,
@@ -889,11 +1197,32 @@
     "tests/test_clv.py": 11,
     "engine/clv.py": 6,
     "docs/superpowers/notes/2026-05-30-clv-findings.md": 1,
-    ".gitignore": 2
+    ".gitignore": 4,
+    ".superpowers/brainstorm/965-1780189118/content/welcome.html": 1,
+    ".superpowers/brainstorm/965-1780189118/content/layout.html": 1,
+    ".superpowers/brainstorm/965-1780189118/content/visual-style.html": 1,
+    ".superpowers/brainstorm/965-1780189118/content/finding-tab.html": 1,
+    ".superpowers/brainstorm/965-1780189118/content/waiting.html": 1,
+    "docs/superpowers/specs/2026-05-30-nfl-betting-slice8-design.md": 1,
+    "docs/superpowers/plans/2026-05-30-nfl-betting-slice8.md": 1,
+    "tests/fixtures/odds_api_sample.json": 1,
+    "tests/test_live_odds.py": 2,
+    "ingestion/live_odds.py": 3,
+    "tests/test_live_odds_store.py": 1,
+    "ingestion/live_odds_store.py": 2,
+    "tests/test_this_week.py": 3,
+    "engine/this_week.py": 2,
+    ".streamlit/config.toml": 1,
+    "tests/test_app_smoke.py": 2,
+    "app/__init__.py": 1,
+    "app/theme.py": 1,
+    "app/this_week_view.py": 2,
+    "app/main.py": 1,
+    "data/raw/odds_api_latest.json": 1
   },
-  "anatomy_hits": 45,
-  "anatomy_misses": 19,
-  "repeated_reads_warned": 150,
+  "anatomy_hits": 59,
+  "anatomy_misses": 21,
+  "repeated_reads_warned": 175,
   "cerebrum_warnings": 0,
-  "stop_count": 17
+  "stop_count": 27
 }

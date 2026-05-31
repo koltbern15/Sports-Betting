@@ -465,6 +465,70 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-31T00:53:07.908Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-05-31T02:04:19.023Z",
+      "error_message": "Wrong reference: GameOdds should be parse_odds_payload",
+      "file": "tests/test_live_odds.py",
+      "root_cause": "Used \"GameOdds\" instead of \"parse_odds_payload\"",
+      "fix": "Changed GameOdds → parse_odds_payload",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T02:04:19.023Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-05-31T02:04:19.848Z",
+      "error_message": "Incorrect value in code",
+      "file": "ingestion/live_odds.py",
+      "root_cause": "Had \")), o.get(\"",
+      "fix": "Changed to \"))\n                    out.append((title, o.get(\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T02:04:19.848Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-05-31T02:17:18.288Z",
+      "error_message": "Incorrect value in code",
+      "file": "tests/test_app_smoke.py",
+      "root_cause": "Had \"app/main.py\"",
+      "fix": "Changed to \"../app/main.py\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T02:17:18.288Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-05-31T02:18:35.274Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/this_week_view.py",
+      "root_cause": "Had '<div><b>Moneyline</b>: best home <span class=\"",
+      "fix": "Changed to '<div><b>Moneyline</b>: best home '",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T02:18:35.274Z"
     }
   ]
 }

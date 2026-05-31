@@ -16,6 +16,9 @@ data/processed/*
 data/db/*
 !data/db/.gitkeep
 
+# Brainstorm visual-companion working files
+.superpowers/
+
 # IDE / OS
 .vscode/
 .idea/
@@ -23,3 +26,10 @@ data/db/*
 Thumbs.db
 
 # uv (lockfile tracked for reproducible installs)
+
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Live odds cache (churny artifact written by fetch_odds; data/raw is otherwise tracked)
+data/raw/odds_api_latest.json
