@@ -12,7 +12,10 @@ def test_init_schema_creates_all_tables(memory_db):
             "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         ).fetchall()
     }
-    assert tables == {"games", "betting_lines", "team_divisions", "real_ml_lines", "opening_lines"}
+    assert tables == {
+        "games", "betting_lines", "team_divisions", "real_ml_lines",
+        "opening_lines", "live_odds_snapshots",
+    }
 
 
 def test_init_schema_is_idempotent(memory_db):
@@ -24,7 +27,10 @@ def test_init_schema_is_idempotent(memory_db):
             "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         ).fetchall()
     }
-    assert tables == {"games", "betting_lines", "team_divisions", "real_ml_lines", "opening_lines"}
+    assert tables == {
+        "games", "betting_lines", "team_divisions", "real_ml_lines",
+        "opening_lines", "live_odds_snapshots",
+    }
 
 
 def test_init_schema_seeds_team_divisions(memory_db):
@@ -130,4 +136,29 @@ def test_opening_lines_rejects_bad_source():
             "INSERT INTO opening_lines (game_id, source, open_spread_home)"
             " VALUES ('g1','espn',-3.0)"
         )
+    conn.close()
+
+
+def test_init_schema_creates_live_odds_snapshots():
+    conn = connect(":memory:")
+    init_schema(conn)
+    cur = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='live_odds_snapshots'"
+    )
+    assert cur.fetchone() is not None
+    conn.close()
+
+
+def test_live_odds_snapshots_accepts_rows():
+    conn = connect(":memory:")
+    init_schema(conn)
+    conn.execute(
+        "INSERT INTO live_odds_snapshots"
+        " (captured_at, game_key, commence_time, home_team, away_team,"
+        "  cons_spread_home, cons_total, cons_ml_home, cons_ml_away)"
+        " VALUES ('2026-09-01T12:00:00Z','2026-09-07_BUF_at_KC','2026-09-07T17:00:00Z',"
+        "         'Kansas City Chiefs','Buffalo Bills',-2.5,48.5,-140,120)"
+    )
+    n = conn.execute("SELECT COUNT(*) FROM live_odds_snapshots").fetchone()[0]
+    assert n == 1
     conn.close()

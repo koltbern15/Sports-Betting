@@ -78,6 +78,21 @@ CREATE TABLE IF NOT EXISTS opening_lines (
 );
 
 CREATE INDEX IF NOT EXISTS idx_opening_lines_game ON opening_lines(game_id);
+
+CREATE TABLE IF NOT EXISTS live_odds_snapshots (
+    snapshot_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+    captured_at      TEXT NOT NULL,
+    game_key         TEXT NOT NULL,
+    commence_time    TEXT NOT NULL,
+    home_team        TEXT NOT NULL,
+    away_team        TEXT NOT NULL,
+    cons_spread_home REAL,
+    cons_total       REAL,
+    cons_ml_home     INTEGER,
+    cons_ml_away     INTEGER
+);
+
+CREATE INDEX IF NOT EXISTS idx_live_odds_game ON live_odds_snapshots(game_key, captured_at);
 """
 
 
