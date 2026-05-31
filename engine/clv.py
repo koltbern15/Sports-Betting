@@ -181,11 +181,14 @@ def _f(v) -> float | None:
     return None if v is None or (isinstance(v, float) and math.isnan(v)) else float(v)
 
 
-def build_bets_from_db(conn: sqlite3.Connection) -> list[dict]:
+def build_bets_from_db(conn: sqlite3.Connection, grade_at: str = "open") -> list[dict]:
     """Build per-game reference-bet records (spread + total) using the canonical opener.
 
     Picks the canonical opener source per game, applies the sanity clamp per market,
-    computes CLV, and grades each bet at the OPENING number.
+    computes CLV (always open vs close), and grades each bet at `grade_at`:
+    'open' (default — the price you'd have taken) or 'close' (the sharper line).
+    Grading at 'close' makes the CLV->result signal vanish — used to prove the
+    open-graded signal is real, not a CLV/grade artifact.
     """
     df = pd.read_sql_query(_JOIN_SQL, conn)
     bets: list[dict] = []
@@ -202,7 +205,8 @@ def build_bets_from_db(conn: sqlite3.Connection) -> list[dict]:
         open_sp = _f(row["open_spread_home"])
         close_sp = _f(row["spread_home_close"])
         if clamp_ok_spread(open_sp) and clamp_ok_spread(close_sp):
-            res = spread_bet_result(hs, as_, open_sp)
+            graded_sp = open_sp if grade_at == "open" else close_sp
+            res = spread_bet_result(hs, as_, graded_sp)
             if res is not None:
                 bets.append({"market": "spread", "clv": clv_spread(open_sp, close_sp),
                              "result": res, "season": season})
@@ -210,7 +214,8 @@ def build_bets_from_db(conn: sqlite3.Connection) -> list[dict]:
         open_tot = _f(row["open_total"])
         close_tot = _f(row["total_close"])
         if clamp_ok_total(open_tot) and clamp_ok_total(close_tot):
-            res = total_bet_result(hs, as_, open_tot)
+            graded_tot = open_tot if grade_at == "open" else close_tot
+            res = total_bet_result(hs, as_, graded_tot)
             if res is not None:
                 bets.append({"market": "total", "clv": clv_total(open_tot, close_tot),
                              "result": res, "season": season})

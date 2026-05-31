@@ -529,6 +529,102 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-31T02:18:35.274Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-05-31T04:16:27.933Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/main.py",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 13→19 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T04:16:27.933Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-05-31T04:17:43.809Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/theme.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 6→7 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T04:17:43.809Z"
+    },
+    {
+      "id": "bug-036",
+      "timestamp": "2026-05-31T04:41:02.682Z",
+      "error_message": "Significant refactor of ",
+      "file": "tests/test_app_data.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 11→18 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T04:41:02.682Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-05-31T04:48:20.688Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/main.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 7→17 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T04:48:20.688Z"
+    },
+    {
+      "id": "bug-038",
+      "timestamp": "2026-05-31T04:58:09.691Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/charts.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 18→23 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T04:58:09.691Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-05-31T05:06:35.956Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/tab_data.py",
+      "root_cause": "Had \"Two independent opening-line sources agree on ~{s",
+      "fix": "Changed to \"Agreement measured across ~{s['",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T05:06:35.956Z"
     }
   ]
 }

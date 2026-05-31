@@ -189,3 +189,26 @@ def test_write_clv_csv_has_header_and_disclaimer(tmp_path):
     assert "# CLV report" in text
     assert "signal test" in text.lower()
     assert "spread,clv_gt_2,100" in text
+
+
+def test_grade_at_close_regrades_at_closing_line():
+    conn = connect(":memory:")
+    init_schema(conn)
+    # Home wins by 4. Opener -3 (covers), closer -6 (does NOT cover).
+    _seed(conn, "g1", 2018, 24, 20, "aus", -3.0, 45.0, -6.0, 45.0)
+    open_bets = build_bets_from_db(conn, grade_at="open")
+    close_bets = build_bets_from_db(conn, grade_at="close")
+    sp_open = next(b for b in open_bets if b["market"] == "spread")
+    sp_close = next(b for b in close_bets if b["market"] == "spread")
+    assert sp_open["result"] == "win"    # covered the -3 opener
+    assert sp_close["result"] == "loss"  # did not cover the -6 closer
+    assert sp_open["clv"] == sp_close["clv"] == 3.0  # open(-3) - close(-6)
+    conn.close()
+
+
+def test_grade_at_defaults_to_open():
+    conn = connect(":memory:")
+    init_schema(conn)
+    _seed(conn, "g1", 2018, 24, 20, "aus", -3.0, 45.0, -6.0, 45.0)
+    assert build_bets_from_db(conn) == build_bets_from_db(conn, grade_at="open")
+    conn.close()

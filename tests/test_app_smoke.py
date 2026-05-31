@@ -11,3 +11,9 @@ from streamlit.testing.v1 import AppTest  # noqa: E402
 def test_app_boots_without_error():
     at = AppTest.from_file("../app/main.py", default_timeout=30).run()
     assert not at.exception
+
+
+def test_app_boots_with_all_tabs():
+    from streamlit.testing.v1 import AppTest
+    at = AppTest.from_file("../app/main.py", default_timeout=60).run()
+    assert not at.exception
