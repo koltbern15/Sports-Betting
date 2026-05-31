@@ -2,7 +2,7 @@
 
 > Past performance does not guarantee future results. This tool is for informational purposes only. Gamble responsibly.
 
-Slices 1–8 of the NFL Sports Betting Analytics Engine. Loads historical NFL games + closing lines from a Kaggle CSV into SQLite and produces three per-bucket historical-edge reports (against-the-spread, totals over/under, and derived moneyline) with full statistical rigor (n, win rate, ROI at -110/-105, p-value vs the 52.38% breakeven, Wilson 95% CI, and by-season trend). Slice 3 validates the derived-ML report against real historical sportsbook moneylines from nflverse (2020–2024). Slice 4 added per-season stability + bootstrap stats for ML. Slice 5 replaces the binary credible-edges gate with an honest cross-market `edge_report.csv`: every bucket is shown, ranked by point-estimate ROI, annotated with the smallest edge its sample size could detect. Slice 6 ingests historical opening lines (two cross-validated sources); Slice 7 builds the CLV engine and finds the project's one real signal — the closing line is sharper than the open; Slice 8 adds a live "This Week" odds board (best price / line shopping + line movement + historical context). See the per-slice sections below.
+Slices 1–9 of the NFL Sports Betting Analytics Engine. Loads historical NFL games + closing lines from a Kaggle CSV into SQLite and produces three per-bucket historical-edge reports (against-the-spread, totals over/under, and derived moneyline) with full statistical rigor (n, win rate, ROI at -110/-105, p-value vs the 52.38% breakeven, Wilson 95% CI, and by-season trend). Slice 3 validates the derived-ML report against real historical sportsbook moneylines from nflverse (2020–2024). Slice 4 added per-season stability + bootstrap stats for ML. Slice 5 replaces the binary credible-edges gate with an honest cross-market `edge_report.csv`: every bucket is shown, ranked by point-estimate ROI, annotated with the smallest edge its sample size could detect. Slice 6 ingests historical opening lines (two cross-validated sources); Slice 7 builds the CLV engine and finds the project's one real signal — the closing line is sharper than the open; Slice 8 adds a live "This Week" odds board (best price / line shopping + line movement + historical context). See the per-slice sections below.
 
 See `docs/superpowers/specs/` for design documents and `docs/superpowers/plans/` for implementation plans. Slice 1 (ATS): `2026-05-26-nfl-betting-slice1-design.md` + `2026-05-26-nfl-betting-slice1.md`. Slice 2 (totals + moneyline): `2026-05-27-nfl-betting-slice2-design.md` + `2026-05-27-nfl-betting-slice2.md`. Slice 3 (real-line validation): `2026-05-27-nfl-betting-slice3-design.md` + `2026-05-27-nfl-betting-slice3.md`. Slice 4 (credible edges): `2026-05-27-nfl-betting-slice4-design.md` + `2026-05-27-nfl-betting-slice4.md`. Slice 5 (honest edge report): `2026-05-29-nfl-betting-slice5-design.md` + `2026-05-29-nfl-betting-slice5.md`.
 
@@ -229,6 +229,19 @@ A refined-dark Streamlit app that shows the current NFL odds board for the upcom
 - `data/raw/odds_api_latest.json` is gitignored. It holds the most recent API response and is regenerated each pull.
 - Historical showcase tabs (Slices 1–7 findings in the UI) are deferred to Slice 9.
 
+## Slice 9 — Historical showcase tabs
+
+The app is now a 5-tab dashboard. **This Week** leads (the live odds board from Slice 8); the four showcase tabs surface the historical analysis built in Slices 1–7.
+
+- **The Finding** — the CLV story: win-rate ladder (Altair line+points, no truncated-bar distortion) showing perfect monotonic rise across all 5 CLV buckets, plus an open-vs-close proof panel (rising win-rate curve vs flat baseline) demonstrating that the close is sharper than the open.
+- **Edge Report** — the honest-metrics table from Slice 5: every bucket ranked by point-estimate ROI, with 95% CI error bars and MDE/power columns making detectability explicit. No certified edges; the data is shown straight.
+- **CLV Explorer** — interactive: filter by market (spread/total) and season range, re-bucket live. Built on the `clv_report.csv` produced by `engine.clv`.
+- **Data & Audit** — coverage (games/seasons loaded), cross-source agreement (Kaggle vs nflverse, AUS vs SBR), and data provenance for every table in the pipeline.
+
+### Run the app
+
+    streamlit run app/main.py
+
 ## Scope
 
 - **Slice 1 (complete):** ingestion, schema, statistics utilities, ATS-by-spread-bucket analysis.
@@ -239,4 +252,5 @@ A refined-dark Streamlit app that shows the current NFL odds board for the upcom
 - **Slice 6 (complete):** historical opening-line ingestion (aussportsbetting + SBR) into `opening_lines`, with a full data-quality audit. Foundation for CLV (Slice 7).
 - **Slice 7 (complete):** CLV engine — per-game CLV (spread+total) + validation of whether positive CLV predicts covering the opener; honest-metrics shape. Signal test, not a strategy.
 - **Slice 8 (complete):** live This Week odds board — current odds + best price (line shopping) + line movement + historical context, refined-dark Streamlit, honest framing. Historical showcase tabs = Slice 9.
-- **Deferred to later slices:** ML-CLV extension, historical showcase tabs in the UI (Slice 9), per-game-state filters, live odds strategy refinement.
+- **Slice 9 (complete):** historical showcase tabs (The Finding / Edge Report / CLV Explorer / Data & Audit) added to the Streamlit app alongside the live This Week board — the full capstone.
+- **Deferred to later slices:** ML-CLV extension, per-game-state filters, live odds strategy refinement.

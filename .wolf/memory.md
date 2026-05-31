@@ -3,6 +3,11 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 2026-05-31 slice9-docs | Slice 9 complete: README updated (Slices 1–9 intro, Slice 9 section, Scope bullet); .gitignore .playwright-mcp/+screenshot ignores committed; cerebrum Decision Log entry (showcase tabs, grade_at=close proof, CLV ladder line+points); 337 tests pass, ruff clean; committed | README.md, .gitignore, .wolf/memory.md, .wolf/cerebrum.md | ~600 |
+| 04:00 | Slice9 Task2: created app/data.py (cached data-access layer) + tests/test_app_data.py (4 tests) | app/data.py, tests/test_app_data.py | 4/4 tests pass, full suite green, ruff clean, committed 71fe323 | ~2800 |
+| 04:15 | Slice9 Task3: created app/charts.py (clv_ladder_chart + ci_errorbar_chart); appended test_charts_build_without_error to tests/test_app_data.py; fixed ruff I001 via auto-fix; full suite green, ruff clean; committed dadf50d | app/charts.py, tests/test_app_data.py | ~800 |
+| 05:10 | Slice9 Task4: wired 5 tabs in app/main.py; created app/tab_finding.py (CLV signal narrative), app/tab_edge.py (honest edge report), app/tab_clv.py (stub), app/tab_data.py (stub); added test_app_boots_with_all_tabs smoke test; fixed ruff I001 (merged app imports into one line); full suite 329 tests pass, ruff clean; committed 7a70419 | app/main.py, app/tab_finding.py, app/tab_edge.py, app/tab_clv.py, app/tab_data.py, tests/test_app_smoke.py | ~1500 |
+
 | 2026-05-30 slice8-T6 | Slice 8 complete: seeded data/raw/odds_api_latest.json (4 games, 4 books each, gitignored); verified 4 games parsed; designqc deferred (no browser in agent env); added Slice 8 README section (line shopping, movement, honest framing, setup); updated Scope bullet; cerebrum Decision Log entry; 328 tests pass, ruff clean; committed | README.md, .wolf/memory.md, .wolf/cerebrum.md | ~800 |
 | 2026-05-30 slice8-T5 | Built refined-dark Streamlit app (app/main.py, app/theme.py, app/this_week_view.py, app/__init__.py); added .streamlit/config.toml, .env.example; appended _main/__main__ to ingestion/live_odds.py; smoke test tests/test_app_smoke.py; fixed AppTest path (relative to test file = ../app/main.py); fixed ruff E501 in this_week_view.py; uv add streamlit altair; 200 tests pass, ruff clean; committed cf601b8 | app/, .streamlit/, .env.example, .gitignore, ingestion/live_odds.py, tests/test_app_smoke.py | ~700 |
 | 2026-05-30 slice8-T4 | TDD: created engine/this_week.py (ThisWeekGame, build_board, historical_spread_context/total_context, _lookup, _move) + tests/test_this_week.py (5 tests); fixed ruff E501 in both files + removed unused import; 321 tests pass (316 baseline + 5 new), ruff clean; committed 080a7da | engine/this_week.py, tests/test_this_week.py | ~600 |
@@ -597,3 +602,53 @@
 | 22:25 | Edited README.md | modified 1() | ~1034 |
 | 22:30 | Edited README.md | inline fix | ~15 |
 | 22:30 | Edited README.md | inline fix | ~105 |
+| 22:31 | Session end: 126 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 80 reads | ~199735 tok |
+| 00:06 | Session end: 126 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 80 reads | ~199735 tok |
+| 00:07 | Session end: 126 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 80 reads | ~199735 tok |
+| 00:10 | Session end: 126 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 80 reads | ~199735 tok |
+| 00:13 | Edited ingestion/live_odds.py | added 1 import(s) | ~24 |
+| 00:13 | Edited ingestion/live_odds.py | expanded (+7 lines) | ~184 |
+| 00:13 | Edited tests/test_live_odds.py | added 1 import(s) | ~30 |
+| 00:15 | designqc: captured 2 screenshots (28KB, ~5000 tok) | / | ready for eval | ~0 |
+| 00:16 | Edited app/main.py | expanded (+6 lines) | ~218 |
+| 00:17 | designqc: captured 2 screenshots (108KB, ~5000 tok) | / | ready for eval | ~0 |
+| 00:17 | Edited app/theme.py | 6→7 lines | ~131 |
+| 00:18 | designqc: captured 2 screenshots (108KB, ~5000 tok) | / | ready for eval | ~0 |
+| 00:18 | designqc: captured 2 screenshots (108KB, ~5000 tok) | / | ready for eval | ~0 |
+| 00:20 | Edited .gitignore | 2→5 lines | ~55 |
+| 00:20 | Session end: 132 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 82 reads | ~197340 tok |
+| 00:22 | Session end: 132 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 83 reads | ~197340 tok |
+| 00:23 | Session end: 132 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 83 reads | ~197340 tok |
+| 00:27 | Session end: 132 writes across 57 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 83 reads | ~197340 tok |
+| 00:29 | Created docs/superpowers/specs/2026-05-31-nfl-betting-slice9-design.md | — | ~2371 |
+| 00:29 | Session end: 133 writes across 58 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 83 reads | ~199881 tok |
+| 00:35 | Created docs/superpowers/plans/2026-05-31-nfl-betting-slice9.md | — | ~7910 |
+| 00:35 | Session end: 134 writes across 59 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 83 reads | ~208845 tok |
+| 00:36 | Edited tests/test_clv.py | modified test_write_clv_csv_has_header_and_disclaimer() | ~448 |
+| 00:37 | Edited engine/clv.py | modified build_bets_from_db() | ~545 |
+| slice9-T1 | TDD: added grade_at param to build_bets_from_db; 2 new tests; full suite green; committed 35a354f | engine/clv.py, tests/test_clv.py | success | ~900 |
+| 00:40 | Created tests/test_app_data.py | — | ~686 |
+| 00:40 | Created app/data.py | — | ~1019 |
+| 00:41 | Edited tests/test_app_data.py | modified _seed_clv() | ~314 |
+| 00:41 | Created app/data.py | — | ~1096 |
+| 00:41 | Created tests/test_app_data.py | — | ~851 |
+| 00:44 | Edited tests/test_app_data.py | modified test_audit_summary_has_sources() | ~176 |
+| 00:45 | Created app/charts.py | — | ~473 |
+| 00:45 | Edited tests/test_app_data.py | modified test_charts_build_without_error() | ~132 |
+| 00:45 | Edited tests/test_app_data.py | modified test_charts_build_without_error() | ~30 |
+| 00:47 | Created app/tab_finding.py | — | ~600 |
+| 00:48 | Created app/tab_edge.py | — | ~358 |
+| 00:48 | Created app/tab_clv.py | — | ~61 |
+| 00:48 | Created app/tab_data.py | — | ~54 |
+| 00:48 | Edited app/main.py | added 1 import(s) | ~130 |
+| 00:48 | Edited app/main.py | modified main() | ~180 |
+| 00:48 | Edited tests/test_app_smoke.py | modified test_app_boots_without_error() | ~91 |
+| 00:48 | Edited app/main.py | 2→1 lines | ~24 |
+| 00:52 | Created app/tab_clv.py | — | ~289 |
+| 00:53 | Created app/tab_data.py | — | ~393 |
+| 00:53 | Task 5: replaced tab_clv.py + tab_data.py stubs with full CLV Explorer + Data & Audit content | app/tab_clv.py, app/tab_data.py | 337 passed, ruff clean, commit 1d8d005 | ~800 |
+| 00:55 | designqc: captured 2 screenshots (113KB, ~5000 tok) | / | ready for eval | ~0 |
+| 00:58 | Edited app/charts.py | modified clv_ladder_chart() | ~287 |
+| 01:01 | Edited README.md | inline fix | ~15 |
+| 01:01 | Edited README.md | modified 1() | ~411 |
+| 01:01 | Edited README.md | expanded (+13 lines) | ~316 |

@@ -36,3 +36,8 @@ data/raw/odds_api_latest.json
 
 # Design-QC screenshots (regenerable via `openwolf designqc`)
 .wolf/designqc-captures/
+
+# Playwright MCP + ad-hoc screenshots (QC artifacts)
+.playwright-mcp/
+finding-tab*.jpeg
+page-*.jpeg
