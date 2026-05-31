@@ -3,16 +3,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
-import streamlit as st
+# `streamlit run app/main.py` puts app/ (not the project root) on sys.path, so the
+# app/engine/ingestion packages aren't importable without this. (pytest adds the
+# root via pythonpath, which is why the smoke test didn't surface it.)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app import theme
-from app.this_week_view import render as render_this_week
-from engine.db import connect
-from engine.this_week import build_board
-from ingestion.live_odds import parse_odds_payload
-from ingestion.live_odds_store import opener_consensus
+import streamlit as st  # noqa: E402
+
+from app import theme  # noqa: E402
+from app.this_week_view import render as render_this_week  # noqa: E402
+from engine.db import connect  # noqa: E402
+from engine.this_week import build_board  # noqa: E402
+from ingestion.live_odds import parse_odds_payload  # noqa: E402
+from ingestion.live_odds_store import opener_consensus  # noqa: E402
 
 _DB = "data/db/nfl_betting.sqlite"
 _LATEST = Path("data/raw/odds_api_latest.json")

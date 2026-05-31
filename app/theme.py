@@ -25,9 +25,10 @@ def inject() -> None:
     st.markdown(_CSS, unsafe_allow_html=True)
 
 
+# Rendered inside a raw-HTML <div>, so use HTML tags (not markdown ** **) for emphasis.
 HONESTY_BANNER = (
-    "**Context & best prices — not certified picks.** Historical rates are *not* a proven "
-    "edge (the market is efficient — see the CLV finding). The real edge here is **line "
-    "shopping**: take the best price. Line movement is descriptive. Past performance ≠ "
-    "future results. Gamble responsibly."
+    "<strong>Context &amp; best prices — not certified picks.</strong> Historical rates are "
+    "<em>not</em> a proven edge (the market is efficient — see the CLV finding). The real edge "
+    "here is <strong>line shopping</strong>: take the best price. Line movement is descriptive. "
+    "Past performance ≠ future results. Gamble responsibly."
 )
