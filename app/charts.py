@@ -34,6 +34,7 @@ def clv_ladder_chart(df: pd.DataFrame) -> alt.Chart:
         .mark_line(color=_ACCENT, point=alt.OverlayMarkDef(color=_ACCENT, size=90))
         .encode(
             x=alt.X("clv_label:N", sort=_CLV_LABEL_ORDER,
+                    axis=alt.Axis(labelAngle=0),
                     title="CLV — points the line moved   (against you ◀     ▶ toward you)"),
             y=alt.Y("win_rate:Q", title="win rate", scale=alt.Scale(zero=False)),
             tooltip=[alt.Tooltip("clv_label:N", title="line moved"),
