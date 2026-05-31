@@ -3,6 +3,10 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 2026-05-30 slice8-T6 | Slice 8 complete: seeded data/raw/odds_api_latest.json (4 games, 4 books each, gitignored); verified 4 games parsed; designqc deferred (no browser in agent env); added Slice 8 README section (line shopping, movement, honest framing, setup); updated Scope bullet; cerebrum Decision Log entry; 328 tests pass, ruff clean; committed | README.md, .wolf/memory.md, .wolf/cerebrum.md | ~800 |
+| 2026-05-30 slice8-T5 | Built refined-dark Streamlit app (app/main.py, app/theme.py, app/this_week_view.py, app/__init__.py); added .streamlit/config.toml, .env.example; appended _main/__main__ to ingestion/live_odds.py; smoke test tests/test_app_smoke.py; fixed AppTest path (relative to test file = ../app/main.py); fixed ruff E501 in this_week_view.py; uv add streamlit altair; 200 tests pass, ruff clean; committed cf601b8 | app/, .streamlit/, .env.example, .gitignore, ingestion/live_odds.py, tests/test_app_smoke.py | ~700 |
+| 2026-05-30 slice8-T4 | TDD: created engine/this_week.py (ThisWeekGame, build_board, historical_spread_context/total_context, _lookup, _move) + tests/test_this_week.py (5 tests); fixed ruff E501 in both files + removed unused import; 321 tests pass (316 baseline + 5 new), ruff clean; committed 080a7da | engine/this_week.py, tests/test_this_week.py | ~600 |
+| 2026-05-30 slice8-T3 | TDD: created ingestion/live_odds_store.py (store_snapshot, opener_consensus, current_consensus) + tests/test_live_odds_store.py (2 tests); ruff E501 caught+fixed; 322/322 pass, ruff clean; committed 9aae229 | ingestion/live_odds_store.py, tests/test_live_odds_store.py | ~400 |
 | 22:30 slice7-T3 | TDD: appended build_bets_from_db + write_clv_csv + _main to engine/clv.py; appended 3 new tests to tests/test_clv.py; fixed _seed INSERT OR IGNORE (games PK), ruff fixes (import sort, F401/F811, E501); 16 CLV tests pass, full suite green, ruff clean; committed 59d3f15 | engine/clv.py, tests/test_clv.py | ~800 |
 | 2026-05-30 slice7-T2 | TDD: appended ClvRow dataclass + aggregate_clv to engine/clv.py; appended 4 new tests to tests/test_clv.py; ruff caught unused ClvRow import in test file (removed); 13 CLV tests pass, full suite 309 pass, ruff clean; committed 860cd0a | engine/clv.py, tests/test_clv.py | ~600 |
 | 2026-05-30 slice7-T1 | TDD: created engine/clv.py (clv_spread, clv_total, clamp_ok_spread, clamp_ok_total, spread_bet_result, total_bet_result, clv_bucket, CLV_BUCKET_ORDER) + tests/test_clv.py (9 tests); removed unused `import math` from test file (cerebrum DNR); 9/9 CLV tests pass, full suite green, ruff clean; committed ea7844a | engine/clv.py, tests/test_clv.py | ~400 |
@@ -542,3 +546,52 @@
 | 20:53 | Edited .gitignore | 7→6 lines | ~61 |
 | 20:53 | Edited .gitignore | 2→1 lines | ~14 |
 | 20:53 | Edited README.md | inline fix | ~46 |
+| 20:54 | Session end: 88 writes across 36 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 64 reads | ~143148 tok |
+| 20:57 | Session end: 88 writes across 36 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 64 reads | ~143148 tok |
+| 20:58 | Edited .gitignore | 1→4 lines | ~19 |
+| 20:59 | Created .superpowers/brainstorm/965-1780189118/content/welcome.html | — | ~257 |
+| 21:00 | Created .superpowers/brainstorm/965-1780189118/content/layout.html | — | ~1138 |
+| 21:01 | Session end: 91 writes across 38 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~144663 tok |
+| 21:06 | Created .superpowers/brainstorm/965-1780189118/content/visual-style.html | — | ~1368 |
+| 21:06 | Session end: 92 writes across 39 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~146129 tok |
+| 21:07 | Created .superpowers/brainstorm/965-1780189118/content/finding-tab.html | — | ~1834 |
+| 21:07 | Session end: 93 writes across 40 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~148094 tok |
+| 21:08 | Created .superpowers/brainstorm/965-1780189118/content/waiting.html | — | ~77 |
+| 21:08 | Session end: 94 writes across 41 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~148177 tok |
+| 21:27 | Session end: 94 writes across 41 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~148177 tok |
+| 21:30 | Created docs/superpowers/specs/2026-05-30-nfl-betting-slice8-design.md | — | ~3065 |
+| 21:31 | Session end: 95 writes across 42 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~151461 tok |
+| 21:35 | Created docs/superpowers/plans/2026-05-30-nfl-betting-slice8.md | — | ~10586 |
+| 21:36 | Session end: 96 writes across 43 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~162803 tok |
+| 21:41 | Session end: 96 writes across 43 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 65 reads | ~162803 tok |
+| 21:59 | Edited tests/test_db.py | modified test_opening_lines_rejects_bad_source() | ~399 |
+| 22:00 | Edited engine/db.py | expanded (+15 lines) | ~165 |
+| 22:00 | Edited tests/test_db.py | modified test_init_schema_is_idempotent() | ~174 |
+| 22:01 | slice8 Task1: added live_odds_snapshots table + index to engine/db.py; added 2 new tests + updated 2 exact-table-set assertions in tests/test_db.py; 314/314 passed; committed 960b531 | engine/db.py, tests/test_db.py | done | ~600 |
+| 22:03 | Created tests/fixtures/odds_api_sample.json | — | ~368 |
+| 22:03 | Created tests/test_live_odds.py | — | ~505 |
+| 22:03 | Created ingestion/live_odds.py | — | ~1633 |
+| 22:04 | Edited tests/test_live_odds.py | inline fix | ~15 |
+| 22:04 | Edited ingestion/live_odds.py | 1→2 lines | ~39 |
+| 22:04 | feat(live_odds): created parse_odds_payload, GameOdds dataclass, fetch_odds, fixture, 6 tests | ingestion/live_odds.py, tests/test_live_odds.py, tests/fixtures/odds_api_sample.json | 320 passed, lint clean, commit 95c183c | ~400 |
+| 22:07 | Created tests/test_live_odds_store.py | — | ~413 |
+| 22:07 | Created ingestion/live_odds_store.py | — | ~570 |
+| 22:07 | Edited ingestion/live_odds_store.py | 4→6 lines | ~72 |
+| 22:10 | Created tests/test_this_week.py | — | ~667 |
+| 22:11 | Created engine/this_week.py | — | ~1015 |
+| 22:11 | Edited engine/this_week.py | 1→4 lines | ~36 |
+| 22:11 | Edited tests/test_this_week.py | inline fix | ~20 |
+| 22:11 | Edited tests/test_this_week.py | 2→4 lines | ~65 |
+| 02:15 | QA review slice8 tasks 3+4 (live_odds_store + this_week) | 4 files | 327 passed, ruff clean | ~900 |
+| 22:16 | Edited .gitignore | expanded (+7 lines) | ~56 |
+| 22:16 | Created .streamlit/config.toml | — | ~42 |
+| 22:16 | Created tests/test_app_smoke.py | — | ~107 |
+| 22:17 | Edited tests/test_app_smoke.py | modified test_app_boots_without_error() | ~39 |
+| 22:17 | Created app/__init__.py | — | ~0 |
+| 22:17 | Created app/theme.py | — | ~355 |
+| 22:17 | Created app/this_week_view.py | — | ~685 |
+| 22:17 | Created app/main.py | — | ~360 |
+| 22:18 | Edited ingestion/live_odds.py | modified fetch_odds() | ~418 |
+| 22:18 | Edited app/this_week_view.py | 2→3 lines | ~61 |
+| 22:25 | Created data/raw/odds_api_latest.json | — | ~2761 |
+| 22:25 | Edited README.md | modified 1() | ~1034 |

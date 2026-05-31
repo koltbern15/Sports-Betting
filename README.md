@@ -196,6 +196,39 @@ Prints a per-bucket table to stdout and writes `data/processed/clv_report.csv`.
 
 See `docs/superpowers/notes/2026-05-30-clv-findings.md` for the full analysis including power assessment and ML follow-on recommendation.
 
+## Slice 8 — Live This Week odds board
+
+A refined-dark Streamlit app that shows the current NFL odds board for the upcoming week. The core value is **line shopping** (best price per side across books) and **live line movement** (how far each line has drifted since the first stored snapshot). Historical stats from Slices 1–7 are surfaced as context — they are labeled, honest, and explicitly not certified picks.
+
+### What it does
+
+- **Best price per side** — for every game, surfaces the highest available moneyline, most-favorable spread point, and best over/under price across all books in the API response. This is line shopping: finding +1 to +5 cents of edge on each leg is the real, repeatable part of profitable sports betting.
+- **Live line movement** — compares the current consensus line against the earliest stored snapshot for each game. A line that has moved 2+ points is a signal the books know something; the board labels movement visually.
+- **Historical context** — the CLV and ATS/totals bucket findings from earlier slices are shown alongside current lines as context. They are clearly labeled as historical analysis, not certified edges.
+- **Honest framing** — a top-of-page banner explains that this board provides context + best price, not buy/sell signals. Past performance, etc.
+
+### Setup
+
+1. Get a free API key at [the-odds-api.com](https://the-odds-api.com). The free tier provides 500 requests/month — plenty for weekly NFL pulls.
+2. Set `ODDS_API_KEY` via environment variable **or** a gitignored `.env` file at the project root. See `.env.example` for the exact format. **Never commit your key** — `.env` is in `.gitignore` and `.env.example` documents the shape without any real value.
+3. Pull the current week's odds:
+
+       uv run python -m ingestion.live_odds
+
+   This fetches from The Odds API, writes `data/raw/odds_api_latest.json` (gitignored), and stores a consensus snapshot in the DB.
+
+4. Launch the board:
+
+       streamlit run app/main.py
+
+   The app reads `data/raw/odds_api_latest.json` on each load (no live network call at render time). Re-run the pull step weekly or before games.
+
+### Notes
+
+- The live pull requires `ODDS_API_KEY`. The rest of the app (all tests, the board rendering with a local seed file) works without it.
+- `data/raw/odds_api_latest.json` is gitignored. It holds the most recent API response and is regenerated each pull.
+- Historical showcase tabs (Slices 1–7 findings in the UI) are deferred to Slice 9.
+
 ## Scope
 
 - **Slice 1 (complete):** ingestion, schema, statistics utilities, ATS-by-spread-bucket analysis.
@@ -205,4 +238,5 @@ See `docs/superpowers/notes/2026-05-30-clv-findings.md` for the full analysis in
 - **Slice 5 (complete):** honest edge report — continuous metrics + power/MDE context replacing the binary gate; derived-ML clamp bug fixed.
 - **Slice 6 (complete):** historical opening-line ingestion (aussportsbetting + SBR) into `opening_lines`, with a full data-quality audit. Foundation for CLV (Slice 7).
 - **Slice 7 (complete):** CLV engine — per-game CLV (spread+total) + validation of whether positive CLV predicts covering the opener; honest-metrics shape. Signal test, not a strategy.
-- **Deferred to later slices:** ML-CLV extension (Slice 8 candidate), per-game-state filters, live odds + this-week pick generator, interactive dashboard.
+- **Slice 8 (complete):** live This Week odds board — current odds + best price (line shopping) + line movement + historical context, refined-dark Streamlit, honest framing. Historical showcase tabs = Slice 9.
+- **Deferred to later slices:** ML-CLV extension, historical showcase tabs in the UI (Slice 9), per-game-state filters, live odds strategy refinement.
