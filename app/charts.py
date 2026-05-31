@@ -12,10 +12,15 @@ _ACCENT = "#6c8cff"
 
 
 def clv_ladder_chart(df: pd.DataFrame) -> alt.Chart:
-    """Win rate by CLV bucket, with a breakeven reference line."""
-    bars = (
+    """Win rate by CLV bucket as a line+points, with a breakeven reference line.
+
+    A line (not bars) so the y-axis can zoom to the data without the truncated-
+    baseline distortion bars would imply — the monotonic climb (and, in the proof
+    panel, 'rising vs flat') reads honestly against the breakeven line.
+    """
+    line = (
         alt.Chart(df)
-        .mark_bar(color=_ACCENT)
+        .mark_line(color=_ACCENT, point=alt.OverlayMarkDef(color=_ACCENT, size=90))
         .encode(
             x=alt.X("clv_bucket:N", sort=CLV_BUCKET_ORDER,
                     title="CLV bucket (← against · toward →)"),
@@ -28,7 +33,7 @@ def clv_ladder_chart(df: pd.DataFrame) -> alt.Chart:
         .mark_rule(color="#9aa0ad", strokeDash=[4, 4])
         .encode(y="y:Q")
     )
-    return (bars + rule).properties(height=260)
+    return (line + rule).properties(height=260)
 
 
 def ci_errorbar_chart(df: pd.DataFrame) -> alt.Chart:
