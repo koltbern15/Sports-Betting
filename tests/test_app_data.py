@@ -67,3 +67,16 @@ def test_audit_summary_has_sources():
     s = appdata.audit_summary()
     assert "sources" in s and len(s["sources"]) == 4
     assert "overlap_spread_within_1pt" in s
+
+
+def test_charts_build_without_error():
+    import pandas as pd
+
+    from app import charts  # noqa: E402
+    ladder = pd.DataFrame({"clv_bucket": ["clv_pm05", "clv_gt_2"], "win_rate": [0.5, 0.57],
+                           "mean_clv": [0.1, 3.0]})
+    edge = pd.DataFrame({
+        "bucket": ["b1"], "point_roi": [0.01], "ci_low": [-0.05], "ci_high": [0.07],
+    })
+    assert charts.clv_ladder_chart(ladder) is not None
+    assert charts.ci_errorbar_chart(edge) is not None
