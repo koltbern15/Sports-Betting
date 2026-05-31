@@ -33,3 +33,6 @@ Thumbs.db
 
 # Live odds cache (churny artifact written by fetch_odds; data/raw is otherwise tracked)
 data/raw/odds_api_latest.json
+
+# Design-QC screenshots (regenerable via `openwolf designqc`)
+.wolf/designqc-captures/
