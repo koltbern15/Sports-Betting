@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -143,8 +144,15 @@ def fetch_odds(api_key: str | None = None) -> list[GameOdds]:
         "apiKey": key, "regions": "us", "markets": "spreads,totals,h2h", "oddsFormat": "american",
     })
     req = urllib.request.Request(f"{_API}?{qs}", headers={"User-Agent": "nfl-betting/0.1"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        payload = json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        # `from None` drops the chained HTTPError, whose .url carries the key.
+        hint = " — check that ODDS_API_KEY is valid and active" if e.code in (401, 403) else ""
+        raise RuntimeError(f"The Odds API returned HTTP {e.code}{hint}.") from None
+    except urllib.error.URLError as e:
+        raise RuntimeError(f"Could not reach The Odds API: {e.reason}") from None
     Path("data/raw").mkdir(parents=True, exist_ok=True)
     Path("data/raw/odds_api_latest.json").write_text(json.dumps(payload), encoding="utf-8")
     return parse_odds_payload(payload)

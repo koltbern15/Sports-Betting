@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from ingestion.live_odds import parse_odds_payload
 
 _FIX = Path(__file__).parent / "fixtures" / "odds_api_sample.json"
@@ -60,3 +62,23 @@ def test_unknown_team_skips_game_not_crash():
         "bookmakers": [],
     }]
     assert parse_odds_payload(payload) == []
+
+
+def test_fetch_odds_http_error_is_clean_runtimeerror(monkeypatch):
+    """A 401 (bad key) surfaces as a clean RuntimeError, never a raw traceback,
+    and the key never appears in the message."""
+    import io
+    import urllib.error
+    import urllib.request
+
+    from ingestion import live_odds
+
+    def _raise(*_a, **_k):
+        raise urllib.error.HTTPError("http://x", 401, "Unauthorized", {}, io.BytesIO(b""))
+
+    monkeypatch.setattr(urllib.request, "urlopen", _raise)
+    with pytest.raises(RuntimeError) as exc:
+        live_odds.fetch_odds(api_key="SECRET_DUMMY_KEY")
+    msg = str(exc.value)
+    assert "401" in msg
+    assert "SECRET_DUMMY_KEY" not in msg
