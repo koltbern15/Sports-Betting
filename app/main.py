@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import streamlit as st  # noqa: E402
 
-from app import theme  # noqa: E402
+from app import data, tab_clv, tab_data, tab_edge, tab_finding, theme  # noqa: E402
 from app.this_week_view import render as render_this_week  # noqa: E402
 from engine.db import connect  # noqa: E402
 from engine.this_week import build_board  # noqa: E402
@@ -40,12 +40,22 @@ def _load_board():
 
 
 def main() -> None:
-    st.set_page_config(page_title="NFL Odds — This Week", page_icon="🏈", layout="wide")
+    st.set_page_config(page_title="NFL Betting Analytics", page_icon="🏈", layout="wide")
     theme.inject()
-    st.title("This Week — live NFL odds")
-    (tab_week,) = st.tabs(["This Week"])
-    with tab_week:
+    st.title("NFL Betting Analytics")
+    lo, hi = data.season_bounds()
+    season_range = st.sidebar.slider("Season range (CLV Explorer)", lo, hi, (lo, hi))
+    tabs = st.tabs(["This Week", "The Finding", "Edge Report", "CLV Explorer", "Data & Audit"])
+    with tabs[0]:
         render_this_week(_load_board())
+    with tabs[1]:
+        tab_finding.render()
+    with tabs[2]:
+        tab_edge.render()
+    with tabs[3]:
+        tab_clv.render(season_range)
+    with tabs[4]:
+        tab_data.render()
 
 
 main()
