@@ -10,6 +10,16 @@ from engine.stats_utils import BREAKEVEN_AT_NEG_110
 
 _ACCENT = "#6c8cff"
 
+# Human-readable axis labels for the internal CLV bucket keys (points the line moved).
+_CLV_LABELS = {
+    "clv_le_neg2": "≤ −2",
+    "clv_neg2_neg05": "−2 to −½",
+    "clv_pm05": "≈ 0",
+    "clv_05_2": "+½ to +2",
+    "clv_gt_2": "> +2",
+}
+_CLV_LABEL_ORDER = [_CLV_LABELS[b] for b in CLV_BUCKET_ORDER]
+
 
 def clv_ladder_chart(df: pd.DataFrame) -> alt.Chart:
     """Win rate by CLV bucket as a line+points, with a breakeven reference line.
@@ -18,14 +28,17 @@ def clv_ladder_chart(df: pd.DataFrame) -> alt.Chart:
     baseline distortion bars would imply — the monotonic climb (and, in the proof
     panel, 'rising vs flat') reads honestly against the breakeven line.
     """
+    plot_df = df.assign(clv_label=df["clv_bucket"].map(_CLV_LABELS))
     line = (
-        alt.Chart(df)
+        alt.Chart(plot_df)
         .mark_line(color=_ACCENT, point=alt.OverlayMarkDef(color=_ACCENT, size=90))
         .encode(
-            x=alt.X("clv_bucket:N", sort=CLV_BUCKET_ORDER,
-                    title="CLV bucket (← against · toward →)"),
+            x=alt.X("clv_label:N", sort=_CLV_LABEL_ORDER,
+                    title="CLV — points the line moved   (against you ◀     ▶ toward you)"),
             y=alt.Y("win_rate:Q", title="win rate", scale=alt.Scale(zero=False)),
-            tooltip=["clv_bucket", "win_rate", "mean_clv"],
+            tooltip=[alt.Tooltip("clv_label:N", title="line moved"),
+                     alt.Tooltip("win_rate:Q", format=".1%"),
+                     alt.Tooltip("mean_clv:Q", title="avg CLV (pts)", format="+.2f")],
         )
     )
     rule = (
