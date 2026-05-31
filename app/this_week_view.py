@@ -8,6 +8,22 @@ from app.theme import HONESTY_BANNER
 from engine.this_week import ThisWeekGame
 
 
+def game_teams(matchup: str) -> tuple[str, str]:
+    """Split a 'Away at Home' matchup into (away, home)."""
+    away, _, home = matchup.partition(" at ")
+    return away, home
+
+
+def board_teams(board: list[ThisWeekGame]) -> list[str]:
+    """Sorted unique team names appearing in this week's slate."""
+    return sorted({t for g in board for t in game_teams(g.matchup)})
+
+
+def filter_board(board: list[ThisWeekGame], team: str) -> list[ThisWeekGame]:
+    """Games where `team` is home or away."""
+    return [g for g in board if team in game_teams(g.matchup)]
+
+
 def _fmt_best(b) -> str:
     if b is None:
         return "—"
@@ -31,8 +47,11 @@ def render(board: list[ThisWeekGame]) -> None:
         st.info("No upcoming games / no odds captured yet. Pull odds with "
                 "`uv run python -m ingestion.live_odds` (needs ODDS_API_KEY).")
         return
-    st.caption(f"{len(board)} upcoming games · sorted by biggest line move")
-    for g in board:
+    pick = st.selectbox("Team", ["All teams", *board_teams(board)], key="tw_team")
+    games = board if pick == "All teams" else filter_board(board, pick)
+    plural = "game" if len(games) == 1 else "games"
+    st.caption(f"{len(games)} {plural} · sorted by biggest line move")
+    for g in games:
         spread_ctx = (f" · historical: {g.spread_ctx['win_rate']:.1%} cover "
                       f"(n={g.spread_ctx['n']}, not certified)") if g.spread_ctx else ""
         st.markdown(
