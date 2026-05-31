@@ -1,0 +1,1409 @@
+season,week,home_team,away_team,ml_home_real,ml_away_real,source
+2020,1,Kansas City Chiefs,Houston Texans,-423,349,nflverse
+2020,1,Atlanta Falcons,Seattle Seahawks,-112,102,nflverse
+2020,1,Baltimore Ravens,Cleveland Browns,-302,260,nflverse
+2020,1,Buffalo Bills,New York Jets,-279,242,nflverse
+2020,1,Carolina Panthers,Las Vegas Raiders,134,-124,nflverse
+2020,1,Detroit Lions,Chicago Bears,-128,116,nflverse
+2020,1,Jacksonville Jaguars,Indianapolis Colts,265,-309,nflverse
+2020,1,Minnesota Vikings,Green Bay Packers,-114,103,nflverse
+2020,1,New England Patriots,Miami Dolphins,-327,278,nflverse
+2020,1,Washington Commanders,Philadelphia Eagles,200,-227,nflverse
+2020,1,Cincinnati Bengals,Los Angeles Chargers,117,-129,nflverse
+2020,1,New Orleans Saints,Tampa Bay Buccaneers,-196,174,nflverse
+2020,1,San Francisco 49ers,Arizona Cardinals,-280,242,nflverse
+2020,1,Los Angeles Rams,Dallas Cowboys,-114,103,nflverse
+2020,1,New York Giants,Pittsburgh Steelers,221,-253,nflverse
+2020,1,Denver Broncos,Tennessee Titans,157,-175,nflverse
+2020,2,Cleveland Browns,Cincinnati Bengals,-243,213,nflverse
+2020,2,Chicago Bears,New York Giants,-222,196,nflverse
+2020,2,Dallas Cowboys,Atlanta Falcons,-145,131,nflverse
+2020,2,Green Bay Packers,Detroit Lions,-284,245,nflverse
+2020,2,Indianapolis Colts,Minnesota Vikings,-176,158,nflverse
+2020,2,Miami Dolphins,Buffalo Bills,214,-244,nflverse
+2020,2,New York Jets,San Francisco 49ers,259,-301,nflverse
+2020,2,Philadelphia Eagles,Los Angeles Rams,-123,111,nflverse
+2020,2,Pittsburgh Steelers,Denver Broncos,-267,232,nflverse
+2020,2,Tampa Bay Buccaneers,Carolina Panthers,-342,290,nflverse
+2020,2,Tennessee Titans,Jacksonville Jaguars,-295,254,nflverse
+2020,2,Arizona Cardinals,Washington Commanders,-313,268,nflverse
+2020,2,Houston Texans,Baltimore Ravens,292,-344,nflverse
+2020,2,Los Angeles Chargers,Kansas City Chiefs,311,-370,nflverse
+2020,2,Seattle Seahawks,New England Patriots,-199,177,nflverse
+2020,2,Las Vegas Raiders,New Orleans Saints,180,-201,nflverse
+2020,3,Jacksonville Jaguars,Miami Dolphins,-138,124,nflverse
+2020,3,Atlanta Falcons,Chicago Bears,-135,122,nflverse
+2020,3,Buffalo Bills,Los Angeles Rams,-126,114,nflverse
+2020,3,Cleveland Browns,Washington Commanders,-331,282,nflverse
+2020,3,Minnesota Vikings,Tennessee Titans,139,-155,nflverse
+2020,3,New England Patriots,Las Vegas Raiders,-311,266,nflverse
+2020,3,New York Giants,San Francisco 49ers,134,-149,nflverse
+2020,3,Philadelphia Eagles,Cincinnati Bengals,-233,205,nflverse
+2020,3,Pittsburgh Steelers,Houston Texans,-196,174,nflverse
+2020,3,Indianapolis Colts,New York Jets,-630,491,nflverse
+2020,3,Los Angeles Chargers,Carolina Panthers,-265,230,nflverse
+2020,3,Arizona Cardinals,Detroit Lions,-218,193,nflverse
+2020,3,Denver Broncos,Tampa Bay Buccaneers,230,-264,nflverse
+2020,3,Seattle Seahawks,Dallas Cowboys,-237,208,nflverse
+2020,3,New Orleans Saints,Green Bay Packers,-172,154,nflverse
+2020,3,Baltimore Ravens,Kansas City Chiefs,-174,156,nflverse
+2020,4,New York Jets,Denver Broncos,-114,104,nflverse
+2020,4,Carolina Panthers,Arizona Cardinals,141,-157,nflverse
+2020,4,Cincinnati Bengals,Jacksonville Jaguars,-112,101,nflverse
+2020,4,Dallas Cowboys,Cleveland Browns,-175,157,nflverse
+2020,4,Detroit Lions,New Orleans Saints,139,-155,nflverse
+2020,4,Houston Texans,Minnesota Vikings,-172,154,nflverse
+2020,4,Miami Dolphins,Seattle Seahawks,196,-223,nflverse
+2020,4,Tampa Bay Buccaneers,Los Angeles Chargers,-331,282,nflverse
+2020,4,Washington Commanders,Baltimore Ravens,692,-958,nflverse
+2020,4,Los Angeles Rams,New York Giants,-890,652,nflverse
+2020,4,Chicago Bears,Indianapolis Colts,156,-174,nflverse
+2020,4,Las Vegas Raiders,Buffalo Bills,154,-172,nflverse
+2020,4,San Francisco 49ers,Philadelphia Eagles,-320,273,nflverse
+2020,4,Kansas City Chiefs,New England Patriots,-299,257,nflverse
+2020,4,Green Bay Packers,Atlanta Falcons,-221,195,nflverse
+2020,5,Chicago Bears,Tampa Bay Buccaneers,164,-184,nflverse
+2020,5,Atlanta Falcons,Carolina Panthers,-139,125,nflverse
+2020,5,Baltimore Ravens,Cincinnati Bengals,-718,547,nflverse
+2020,5,Houston Texans,Jacksonville Jaguars,-281,243,nflverse
+2020,5,Kansas City Chiefs,Las Vegas Raiders,-476,387,nflverse
+2020,5,New York Jets,Arizona Cardinals,254,-295,nflverse
+2020,5,Pittsburgh Steelers,Philadelphia Eagles,-372,312,nflverse
+2020,5,Washington Commanders,Los Angeles Rams,262,-305,nflverse
+2020,5,San Francisco 49ers,Miami Dolphins,-357,301,nflverse
+2020,5,Cleveland Browns,Indianapolis Colts,-110,-101,nflverse
+2020,5,Dallas Cowboys,New York Giants,-347,293,nflverse
+2020,5,Seattle Seahawks,Minnesota Vikings,-284,245,nflverse
+2020,5,New Orleans Saints,Los Angeles Chargers,-339,288,nflverse
+2020,5,Tennessee Titans,Buffalo Bills,150,-168,nflverse
+2020,6,Carolina Panthers,Chicago Bears,-124,112,nflverse
+2020,6,Indianapolis Colts,Cincinnati Bengals,-340,288,nflverse
+2020,6,Jacksonville Jaguars,Detroit Lions,139,-154,nflverse
+2020,6,Minnesota Vikings,Atlanta Falcons,-188,167,nflverse
+2020,6,New England Patriots,Denver Broncos,-328,280,nflverse
+2020,6,New York Giants,Washington Commanders,-128,116,nflverse
+2020,6,Philadelphia Eagles,Baltimore Ravens,348,-422,nflverse
+2020,6,Pittsburgh Steelers,Cleveland Browns,-159,143,nflverse
+2020,6,Tennessee Titans,Houston Texans,-190,169,nflverse
+2020,6,Miami Dolphins,New York Jets,-410,340,nflverse
+2020,6,Tampa Bay Buccaneers,Green Bay Packers,131,-145,nflverse
+2020,6,San Francisco 49ers,Los Angeles Rams,112,-124,nflverse
+2020,6,Buffalo Bills,Kansas City Chiefs,203,-230,nflverse
+2020,6,Dallas Cowboys,Arizona Cardinals,-114,103,nflverse
+2020,7,Philadelphia Eagles,New York Giants,-223,197,nflverse
+2020,7,Atlanta Falcons,Detroit Lions,-113,102,nflverse
+2020,7,Cincinnati Bengals,Cleveland Browns,179,-201,nflverse
+2020,7,Houston Texans,Green Bay Packers,127,-140,nflverse
+2020,7,New Orleans Saints,Carolina Panthers,-317,271,nflverse
+2020,7,New York Jets,Buffalo Bills,327,-391,nflverse
+2020,7,Tennessee Titans,Pittsburgh Steelers,-114,103,nflverse
+2020,7,Washington Commanders,Dallas Cowboys,100,-110,nflverse
+2020,7,Las Vegas Raiders,Tampa Bay Buccaneers,171,-192,nflverse
+2020,7,Denver Broncos,Kansas City Chiefs,260,-302,nflverse
+2020,7,Los Angeles Chargers,Jacksonville Jaguars,-389,325,nflverse
+2020,7,New England Patriots,San Francisco 49ers,-167,150,nflverse
+2020,7,Arizona Cardinals,Seattle Seahawks,166,-186,nflverse
+2020,7,Los Angeles Rams,Chicago Bears,-291,251,nflverse
+2020,8,Carolina Panthers,Atlanta Falcons,-115,104,nflverse
+2020,8,Baltimore Ravens,Pittsburgh Steelers,-200,178,nflverse
+2020,8,Buffalo Bills,New England Patriots,-197,175,nflverse
+2020,8,Cincinnati Bengals,Tennessee Titans,274,-321,nflverse
+2020,8,Cleveland Browns,Las Vegas Raiders,-130,117,nflverse
+2020,8,Detroit Lions,Indianapolis Colts,165,-185,nflverse
+2020,8,Green Bay Packers,Minnesota Vikings,-249,218,nflverse
+2020,8,Kansas City Chiefs,New York Jets,-1965,1204,nflverse
+2020,8,Miami Dolphins,Los Angeles Rams,157,-176,nflverse
+2020,8,Denver Broncos,Los Angeles Chargers,132,-146,nflverse
+2020,8,Chicago Bears,New Orleans Saints,202,-229,nflverse
+2020,8,Seattle Seahawks,San Francisco 49ers,-110,-100,nflverse
+2020,8,Philadelphia Eagles,Dallas Cowboys,-403,335,nflverse
+2020,8,New York Giants,Tampa Bay Buccaneers,470,-598,nflverse
+2020,9,San Francisco 49ers,Green Bay Packers,215,-246,nflverse
+2020,9,Atlanta Falcons,Denver Broncos,-218,193,nflverse
+2020,9,Buffalo Bills,Seattle Seahawks,147,-164,nflverse
+2020,9,Indianapolis Colts,Baltimore Ravens,-104,-106,nflverse
+2020,9,Jacksonville Jaguars,Houston Texans,249,-289,nflverse
+2020,9,Kansas City Chiefs,Carolina Panthers,-445,365,nflverse
+2020,9,Minnesota Vikings,Detroit Lions,-173,155,nflverse
+2020,9,Tennessee Titans,Chicago Bears,-280,243,nflverse
+2020,9,Washington Commanders,New York Giants,-162,145,nflverse
+2020,9,Los Angeles Chargers,Las Vegas Raiders,102,-112,nflverse
+2020,9,Arizona Cardinals,Miami Dolphins,-241,211,nflverse
+2020,9,Dallas Cowboys,Pittsburgh Steelers,591,-789,nflverse
+2020,9,Tampa Bay Buccaneers,New Orleans Saints,-179,160,nflverse
+2020,9,New York Jets,New England Patriots,312,-372,nflverse
+2020,10,Tennessee Titans,Indianapolis Colts,105,-115,nflverse
+2020,10,Carolina Panthers,Tampa Bay Buccaneers,226,-259,nflverse
+2020,10,Cleveland Browns,Houston Texans,-217,192,nflverse
+2020,10,Detroit Lions,Washington Commanders,-136,123,nflverse
+2020,10,Green Bay Packers,Jacksonville Jaguars,-893,653,nflverse
+2020,10,New York Giants,Philadelphia Eagles,194,-219,nflverse
+2020,10,Arizona Cardinals,Buffalo Bills,-153,138,nflverse
+2020,10,Las Vegas Raiders,Denver Broncos,-188,168,nflverse
+2020,10,Miami Dolphins,Los Angeles Chargers,-115,104,nflverse
+2020,10,Los Angeles Rams,Seattle Seahawks,-146,132,nflverse
+2020,10,New Orleans Saints,San Francisco 49ers,-387,323,nflverse
+2020,10,Pittsburgh Steelers,Cincinnati Bengals,-297,255,nflverse
+2020,10,New England Patriots,Baltimore Ravens,272,-318,nflverse
+2020,10,Chicago Bears,Minnesota Vikings,152,-170,nflverse
+2020,11,Seattle Seahawks,Arizona Cardinals,-164,147,nflverse
+2020,11,Baltimore Ravens,Tennessee Titans,-253,221,nflverse
+2020,11,Carolina Panthers,Detroit Lions,152,-169,nflverse
+2020,11,Cleveland Browns,Philadelphia Eagles,-135,122,nflverse
+2020,11,Houston Texans,New England Patriots,132,-147,nflverse
+2020,11,Jacksonville Jaguars,Pittsburgh Steelers,386,-475,nflverse
+2020,11,New Orleans Saints,Atlanta Falcons,-181,162,nflverse
+2020,11,Washington Commanders,Cincinnati Bengals,-121,110,nflverse
+2020,11,Denver Broncos,Miami Dolphins,174,-196,nflverse
+2020,11,Los Angeles Chargers,New York Jets,-425,351,nflverse
+2020,11,Indianapolis Colts,Green Bay Packers,-120,109,nflverse
+2020,11,Minnesota Vikings,Dallas Cowboys,-304,261,nflverse
+2020,11,Las Vegas Raiders,Kansas City Chiefs,296,-351,nflverse
+2020,11,Tampa Bay Buccaneers,Los Angeles Rams,-195,173,nflverse
+2020,12,Detroit Lions,Houston Texans,139,-155,nflverse
+2020,12,Dallas Cowboys,Washington Commanders,-135,122,nflverse
+2020,12,Atlanta Falcons,Las Vegas Raiders,164,-184,nflverse
+2020,12,Buffalo Bills,Los Angeles Chargers,-214,189,nflverse
+2020,12,Cincinnati Bengals,New York Giants,227,-260,nflverse
+2020,12,Indianapolis Colts,Tennessee Titans,-147,133,nflverse
+2020,12,Jacksonville Jaguars,Cleveland Browns,284,-334,nflverse
+2020,12,Minnesota Vikings,Carolina Panthers,-145,131,nflverse
+2020,12,New England Patriots,Arizona Cardinals,104,-115,nflverse
+2020,12,New York Jets,Miami Dolphins,296,-350,nflverse
+2020,12,Denver Broncos,New Orleans Saints,906,-1350,nflverse
+2020,12,Los Angeles Rams,San Francisco 49ers,-215,190,nflverse
+2020,12,Tampa Bay Buccaneers,Kansas City Chiefs,149,-166,nflverse
+2020,12,Green Bay Packers,Chicago Bears,-346,293,nflverse
+2020,12,Philadelphia Eagles,Seattle Seahawks,237,-274,nflverse
+2020,12,Pittsburgh Steelers,Baltimore Ravens,-518,416,nflverse
+2020,13,Atlanta Falcons,New Orleans Saints,127,-141,nflverse
+2020,13,Chicago Bears,Detroit Lions,-161,145,nflverse
+2020,13,Houston Texans,Indianapolis Colts,157,-176,nflverse
+2020,13,Miami Dolphins,Cincinnati Bengals,-491,397,nflverse
+2020,13,Minnesota Vikings,Jacksonville Jaguars,-445,365,nflverse
+2020,13,New York Jets,Las Vegas Raiders,295,-349,nflverse
+2020,13,Tennessee Titans,Cleveland Browns,-200,178,nflverse
+2020,13,Arizona Cardinals,Los Angeles Rams,130,-144,nflverse
+2020,13,Seattle Seahawks,New York Giants,-514,413,nflverse
+2020,13,Green Bay Packers,Philadelphia Eagles,-393,328,nflverse
+2020,13,Los Angeles Chargers,New England Patriots,-129,117,nflverse
+2020,13,Kansas City Chiefs,Denver Broncos,-660,510,nflverse
+2020,13,Pittsburgh Steelers,Washington Commanders,-265,231,nflverse
+2020,13,San Francisco 49ers,Buffalo Bills,-122,110,nflverse
+2020,13,Baltimore Ravens,Dallas Cowboys,-390,326,nflverse
+2020,14,Los Angeles Rams,New England Patriots,-228,201,nflverse
+2020,14,Carolina Panthers,Denver Broncos,-199,177,nflverse
+2020,14,Chicago Bears,Houston Texans,104,-114,nflverse
+2020,14,Cincinnati Bengals,Dallas Cowboys,148,-164,nflverse
+2020,14,Jacksonville Jaguars,Tennessee Titans,307,-364,nflverse
+2020,14,Miami Dolphins,Kansas City Chiefs,281,-330,nflverse
+2020,14,New York Giants,Arizona Cardinals,139,-154,nflverse
+2020,14,Tampa Bay Buccaneers,Minnesota Vikings,-317,271,nflverse
+2020,14,Las Vegas Raiders,Indianapolis Colts,118,-130,nflverse
+2020,14,Seattle Seahawks,New York Jets,-1032,734,nflverse
+2020,14,Detroit Lions,Green Bay Packers,292,-345,nflverse
+2020,14,Los Angeles Chargers,Atlanta Falcons,-118,107,nflverse
+2020,14,Philadelphia Eagles,New Orleans Saints,284,-335,nflverse
+2020,14,San Francisco 49ers,Washington Commanders,-149,134,nflverse
+2020,14,Buffalo Bills,Pittsburgh Steelers,-124,112,nflverse
+2020,14,Cleveland Browns,Baltimore Ravens,156,-174,nflverse
+2020,15,Las Vegas Raiders,Los Angeles Chargers,-174,156,nflverse
+2020,15,Denver Broncos,Buffalo Bills,212,-242,nflverse
+2020,15,Green Bay Packers,Carolina Panthers,-419,346,nflverse
+2020,15,Atlanta Falcons,Tampa Bay Buccaneers,225,-258,nflverse
+2020,15,Baltimore Ravens,Jacksonville Jaguars,-746,564,nflverse
+2020,15,Dallas Cowboys,San Francisco 49ers,180,-202,nflverse
+2020,15,Indianapolis Colts,Houston Texans,-370,311,nflverse
+2020,15,Miami Dolphins,New England Patriots,109,-120,nflverse
+2020,15,Minnesota Vikings,Chicago Bears,-152,137,nflverse
+2020,15,Tennessee Titans,Detroit Lions,-389,325,nflverse
+2020,15,Washington Commanders,Seattle Seahawks,219,-251,nflverse
+2020,15,Arizona Cardinals,Philadelphia Eagles,-259,226,nflverse
+2020,15,Los Angeles Rams,New York Jets,-1601,957,nflverse
+2020,15,New Orleans Saints,Kansas City Chiefs,124,-137,nflverse
+2020,15,New York Giants,Cleveland Browns,235,-271,nflverse
+2020,15,Cincinnati Bengals,Pittsburgh Steelers,682,-942,nflverse
+2020,16,New Orleans Saints,Minnesota Vikings,-302,260,nflverse
+2020,16,Detroit Lions,Tampa Bay Buccaneers,455,-591,nflverse
+2020,16,Arizona Cardinals,San Francisco 49ers,-280,242,nflverse
+2020,16,Las Vegas Raiders,Miami Dolphins,113,-125,nflverse
+2020,16,Baltimore Ravens,New York Giants,-420,348,nflverse
+2020,16,Houston Texans,Cincinnati Bengals,-324,276,nflverse
+2020,16,Jacksonville Jaguars,Chicago Bears,370,-452,nflverse
+2020,16,Kansas City Chiefs,Atlanta Falcons,-508,409,nflverse
+2020,16,New York Jets,Cleveland Browns,260,-303,nflverse
+2020,16,Pittsburgh Steelers,Indianapolis Colts,-104,-106,nflverse
+2020,16,Los Angeles Chargers,Denver Broncos,-125,113,nflverse
+2020,16,Washington Commanders,Carolina Panthers,102,-112,nflverse
+2020,16,Dallas Cowboys,Philadelphia Eagles,149,-166,nflverse
+2020,16,Seattle Seahawks,Los Angeles Rams,-127,115,nflverse
+2020,16,Green Bay Packers,Tennessee Titans,-177,159,nflverse
+2020,16,New England Patriots,Buffalo Bills,268,-313,nflverse
+2020,17,Buffalo Bills,Miami Dolphins,138,-153,nflverse
+2020,17,Cincinnati Bengals,Baltimore Ravens,597,-799,nflverse
+2020,17,Cleveland Browns,Pittsburgh Steelers,-460,376,nflverse
+2020,17,Detroit Lions,Minnesota Vikings,145,-161,nflverse
+2020,17,New England Patriots,New York Jets,-161,145,nflverse
+2020,17,New York Giants,Dallas Cowboys,109,-121,nflverse
+2020,17,Tampa Bay Buccaneers,Atlanta Falcons,-323,276,nflverse
+2020,17,Carolina Panthers,New Orleans Saints,219,-250,nflverse
+2020,17,Chicago Bears,Green Bay Packers,184,-207,nflverse
+2020,17,Denver Broncos,Las Vegas Raiders,130,-144,nflverse
+2020,17,Houston Texans,Tennessee Titans,259,-301,nflverse
+2020,17,Indianapolis Colts,Jacksonville Jaguars,-1350,906,nflverse
+2020,17,Kansas City Chiefs,Los Angeles Chargers,244,-282,nflverse
+2020,17,Los Angeles Rams,Arizona Cardinals,-125,113,nflverse
+2020,17,San Francisco 49ers,Seattle Seahawks,266,-310,nflverse
+2020,17,Philadelphia Eagles,Washington Commanders,245,-283,nflverse
+2020,100,Buffalo Bills,Indianapolis Colts,-325,277,nflverse
+2020,100,Seattle Seahawks,Los Angeles Rams,-172,154,nflverse
+2020,100,Washington Commanders,Tampa Bay Buccaneers,373,-456,nflverse
+2020,100,Tennessee Titans,Baltimore Ravens,163,-182,nflverse
+2020,100,New Orleans Saints,Chicago Bears,-558,443,nflverse
+2020,100,Pittsburgh Steelers,Cleveland Browns,-239,210,nflverse
+2020,101,Green Bay Packers,Los Angeles Rams,-351,296,nflverse
+2020,101,Buffalo Bills,Baltimore Ravens,-137,124,nflverse
+2020,101,Kansas City Chiefs,Cleveland Browns,-376,316,nflverse
+2020,101,New Orleans Saints,Tampa Bay Buccaneers,-133,120,nflverse
+2020,102,Green Bay Packers,Tampa Bay Buccaneers,-176,157,nflverse
+2020,102,Kansas City Chiefs,Buffalo Bills,-158,142,nflverse
+2020,103,Tampa Bay Buccaneers,Kansas City Chiefs,145,-161,nflverse
+2021,1,Tampa Bay Buccaneers,Dallas Cowboys,-425,351,nflverse
+2021,1,Atlanta Falcons,Philadelphia Eagles,-180,161,nflverse
+2021,1,Buffalo Bills,Pittsburgh Steelers,-267,232,nflverse
+2021,1,Carolina Panthers,New York Jets,-184,164,nflverse
+2021,1,Cincinnati Bengals,Minnesota Vikings,122,-135,nflverse
+2021,1,Detroit Lions,San Francisco 49ers,344,-415,nflverse
+2021,1,Houston Texans,Jacksonville Jaguars,154,-172,nflverse
+2021,1,Indianapolis Colts,Seattle Seahawks,132,-146,nflverse
+2021,1,Tennessee Titans,Arizona Cardinals,-146,131,nflverse
+2021,1,Washington Commanders,Los Angeles Chargers,-129,117,nflverse
+2021,1,Kansas City Chiefs,Cleveland Browns,-241,211,nflverse
+2021,1,New England Patriots,Miami Dolphins,-173,155,nflverse
+2021,1,New Orleans Saints,Green Bay Packers,162,-181,nflverse
+2021,1,New York Giants,Denver Broncos,125,-139,nflverse
+2021,1,Los Angeles Rams,Chicago Bears,-387,324,nflverse
+2021,1,Las Vegas Raiders,Baltimore Ravens,149,-167,nflverse
+2021,2,Washington Commanders,New York Giants,-198,176,nflverse
+2021,2,Carolina Panthers,New Orleans Saints,131,-145,nflverse
+2021,2,Chicago Bears,Cincinnati Bengals,-126,114,nflverse
+2021,2,Cleveland Browns,Houston Texans,-675,521,nflverse
+2021,2,Indianapolis Colts,Los Angeles Rams,182,-205,nflverse
+2021,2,Jacksonville Jaguars,Denver Broncos,211,-241,nflverse
+2021,2,Miami Dolphins,Buffalo Bills,160,-179,nflverse
+2021,2,New York Jets,New England Patriots,207,-235,nflverse
+2021,2,Philadelphia Eagles,San Francisco 49ers,130,-144,nflverse
+2021,2,Pittsburgh Steelers,Las Vegas Raiders,-228,201,nflverse
+2021,2,Arizona Cardinals,Minnesota Vikings,-191,170,nflverse
+2021,2,Tampa Bay Buccaneers,Atlanta Falcons,-772,582,nflverse
+2021,2,Los Angeles Chargers,Dallas Cowboys,-150,135,nflverse
+2021,2,Seattle Seahawks,Tennessee Titans,-286,247,nflverse
+2021,2,Baltimore Ravens,Kansas City Chiefs,153,-171,nflverse
+2021,2,Green Bay Packers,Detroit Lions,-494,400,nflverse
+2021,3,Houston Texans,Carolina Panthers,348,-420,nflverse
+2021,3,Buffalo Bills,Washington Commanders,-330,281,nflverse
+2021,3,Cleveland Browns,Chicago Bears,-375,315,nflverse
+2021,3,Detroit Lions,Baltimore Ravens,292,-344,nflverse
+2021,3,Jacksonville Jaguars,Arizona Cardinals,304,-360,nflverse
+2021,3,Kansas City Chiefs,Los Angeles Chargers,-273,237,nflverse
+2021,3,New England Patriots,New Orleans Saints,-144,130,nflverse
+2021,3,New York Giants,Atlanta Falcons,-143,129,nflverse
+2021,3,Pittsburgh Steelers,Cincinnati Bengals,-140,126,nflverse
+2021,3,Tennessee Titans,Indianapolis Colts,-196,175,nflverse
+2021,3,Denver Broncos,New York Jets,-597,470,nflverse
+2021,3,Las Vegas Raiders,Miami Dolphins,-194,173,nflverse
+2021,3,Los Angeles Rams,Tampa Bay Buccaneers,-104,-106,nflverse
+2021,3,Minnesota Vikings,Seattle Seahawks,109,-120,nflverse
+2021,3,San Francisco 49ers,Green Bay Packers,-179,160,nflverse
+2021,3,Dallas Cowboys,Philadelphia Eagles,-189,168,nflverse
+2021,4,Cincinnati Bengals,Jacksonville Jaguars,-373,313,nflverse
+2021,4,Atlanta Falcons,Washington Commanders,106,-117,nflverse
+2021,4,Buffalo Bills,Houston Texans,-1500,988,nflverse
+2021,4,Chicago Bears,Detroit Lions,-148,134,nflverse
+2021,4,Dallas Cowboys,Carolina Panthers,-210,186,nflverse
+2021,4,Miami Dolphins,Indianapolis Colts,-144,130,nflverse
+2021,4,Minnesota Vikings,Cleveland Browns,-106,-105,nflverse
+2021,4,New Orleans Saints,New York Giants,-337,286,nflverse
+2021,4,New York Jets,Tennessee Titans,206,-234,nflverse
+2021,4,Philadelphia Eagles,Kansas City Chiefs,296,-349,nflverse
+2021,4,Los Angeles Rams,Arizona Cardinals,-200,178,nflverse
+2021,4,San Francisco 49ers,Seattle Seahawks,-133,120,nflverse
+2021,4,Denver Broncos,Baltimore Ravens,-118,107,nflverse
+2021,4,Green Bay Packers,Pittsburgh Steelers,-276,239,nflverse
+2021,4,New England Patriots,Tampa Bay Buccaneers,223,-255,nflverse
+2021,4,Los Angeles Chargers,Las Vegas Raiders,-161,144,nflverse
+2021,5,Seattle Seahawks,Los Angeles Rams,122,-135,nflverse
+2021,5,Atlanta Falcons,New York Jets,-153,138,nflverse
+2021,5,Carolina Panthers,Philadelphia Eagles,-139,126,nflverse
+2021,5,Cincinnati Bengals,Green Bay Packers,111,-123,nflverse
+2021,5,Houston Texans,New England Patriots,288,-339,nflverse
+2021,5,Jacksonville Jaguars,Tennessee Titans,170,-191,nflverse
+2021,5,Minnesota Vikings,Detroit Lions,-418,346,nflverse
+2021,5,Pittsburgh Steelers,Denver Broncos,113,-124,nflverse
+2021,5,Tampa Bay Buccaneers,Miami Dolphins,-564,448,nflverse
+2021,5,Washington Commanders,New Orleans Saints,117,-130,nflverse
+2021,5,Los Angeles Chargers,Cleveland Browns,-129,117,nflverse
+2021,5,Las Vegas Raiders,Chicago Bears,-245,215,nflverse
+2021,5,Arizona Cardinals,San Francisco 49ers,-266,231,nflverse
+2021,5,Dallas Cowboys,New York Giants,-335,285,nflverse
+2021,5,Kansas City Chiefs,Buffalo Bills,-134,121,nflverse
+2021,5,Baltimore Ravens,Indianapolis Colts,-356,301,nflverse
+2021,6,Philadelphia Eagles,Tampa Bay Buccaneers,238,-274,nflverse
+2021,6,Jacksonville Jaguars,Miami Dolphins,110,-122,nflverse
+2021,6,Baltimore Ravens,Los Angeles Chargers,-166,149,nflverse
+2021,6,Carolina Panthers,Minnesota Vikings,121,-134,nflverse
+2021,6,Chicago Bears,Green Bay Packers,201,-228,nflverse
+2021,6,Detroit Lions,Cincinnati Bengals,171,-192,nflverse
+2021,6,Indianapolis Colts,Houston Texans,-442,363,nflverse
+2021,6,New York Giants,Los Angeles Rams,280,-328,nflverse
+2021,6,Washington Commanders,Kansas City Chiefs,223,-255,nflverse
+2021,6,Cleveland Browns,Arizona Cardinals,-143,129,nflverse
+2021,6,Denver Broncos,Las Vegas Raiders,-205,182,nflverse
+2021,6,New England Patriots,Dallas Cowboys,169,-189,nflverse
+2021,6,Pittsburgh Steelers,Seattle Seahawks,-213,189,nflverse
+2021,6,Tennessee Titans,Buffalo Bills,210,-239,nflverse
+2021,7,Cleveland Browns,Denver Broncos,-121,110,nflverse
+2021,7,Baltimore Ravens,Cincinnati Bengals,-272,236,nflverse
+2021,7,Green Bay Packers,Washington Commanders,-397,331,nflverse
+2021,7,Miami Dolphins,Atlanta Falcons,117,-129,nflverse
+2021,7,New England Patriots,New York Jets,-303,261,nflverse
+2021,7,New York Giants,Carolina Panthers,139,-154,nflverse
+2021,7,Tennessee Titans,Kansas City Chiefs,185,-209,nflverse
+2021,7,Los Angeles Rams,Detroit Lions,-1256,860,nflverse
+2021,7,Las Vegas Raiders,Philadelphia Eagles,-108,-102,nflverse
+2021,7,Arizona Cardinals,Houston Texans,-1766,1119,nflverse
+2021,7,Tampa Bay Buccaneers,Chicago Bears,-644,501,nflverse
+2021,7,San Francisco 49ers,Indianapolis Colts,-169,152,nflverse
+2021,7,Seattle Seahawks,New Orleans Saints,208,-237,nflverse
+2021,8,Arizona Cardinals,Green Bay Packers,-279,242,nflverse
+2021,8,Atlanta Falcons,Carolina Panthers,-129,117,nflverse
+2021,8,Buffalo Bills,Miami Dolphins,-983,709,nflverse
+2021,8,Chicago Bears,San Francisco 49ers,186,-210,nflverse
+2021,8,Cleveland Browns,Pittsburgh Steelers,-222,196,nflverse
+2021,8,Detroit Lions,Philadelphia Eagles,151,-168,nflverse
+2021,8,Houston Texans,Los Angeles Rams,724,-1010,nflverse
+2021,8,Indianapolis Colts,Tennessee Titans,-160,144,nflverse
+2021,8,New York Jets,Cincinnati Bengals,411,-510,nflverse
+2021,8,Los Angeles Chargers,New England Patriots,-183,163,nflverse
+2021,8,Seattle Seahawks,Jacksonville Jaguars,-192,171,nflverse
+2021,8,Denver Broncos,Washington Commanders,-191,170,nflverse
+2021,8,New Orleans Saints,Tampa Bay Buccaneers,168,-188,nflverse
+2021,8,Minnesota Vikings,Dallas Cowboys,-219,193,nflverse
+2021,8,Kansas City Chiefs,New York Giants,-530,425,nflverse
+2021,9,Indianapolis Colts,New York Jets,-509,410,nflverse
+2021,9,Baltimore Ravens,Minnesota Vikings,-305,262,nflverse
+2021,9,Carolina Panthers,New England Patriots,157,-176,nflverse
+2021,9,Cincinnati Bengals,Cleveland Browns,-129,117,nflverse
+2021,9,Dallas Cowboys,Denver Broncos,-462,378,nflverse
+2021,9,Jacksonville Jaguars,Buffalo Bills,776,-1101,nflverse
+2021,9,Miami Dolphins,Houston Texans,-185,166,nflverse
+2021,9,New Orleans Saints,Atlanta Falcons,-277,240,nflverse
+2021,9,New York Giants,Las Vegas Raiders,137,-152,nflverse
+2021,9,Philadelphia Eagles,Los Angeles Chargers,-104,-106,nflverse
+2021,9,Kansas City Chiefs,Green Bay Packers,-322,275,nflverse
+2021,9,San Francisco 49ers,Arizona Cardinals,-235,207,nflverse
+2021,9,Los Angeles Rams,Tennessee Titans,-350,296,nflverse
+2021,9,Pittsburgh Steelers,Chicago Bears,-306,263,nflverse
+2021,10,Miami Dolphins,Baltimore Ravens,326,-390,nflverse
+2021,10,Dallas Cowboys,Atlanta Falcons,-392,328,nflverse
+2021,10,Indianapolis Colts,Jacksonville Jaguars,-434,358,nflverse
+2021,10,New England Patriots,Cleveland Browns,-132,119,nflverse
+2021,10,New York Jets,Buffalo Bills,527,-685,nflverse
+2021,10,Pittsburgh Steelers,Detroit Lions,-359,303,nflverse
+2021,10,Tennessee Titans,New Orleans Saints,-147,133,nflverse
+2021,10,Washington Commanders,Tampa Bay Buccaneers,359,-435,nflverse
+2021,10,Arizona Cardinals,Carolina Panthers,-329,280,nflverse
+2021,10,Los Angeles Chargers,Minnesota Vikings,-179,160,nflverse
+2021,10,Denver Broncos,Philadelphia Eagles,-111,101,nflverse
+2021,10,Green Bay Packers,Seattle Seahawks,-168,151,nflverse
+2021,10,Las Vegas Raiders,Kansas City Chiefs,133,-147,nflverse
+2021,10,San Francisco 49ers,Los Angeles Rams,158,-177,nflverse
+2021,11,Atlanta Falcons,New England Patriots,280,-329,nflverse
+2021,11,Buffalo Bills,Indianapolis Colts,-320,274,nflverse
+2021,11,Carolina Panthers,Washington Commanders,-172,154,nflverse
+2021,11,Chicago Bears,Baltimore Ravens,199,-226,nflverse
+2021,11,Cleveland Browns,Detroit Lions,-590,465,nflverse
+2021,11,Jacksonville Jaguars,San Francisco 49ers,243,-281,nflverse
+2021,11,Minnesota Vikings,Green Bay Packers,101,-111,nflverse
+2021,11,New York Jets,Miami Dolphins,162,-181,nflverse
+2021,11,Philadelphia Eagles,New Orleans Saints,-144,130,nflverse
+2021,11,Tennessee Titans,Houston Texans,-462,377,nflverse
+2021,11,Las Vegas Raiders,Cincinnati Bengals,112,-123,nflverse
+2021,11,Kansas City Chiefs,Dallas Cowboys,-134,122,nflverse
+2021,11,Seattle Seahawks,Arizona Cardinals,-150,135,nflverse
+2021,11,Los Angeles Chargers,Pittsburgh Steelers,-251,220,nflverse
+2021,11,Tampa Bay Buccaneers,New York Giants,-527,423,nflverse
+2021,12,Detroit Lions,Chicago Bears,115,-129,nflverse
+2021,12,Dallas Cowboys,Las Vegas Raiders,-314,269,nflverse
+2021,12,New Orleans Saints,Buffalo Bills,235,-270,nflverse
+2021,12,Cincinnati Bengals,Pittsburgh Steelers,-172,154,nflverse
+2021,12,Houston Texans,New York Jets,-138,125,nflverse
+2021,12,Indianapolis Colts,Tampa Bay Buccaneers,135,-149,nflverse
+2021,12,Jacksonville Jaguars,Atlanta Falcons,105,-115,nflverse
+2021,12,Miami Dolphins,Carolina Panthers,108,-119,nflverse
+2021,12,New England Patriots,Tennessee Titans,-305,262,nflverse
+2021,12,New York Giants,Philadelphia Eagles,171,-192,nflverse
+2021,12,Denver Broncos,Los Angeles Chargers,127,-141,nflverse
+2021,12,Green Bay Packers,Los Angeles Rams,108,-120,nflverse
+2021,12,San Francisco 49ers,Minnesota Vikings,-183,164,nflverse
+2021,12,Baltimore Ravens,Cleveland Browns,-156,140,nflverse
+2021,12,Washington Commanders,Seattle Seahawks,116,-128,nflverse
+2021,13,New Orleans Saints,Dallas Cowboys,222,-254,nflverse
+2021,13,Atlanta Falcons,Tampa Bay Buccaneers,387,-475,nflverse
+2021,13,Chicago Bears,Arizona Cardinals,314,-373,nflverse
+2021,13,Cincinnati Bengals,Los Angeles Chargers,-141,127,nflverse
+2021,13,Detroit Lions,Minnesota Vikings,255,-296,nflverse
+2021,13,Houston Texans,Indianapolis Colts,339,-408,nflverse
+2021,13,Miami Dolphins,New York Giants,-293,253,nflverse
+2021,13,New York Jets,Philadelphia Eagles,177,-199,nflverse
+2021,13,Los Angeles Rams,Jacksonville Jaguars,-796,597,nflverse
+2021,13,Las Vegas Raiders,Washington Commanders,-128,116,nflverse
+2021,13,Pittsburgh Steelers,Baltimore Ravens,174,-195,nflverse
+2021,13,Seattle Seahawks,San Francisco 49ers,125,-138,nflverse
+2021,13,Kansas City Chiefs,Denver Broncos,-387,323,nflverse
+2021,13,Buffalo Bills,New England Patriots,-146,132,nflverse
+2021,14,Minnesota Vikings,Pittsburgh Steelers,-175,157,nflverse
+2021,14,Carolina Panthers,Atlanta Falcons,-136,123,nflverse
+2021,14,Cleveland Browns,Baltimore Ravens,-150,135,nflverse
+2021,14,Houston Texans,Seattle Seahawks,334,-401,nflverse
+2021,14,Kansas City Chiefs,Las Vegas Raiders,-444,365,nflverse
+2021,14,New York Jets,New Orleans Saints,173,-194,nflverse
+2021,14,Tennessee Titans,Jacksonville Jaguars,-384,321,nflverse
+2021,14,Washington Commanders,Dallas Cowboys,246,-284,nflverse
+2021,14,Denver Broncos,Detroit Lions,-635,495,nflverse
+2021,14,Los Angeles Chargers,New York Giants,-395,329,nflverse
+2021,14,Cincinnati Bengals,San Francisco 49ers,117,-130,nflverse
+2021,14,Tampa Bay Buccaneers,Buffalo Bills,-181,161,nflverse
+2021,14,Green Bay Packers,Chicago Bears,-639,498,nflverse
+2021,14,Arizona Cardinals,Los Angeles Rams,-172,154,nflverse
+2021,15,Los Angeles Chargers,Kansas City Chiefs,155,-173,nflverse
+2021,15,Indianapolis Colts,New England Patriots,-109,-102,nflverse
+2021,15,Buffalo Bills,Carolina Panthers,-739,562,nflverse
+2021,15,Detroit Lions,Arizona Cardinals,495,-634,nflverse
+2021,15,Jacksonville Jaguars,Houston Texans,-257,224,nflverse
+2021,15,Miami Dolphins,New York Jets,-445,366,nflverse
+2021,15,New York Giants,Dallas Cowboys,428,-534,nflverse
+2021,15,Pittsburgh Steelers,Tennessee Titans,-121,109,nflverse
+2021,15,Denver Broncos,Cincinnati Bengals,-155,140,nflverse
+2021,15,San Francisco 49ers,Atlanta Falcons,-380,319,nflverse
+2021,15,Baltimore Ravens,Green Bay Packers,299,-354,nflverse
+2021,15,Tampa Bay Buccaneers,New Orleans Saints,-518,417,nflverse
+2021,15,Cleveland Browns,Las Vegas Raiders,131,-147,nflverse
+2021,15,Chicago Bears,Minnesota Vikings,274,-320,nflverse
+2021,15,Los Angeles Rams,Seattle Seahawks,-352,298,nflverse
+2021,15,Philadelphia Eagles,Washington Commanders,-465,380,nflverse
+2021,16,Tennessee Titans,San Francisco 49ers,154,-171,nflverse
+2021,16,Green Bay Packers,Cleveland Browns,-430,343,nflverse
+2021,16,Arizona Cardinals,Indianapolis Colts,-161,143,nflverse
+2021,16,Atlanta Falcons,Detroit Lions,-373,309,nflverse
+2021,16,Carolina Panthers,Tampa Bay Buccaneers,399,-503,nflverse
+2021,16,Cincinnati Bengals,Baltimore Ravens,-369,306,nflverse
+2021,16,Houston Texans,Los Angeles Chargers,500,-661,nflverse
+2021,16,Minnesota Vikings,Los Angeles Rams,158,-177,nflverse
+2021,16,New England Patriots,Buffalo Bills,-114,102,nflverse
+2021,16,New York Jets,Jacksonville Jaguars,-125,114,nflverse
+2021,16,Philadelphia Eagles,New York Giants,-529,416,nflverse
+2021,16,Seattle Seahawks,Chicago Bears,-313,268,nflverse
+2021,16,Kansas City Chiefs,Pittsburgh Steelers,-400,328,nflverse
+2021,16,Las Vegas Raiders,Denver Broncos,-102,-109,nflverse
+2021,16,Dallas Cowboys,Washington Commanders,-457,367,nflverse
+2021,16,New Orleans Saints,Miami Dolphins,143,-160,nflverse
+2021,17,Baltimore Ravens,Los Angeles Rams,264,-313,nflverse
+2021,17,Buffalo Bills,Atlanta Falcons,-871,625,nflverse
+2021,17,Chicago Bears,New York Giants,-287,245,nflverse
+2021,17,Cincinnati Bengals,Kansas City Chiefs,157,-178,nflverse
+2021,17,Indianapolis Colts,Las Vegas Raiders,-397,325,nflverse
+2021,17,New England Patriots,Jacksonville Jaguars,-1056,727,nflverse
+2021,17,New York Jets,Tampa Bay Buccaneers,623,-868,nflverse
+2021,17,Tennessee Titans,Miami Dolphins,-170,151,nflverse
+2021,17,Washington Commanders,Philadelphia Eagles,206,-238,nflverse
+2021,17,Los Angeles Chargers,Denver Broncos,-340,285,nflverse
+2021,17,San Francisco 49ers,Houston Texans,-602,463,nflverse
+2021,17,Dallas Cowboys,Arizona Cardinals,-262,225,nflverse
+2021,17,New Orleans Saints,Carolina Panthers,-279,238,nflverse
+2021,17,Seattle Seahawks,Detroit Lions,-399,327,nflverse
+2021,17,Green Bay Packers,Minnesota Vikings,-702,525,nflverse
+2021,17,Pittsburgh Steelers,Cleveland Browns,105,-117,nflverse
+2021,18,Denver Broncos,Kansas City Chiefs,435,-600,nflverse
+2021,18,Philadelphia Eagles,Dallas Cowboys,235,-300,nflverse
+2021,18,Baltimore Ravens,Pittsburgh Steelers,-155,135,nflverse
+2021,18,Cleveland Browns,Cincinnati Bengals,-265,215,nflverse
+2021,18,Detroit Lions,Green Bay Packers,165,-195,nflverse
+2021,18,Houston Texans,Tennessee Titans,410,-575,nflverse
+2021,18,Jacksonville Jaguars,Indianapolis Colts,650,-1000,nflverse
+2021,18,Minnesota Vikings,Chicago Bears,-190,160,nflverse
+2021,18,New York Giants,Washington Commanders,206,-238,nflverse
+2021,18,Arizona Cardinals,Seattle Seahawks,-235,190,nflverse
+2021,18,Atlanta Falcons,New Orleans Saints,186,-213,nflverse
+2021,18,Buffalo Bills,New York Jets,-1250,750,nflverse
+2021,18,Los Angeles Rams,San Francisco 49ers,-170,150,nflverse
+2021,18,Miami Dolphins,New England Patriots,200,-250,nflverse
+2021,18,Tampa Bay Buccaneers,Carolina Panthers,-510,375,nflverse
+2021,18,Las Vegas Raiders,Los Angeles Chargers,155,-180,nflverse
+2021,100,Cincinnati Bengals,Las Vegas Raiders,-248,214,nflverse
+2021,100,Buffalo Bills,New England Patriots,-207,181,nflverse
+2021,100,Tampa Bay Buccaneers,Philadelphia Eagles,-352,293,nflverse
+2021,100,Dallas Cowboys,San Francisco 49ers,-162,144,nflverse
+2021,100,Kansas City Chiefs,Pittsburgh Steelers,-697,522,nflverse
+2021,100,Los Angeles Rams,Arizona Cardinals,-179,158,nflverse
+2021,101,Tennessee Titans,Cincinnati Bengals,-191,170,nflverse
+2021,101,Green Bay Packers,San Francisco 49ers,-261,228,nflverse
+2021,101,Tampa Bay Buccaneers,Los Angeles Rams,-145,131,nflverse
+2021,101,Kansas City Chiefs,Buffalo Bills,-138,124,nflverse
+2021,102,Kansas City Chiefs,Cincinnati Bengals,-320,250,nflverse
+2021,102,Los Angeles Rams,San Francisco 49ers,-180,155,nflverse
+2021,103,Cincinnati Bengals,Los Angeles Rams,160,-190,nflverse
+2022,1,Los Angeles Rams,Buffalo Bills,106,-117,nflverse
+2022,1,Atlanta Falcons,New Orleans Saints,201,-228,nflverse
+2022,1,Carolina Panthers,Cleveland Browns,-125,114,nflverse
+2022,1,Chicago Bears,San Francisco 49ers,217,-248,nflverse
+2022,1,Cincinnati Bengals,Pittsburgh Steelers,-308,264,nflverse
+2022,1,Detroit Lions,Philadelphia Eagles,211,-240,nflverse
+2022,1,Houston Texans,Indianapolis Colts,250,-290,nflverse
+2022,1,Miami Dolphins,New England Patriots,-155,140,nflverse
+2022,1,New York Jets,Baltimore Ravens,231,-265,nflverse
+2022,1,Washington Commanders,Jacksonville Jaguars,-159,143,nflverse
+2022,1,Arizona Cardinals,Kansas City Chiefs,221,-252,nflverse
+2022,1,Los Angeles Chargers,Las Vegas Raiders,-180,161,nflverse
+2022,1,Minnesota Vikings,Green Bay Packers,-125,113,nflverse
+2022,1,Tennessee Titans,New York Giants,-239,209,nflverse
+2022,1,Dallas Cowboys,Tampa Bay Buccaneers,120,-133,nflverse
+2022,1,Seattle Seahawks,Denver Broncos,221,-253,nflverse
+2022,2,Kansas City Chiefs,Los Angeles Chargers,-188,167,nflverse
+2022,2,Baltimore Ravens,Miami Dolphins,-164,148,nflverse
+2022,2,Cleveland Browns,New York Jets,-235,207,nflverse
+2022,2,Detroit Lions,Washington Commanders,103,-114,nflverse
+2022,2,Jacksonville Jaguars,Indianapolis Colts,142,-157,nflverse
+2022,2,New Orleans Saints,Tampa Bay Buccaneers,124,-138,nflverse
+2022,2,New York Giants,Carolina Panthers,103,-114,nflverse
+2022,2,Pittsburgh Steelers,New England Patriots,135,-150,nflverse
+2022,2,Los Angeles Rams,Atlanta Falcons,-473,385,nflverse
+2022,2,San Francisco 49ers,Seattle Seahawks,-379,318,nflverse
+2022,2,Dallas Cowboys,Cincinnati Bengals,260,-303,nflverse
+2022,2,Denver Broncos,Houston Texans,-481,391,nflverse
+2022,2,Las Vegas Raiders,Arizona Cardinals,-223,197,nflverse
+2022,2,Green Bay Packers,Chicago Bears,-420,348,nflverse
+2022,2,Buffalo Bills,Tennessee Titans,-395,329,nflverse
+2022,2,Philadelphia Eagles,Minnesota Vikings,-141,127,nflverse
+2022,3,Cleveland Browns,Pittsburgh Steelers,-206,183,nflverse
+2022,3,Carolina Panthers,New Orleans Saints,112,-123,nflverse
+2022,3,Chicago Bears,Houston Texans,-156,141,nflverse
+2022,3,Indianapolis Colts,Kansas City Chiefs,177,-199,nflverse
+2022,3,Miami Dolphins,Buffalo Bills,175,-196,nflverse
+2022,3,Minnesota Vikings,Detroit Lions,-266,232,nflverse
+2022,3,New England Patriots,Baltimore Ravens,129,-143,nflverse
+2022,3,New York Jets,Cincinnati Bengals,220,-247,nflverse
+2022,3,Tennessee Titans,Las Vegas Raiders,117,-130,nflverse
+2022,3,Washington Commanders,Philadelphia Eagles,210,-240,nflverse
+2022,3,Los Angeles Chargers,Jacksonville Jaguars,-252,220,nflverse
+2022,3,Arizona Cardinals,Los Angeles Rams,153,-171,nflverse
+2022,3,Seattle Seahawks,Atlanta Falcons,-106,-104,nflverse
+2022,3,Tampa Bay Buccaneers,Green Bay Packers,-123,112,nflverse
+2022,3,Denver Broncos,San Francisco 49ers,-101,-110,nflverse
+2022,3,New York Giants,Dallas Cowboys,-120,109,nflverse
+2022,4,Cincinnati Bengals,Miami Dolphins,-190,169,nflverse
+2022,4,New Orleans Saints,Minnesota Vikings,177,-199,nflverse
+2022,4,Atlanta Falcons,Cleveland Browns,-103,-107,nflverse
+2022,4,Baltimore Ravens,Buffalo Bills,154,-172,nflverse
+2022,4,Dallas Cowboys,Washington Commanders,-155,140,nflverse
+2022,4,Detroit Lions,Seattle Seahawks,-169,151,nflverse
+2022,4,Houston Texans,Los Angeles Chargers,205,-234,nflverse
+2022,4,Indianapolis Colts,Tennessee Titans,-205,182,nflverse
+2022,4,New York Giants,Chicago Bears,-144,130,nflverse
+2022,4,Philadelphia Eagles,Jacksonville Jaguars,-256,223,nflverse
+2022,4,Pittsburgh Steelers,New York Jets,-161,145,nflverse
+2022,4,Carolina Panthers,Arizona Cardinals,-113,102,nflverse
+2022,4,Green Bay Packers,New England Patriots,-435,358,nflverse
+2022,4,Las Vegas Raiders,Denver Broncos,-137,124,nflverse
+2022,4,Tampa Bay Buccaneers,Kansas City Chiefs,-125,113,nflverse
+2022,4,San Francisco 49ers,Los Angeles Rams,-124,112,nflverse
+2022,5,Denver Broncos,Indianapolis Colts,-178,159,nflverse
+2022,5,Green Bay Packers,New York Giants,-397,331,nflverse
+2022,5,Buffalo Bills,Pittsburgh Steelers,-749,568,nflverse
+2022,5,Cleveland Browns,Los Angeles Chargers,103,-114,nflverse
+2022,5,Jacksonville Jaguars,Houston Texans,-304,261,nflverse
+2022,5,Minnesota Vikings,Chicago Bears,-385,322,nflverse
+2022,5,New England Patriots,Detroit Lions,-148,133,nflverse
+2022,5,New Orleans Saints,Seattle Seahawks,-229,201,nflverse
+2022,5,New York Jets,Miami Dolphins,146,-162,nflverse
+2022,5,Tampa Bay Buccaneers,Atlanta Falcons,-430,355,nflverse
+2022,5,Washington Commanders,Tennessee Titans,-100,-110,nflverse
+2022,5,Carolina Panthers,San Francisco 49ers,206,-234,nflverse
+2022,5,Arizona Cardinals,Philadelphia Eagles,196,-222,nflverse
+2022,5,Los Angeles Rams,Dallas Cowboys,-220,195,nflverse
+2022,5,Baltimore Ravens,Cincinnati Bengals,-168,151,nflverse
+2022,5,Kansas City Chiefs,Las Vegas Raiders,-321,275,nflverse
+2022,6,Chicago Bears,Washington Commanders,109,-120,nflverse
+2022,6,Atlanta Falcons,San Francisco 49ers,166,-185,nflverse
+2022,6,Cleveland Browns,New England Patriots,-140,127,nflverse
+2022,6,Green Bay Packers,New York Jets,-362,305,nflverse
+2022,6,Indianapolis Colts,Jacksonville Jaguars,-122,110,nflverse
+2022,6,Miami Dolphins,Minnesota Vikings,157,-175,nflverse
+2022,6,New Orleans Saints,Cincinnati Bengals,148,-164,nflverse
+2022,6,New York Giants,Baltimore Ravens,206,-234,nflverse
+2022,6,Pittsburgh Steelers,Tampa Bay Buccaneers,323,-386,nflverse
+2022,6,Los Angeles Rams,Carolina Panthers,-413,343,nflverse
+2022,6,Seattle Seahawks,Arizona Cardinals,123,-136,nflverse
+2022,6,Kansas City Chiefs,Buffalo Bills,132,-146,nflverse
+2022,6,Philadelphia Eagles,Dallas Cowboys,-292,252,nflverse
+2022,6,Los Angeles Chargers,Denver Broncos,-186,166,nflverse
+2022,7,Arizona Cardinals,New Orleans Saints,-140,126,nflverse
+2022,7,Baltimore Ravens,Cleveland Browns,-282,244,nflverse
+2022,7,Carolina Panthers,Tampa Bay Buccaneers,524,-680,nflverse
+2022,7,Cincinnati Bengals,Atlanta Falcons,-271,235,nflverse
+2022,7,Dallas Cowboys,Detroit Lions,-278,241,nflverse
+2022,7,Jacksonville Jaguars,New York Giants,-165,148,nflverse
+2022,7,Tennessee Titans,Indianapolis Colts,-143,129,nflverse
+2022,7,Washington Commanders,Green Bay Packers,173,-195,nflverse
+2022,7,Denver Broncos,New York Jets,115,-127,nflverse
+2022,7,Las Vegas Raiders,Houston Texans,-325,278,nflverse
+2022,7,Los Angeles Chargers,Seattle Seahawks,-219,193,nflverse
+2022,7,San Francisco 49ers,Kansas City Chiefs,-104,-106,nflverse
+2022,7,Miami Dolphins,Pittsburgh Steelers,-297,255,nflverse
+2022,7,New England Patriots,Chicago Bears,-392,327,nflverse
+2022,8,Tampa Bay Buccaneers,Baltimore Ravens,-128,116,nflverse
+2022,8,Jacksonville Jaguars,Denver Broncos,-107,-103,nflverse
+2022,8,Atlanta Falcons,Carolina Panthers,-201,178,nflverse
+2022,8,Dallas Cowboys,Chicago Bears,-430,355,nflverse
+2022,8,Detroit Lions,Miami Dolphins,169,-190,nflverse
+2022,8,Minnesota Vikings,Arizona Cardinals,-199,177,nflverse
+2022,8,New Orleans Saints,Las Vegas Raiders,108,-119,nflverse
+2022,8,New York Jets,New England Patriots,140,-155,nflverse
+2022,8,Philadelphia Eagles,Pittsburgh Steelers,-490,397,nflverse
+2022,8,Houston Texans,Tennessee Titans,104,-115,nflverse
+2022,8,Indianapolis Colts,Washington Commanders,-151,136,nflverse
+2022,8,Los Angeles Rams,San Francisco 49ers,-106,-104,nflverse
+2022,8,Seattle Seahawks,New York Giants,-164,147,nflverse
+2022,8,Buffalo Bills,Green Bay Packers,-445,365,nflverse
+2022,8,Cleveland Browns,Cincinnati Bengals,147,-163,nflverse
+2022,9,Houston Texans,Philadelphia Eagles,539,-702,nflverse
+2022,9,Atlanta Falcons,Los Angeles Chargers,130,-143,nflverse
+2022,9,Chicago Bears,Miami Dolphins,172,-193,nflverse
+2022,9,Cincinnati Bengals,Carolina Panthers,-331,282,nflverse
+2022,9,Detroit Lions,Green Bay Packers,170,-191,nflverse
+2022,9,Jacksonville Jaguars,Las Vegas Raiders,116,-129,nflverse
+2022,9,New England Patriots,Indianapolis Colts,-212,188,nflverse
+2022,9,New York Jets,Buffalo Bills,400,-494,nflverse
+2022,9,Washington Commanders,Minnesota Vikings,151,-169,nflverse
+2022,9,Arizona Cardinals,Seattle Seahawks,-128,116,nflverse
+2022,9,Tampa Bay Buccaneers,Los Angeles Rams,-158,142,nflverse
+2022,9,Kansas City Chiefs,Tennessee Titans,-689,530,nflverse
+2022,9,New Orleans Saints,Baltimore Ravens,112,-124,nflverse
+2022,10,Carolina Panthers,Atlanta Falcons,119,-132,nflverse
+2022,10,Tampa Bay Buccaneers,Seattle Seahawks,-138,124,nflverse
+2022,10,Buffalo Bills,Minnesota Vikings,-264,230,nflverse
+2022,10,Chicago Bears,Detroit Lions,-159,143,nflverse
+2022,10,Kansas City Chiefs,Jacksonville Jaguars,-399,333,nflverse
+2022,10,Miami Dolphins,Cleveland Browns,-177,158,nflverse
+2022,10,New York Giants,Houston Texans,-221,195,nflverse
+2022,10,Pittsburgh Steelers,New Orleans Saints,-116,105,nflverse
+2022,10,Tennessee Titans,Denver Broncos,-135,122,nflverse
+2022,10,Las Vegas Raiders,Indianapolis Colts,-199,177,nflverse
+2022,10,Green Bay Packers,Dallas Cowboys,177,-199,nflverse
+2022,10,Los Angeles Rams,Arizona Cardinals,-183,160,nflverse
+2022,10,San Francisco 49ers,Los Angeles Chargers,-357,302,nflverse
+2022,10,Philadelphia Eagles,Washington Commanders,-501,405,nflverse
+2022,11,Green Bay Packers,Tennessee Titans,-171,153,nflverse
+2022,11,Atlanta Falcons,Chicago Bears,-138,125,nflverse
+2022,11,Baltimore Ravens,Carolina Panthers,-647,503,nflverse
+2022,11,Buffalo Bills,Cleveland Browns,-353,298,nflverse
+2022,11,Houston Texans,Washington Commanders,135,-150,nflverse
+2022,11,Indianapolis Colts,Philadelphia Eagles,235,-270,nflverse
+2022,11,New England Patriots,New York Jets,-182,163,nflverse
+2022,11,New Orleans Saints,Los Angeles Rams,-124,112,nflverse
+2022,11,New York Giants,Detroit Lions,-159,143,nflverse
+2022,11,Denver Broncos,Las Vegas Raiders,-145,131,nflverse
+2022,11,Minnesota Vikings,Dallas Cowboys,118,-131,nflverse
+2022,11,Pittsburgh Steelers,Cincinnati Bengals,163,-182,nflverse
+2022,11,Los Angeles Chargers,Kansas City Chiefs,203,-231,nflverse
+2022,11,Arizona Cardinals,San Francisco 49ers,350,-422,nflverse
+2022,12,Detroit Lions,Buffalo Bills,342,-412,nflverse
+2022,12,Dallas Cowboys,New York Giants,-441,363,nflverse
+2022,12,Minnesota Vikings,New England Patriots,-136,123,nflverse
+2022,12,Carolina Panthers,Denver Broncos,105,-116,nflverse
+2022,12,Cleveland Browns,Tampa Bay Buccaneers,151,-169,nflverse
+2022,12,Jacksonville Jaguars,Baltimore Ravens,147,-164,nflverse
+2022,12,Miami Dolphins,Houston Texans,-822,613,nflverse
+2022,12,New York Jets,Chicago Bears,-375,315,nflverse
+2022,12,Tennessee Titans,Cincinnati Bengals,-105,-105,nflverse
+2022,12,Washington Commanders,Atlanta Falcons,-183,163,nflverse
+2022,12,Arizona Cardinals,Los Angeles Chargers,123,-136,nflverse
+2022,12,Seattle Seahawks,Las Vegas Raiders,-196,174,nflverse
+2022,12,Kansas City Chiefs,Los Angeles Rams,-1088,768,nflverse
+2022,12,San Francisco 49ers,New Orleans Saints,-392,327,nflverse
+2022,12,Philadelphia Eagles,Green Bay Packers,-278,241,nflverse
+2022,12,Indianapolis Colts,Pittsburgh Steelers,-128,116,nflverse
+2022,13,New England Patriots,Buffalo Bills,165,-185,nflverse
+2022,13,Atlanta Falcons,Pittsburgh Steelers,103,-113,nflverse
+2022,13,Baltimore Ravens,Denver Broncos,-347,294,nflverse
+2022,13,Chicago Bears,Green Bay Packers,163,-182,nflverse
+2022,13,Detroit Lions,Jacksonville Jaguars,-118,107,nflverse
+2022,13,Houston Texans,Cleveland Browns,280,-329,nflverse
+2022,13,Minnesota Vikings,New York Jets,-146,132,nflverse
+2022,13,New York Giants,Washington Commanders,113,-124,nflverse
+2022,13,Philadelphia Eagles,Tennessee Titans,-213,189,nflverse
+2022,13,Los Angeles Rams,Seattle Seahawks,252,-292,nflverse
+2022,13,San Francisco 49ers,Miami Dolphins,-222,196,nflverse
+2022,13,Cincinnati Bengals,Kansas City Chiefs,120,-132,nflverse
+2022,13,Las Vegas Raiders,Los Angeles Chargers,-139,125,nflverse
+2022,13,Dallas Cowboys,Indianapolis Colts,-460,376,nflverse
+2022,13,Tampa Bay Buccaneers,New Orleans Saints,-190,169,nflverse
+2022,14,Los Angeles Rams,Las Vegas Raiders,245,-283,nflverse
+2022,14,Buffalo Bills,New York Jets,-398,332,nflverse
+2022,14,Cincinnati Bengals,Cleveland Browns,-204,181,nflverse
+2022,14,Dallas Cowboys,Houston Texans,-1365,918,nflverse
+2022,14,Detroit Lions,Minnesota Vikings,-132,119,nflverse
+2022,14,New York Giants,Philadelphia Eagles,260,-302,nflverse
+2022,14,Pittsburgh Steelers,Baltimore Ravens,-124,112,nflverse
+2022,14,Tennessee Titans,Jacksonville Jaguars,-169,151,nflverse
+2022,14,Denver Broncos,Kansas City Chiefs,329,-394,nflverse
+2022,14,Seattle Seahawks,Carolina Panthers,-200,178,nflverse
+2022,14,San Francisco 49ers,Tampa Bay Buccaneers,-196,175,nflverse
+2022,14,Los Angeles Chargers,Miami Dolphins,146,-163,nflverse
+2022,14,Arizona Cardinals,New England Patriots,113,-125,nflverse
+2022,15,Seattle Seahawks,San Francisco 49ers,152,-169,nflverse
+2022,15,Minnesota Vikings,Indianapolis Colts,-188,168,nflverse
+2022,15,Cleveland Browns,Baltimore Ravens,-155,139,nflverse
+2022,15,Buffalo Bills,Miami Dolphins,-320,273,nflverse
+2022,15,Carolina Panthers,Pittsburgh Steelers,-145,130,nflverse
+2022,15,Chicago Bears,Philadelphia Eagles,323,-386,nflverse
+2022,15,Houston Texans,Kansas City Chiefs,572,-755,nflverse
+2022,15,Jacksonville Jaguars,Dallas Cowboys,168,-188,nflverse
+2022,15,New Orleans Saints,Atlanta Falcons,-231,203,nflverse
+2022,15,New York Jets,Detroit Lions,-132,120,nflverse
+2022,15,Denver Broncos,Arizona Cardinals,-121,110,nflverse
+2022,15,Las Vegas Raiders,New England Patriots,-129,117,nflverse
+2022,15,Los Angeles Chargers,Tennessee Titans,-158,142,nflverse
+2022,15,Tampa Bay Buccaneers,Cincinnati Bengals,150,-167,nflverse
+2022,15,Washington Commanders,New York Giants,-203,180,nflverse
+2022,15,Green Bay Packers,Los Angeles Rams,-356,301,nflverse
+2022,16,New York Jets,Jacksonville Jaguars,-136,123,nflverse
+2022,16,Baltimore Ravens,Atlanta Falcons,-274,238,nflverse
+2022,16,Carolina Panthers,Detroit Lions,117,-129,nflverse
+2022,16,Chicago Bears,Buffalo Bills,304,-360,nflverse
+2022,16,Cleveland Browns,New Orleans Saints,-181,162,nflverse
+2022,16,Kansas City Chiefs,Seattle Seahawks,-447,367,nflverse
+2022,16,Minnesota Vikings,New York Giants,-215,191,nflverse
+2022,16,New England Patriots,Cincinnati Bengals,136,-151,nflverse
+2022,16,Tennessee Titans,Houston Texans,-170,153,nflverse
+2022,16,San Francisco 49ers,Washington Commanders,-279,241,nflverse
+2022,16,Dallas Cowboys,Philadelphia Eagles,-200,178,nflverse
+2022,16,Pittsburgh Steelers,Las Vegas Raiders,-141,127,nflverse
+2022,16,Miami Dolphins,Green Bay Packers,-182,163,nflverse
+2022,16,Los Angeles Rams,Denver Broncos,155,-173,nflverse
+2022,16,Arizona Cardinals,Tampa Bay Buccaneers,273,-320,nflverse
+2022,16,Indianapolis Colts,Los Angeles Chargers,165,-185,nflverse
+2022,17,Tennessee Titans,Dallas Cowboys,563,-741,nflverse
+2022,17,Atlanta Falcons,Arizona Cardinals,-279,241,nflverse
+2022,17,Detroit Lions,Chicago Bears,-219,194,nflverse
+2022,17,Houston Texans,Jacksonville Jaguars,167,-187,nflverse
+2022,17,Kansas City Chiefs,Denver Broncos,-711,544,nflverse
+2022,17,New England Patriots,Miami Dolphins,-160,144,nflverse
+2022,17,New York Giants,Indianapolis Colts,-229,202,nflverse
+2022,17,Philadelphia Eagles,New Orleans Saints,-225,198,nflverse
+2022,17,Tampa Bay Buccaneers,Carolina Panthers,-184,164,nflverse
+2022,17,Washington Commanders,Cleveland Browns,-117,106,nflverse
+2022,17,Las Vegas Raiders,San Francisco 49ers,371,-453,nflverse
+2022,17,Seattle Seahawks,New York Jets,102,-113,nflverse
+2022,17,Green Bay Packers,Minnesota Vikings,-173,155,nflverse
+2022,17,Los Angeles Chargers,Los Angeles Rams,-283,244,nflverse
+2022,17,Baltimore Ravens,Pittsburgh Steelers,-121,110,nflverse
+2022,18,Las Vegas Raiders,Kansas City Chiefs,338,-407,nflverse
+2022,18,Jacksonville Jaguars,Tennessee Titans,-260,227,nflverse
+2022,18,Atlanta Falcons,Tampa Bay Buccaneers,-235,207,nflverse
+2022,18,Buffalo Bills,New England Patriots,-373,314,nflverse
+2022,18,Chicago Bears,Minnesota Vikings,227,-260,nflverse
+2022,18,Cincinnati Bengals,Baltimore Ravens,-603,474,nflverse
+2022,18,Indianapolis Colts,Houston Texans,-142,128,nflverse
+2022,18,Miami Dolphins,New York Jets,-200,178,nflverse
+2022,18,New Orleans Saints,Carolina Panthers,-179,160,nflverse
+2022,18,Pittsburgh Steelers,Cleveland Browns,-142,128,nflverse
+2022,18,Denver Broncos,Los Angeles Chargers,-254,222,nflverse
+2022,18,Philadelphia Eagles,New York Giants,-1252,858,nflverse
+2022,18,Seattle Seahawks,Los Angeles Rams,-224,198,nflverse
+2022,18,San Francisco 49ers,Arizona Cardinals,-1061,753,nflverse
+2022,18,Washington Commanders,Dallas Cowboys,274,-320,nflverse
+2022,18,Green Bay Packers,Detroit Lions,-273,237,nflverse
+2022,100,San Francisco 49ers,Seattle Seahawks,-447,367,nflverse
+2022,100,Jacksonville Jaguars,Los Angeles Chargers,114,-126,nflverse
+2022,100,Buffalo Bills,Miami Dolphins,-882,649,nflverse
+2022,100,Minnesota Vikings,New York Giants,-142,129,nflverse
+2022,100,Cincinnati Bengals,Baltimore Ravens,-370,311,nflverse
+2022,100,Tampa Bay Buccaneers,Dallas Cowboys,122,-135,nflverse
+2022,101,Kansas City Chiefs,Jacksonville Jaguars,-461,377,nflverse
+2022,101,Philadelphia Eagles,New York Giants,-360,304,nflverse
+2022,101,Buffalo Bills,Cincinnati Bengals,-259,226,nflverse
+2022,101,San Francisco 49ers,Dallas Cowboys,-183,164,nflverse
+2022,102,Philadelphia Eagles,San Francisco 49ers,-147,133,nflverse
+2022,102,Kansas City Chiefs,Cincinnati Bengals,-131,119,nflverse
+2022,103,Philadelphia Eagles,Kansas City Chiefs,-115,104,nflverse
+2023,1,Kansas City Chiefs,Detroit Lions,-198,164,nflverse
+2023,1,Atlanta Falcons,Carolina Panthers,-192,160,nflverse
+2023,1,Baltimore Ravens,Houston Texans,-500,380,nflverse
+2023,1,Cleveland Browns,Cincinnati Bengals,-108,-112,nflverse
+2023,1,Indianapolis Colts,Jacksonville Jaguars,170,-205,nflverse
+2023,1,Minnesota Vikings,Tampa Bay Buccaneers,-205,170,nflverse
+2023,1,New Orleans Saints,Tennessee Titans,-148,124,nflverse
+2023,1,Pittsburgh Steelers,San Francisco 49ers,100,-120,nflverse
+2023,1,Washington Commanders,Arizona Cardinals,-340,270,nflverse
+2023,1,Chicago Bears,Green Bay Packers,-118,-102,nflverse
+2023,1,Denver Broncos,Las Vegas Raiders,-162,136,nflverse
+2023,1,Los Angeles Chargers,Miami Dolphins,-162,136,nflverse
+2023,1,New England Patriots,Philadelphia Eagles,154,-185,nflverse
+2023,1,Seattle Seahawks,Los Angeles Rams,-218,180,nflverse
+2023,1,New York Giants,Dallas Cowboys,142,-170,nflverse
+2023,1,New York Jets,Buffalo Bills,114,-135,nflverse
+2023,2,Philadelphia Eagles,Minnesota Vikings,-238,195,nflverse
+2023,2,Atlanta Falcons,Green Bay Packers,-148,124,nflverse
+2023,2,Buffalo Bills,Las Vegas Raiders,-355,280,nflverse
+2023,2,Cincinnati Bengals,Baltimore Ravens,-175,145,nflverse
+2023,2,Detroit Lions,Seattle Seahawks,-218,180,nflverse
+2023,2,Houston Texans,Indianapolis Colts,-110,-110,nflverse
+2023,2,Jacksonville Jaguars,Kansas City Chiefs,142,-170,nflverse
+2023,2,Tampa Bay Buccaneers,Chicago Bears,-135,114,nflverse
+2023,2,Tennessee Titans,Los Angeles Chargers,120,-142,nflverse
+2023,2,Arizona Cardinals,New York Giants,185,-225,nflverse
+2023,2,Los Angeles Rams,San Francisco 49ers,270,-340,nflverse
+2023,2,Dallas Cowboys,New York Jets,-380,300,nflverse
+2023,2,Denver Broncos,Washington Commanders,-198,164,nflverse
+2023,2,New England Patriots,Miami Dolphins,110,-130,nflverse
+2023,2,Carolina Panthers,New Orleans Saints,145,-175,nflverse
+2023,2,Pittsburgh Steelers,Cleveland Browns,124,-148,nflverse
+2023,3,San Francisco 49ers,New York Giants,-535,400,nflverse
+2023,3,Baltimore Ravens,Indianapolis Colts,-380,300,nflverse
+2023,3,Cleveland Browns,Tennessee Titans,-185,154,nflverse
+2023,3,Detroit Lions,Atlanta Falcons,-166,140,nflverse
+2023,3,Green Bay Packers,New Orleans Saints,105,-125,nflverse
+2023,3,Jacksonville Jaguars,Houston Texans,-380,300,nflverse
+2023,3,Miami Dolphins,Denver Broncos,-250,205,nflverse
+2023,3,Minnesota Vikings,Los Angeles Chargers,-110,-110,nflverse
+2023,3,New York Jets,New England Patriots,120,-142,nflverse
+2023,3,Washington Commanders,Buffalo Bills,200,-245,nflverse
+2023,3,Seattle Seahawks,Carolina Panthers,-225,185,nflverse
+2023,3,Arizona Cardinals,Dallas Cowboys,470,-650,nflverse
+2023,3,Kansas City Chiefs,Chicago Bears,-750,525,nflverse
+2023,3,Las Vegas Raiders,Pittsburgh Steelers,-148,124,nflverse
+2023,3,Tampa Bay Buccaneers,Philadelphia Eagles,210,-258,nflverse
+2023,3,Cincinnati Bengals,Los Angeles Rams,-162,136,nflverse
+2023,4,Green Bay Packers,Detroit Lions,120,-142,nflverse
+2023,4,Jacksonville Jaguars,Atlanta Falcons,-185,154,nflverse
+2023,4,Buffalo Bills,Miami Dolphins,-142,120,nflverse
+2023,4,Carolina Panthers,Minnesota Vikings,185,-225,nflverse
+2023,4,Chicago Bears,Denver Broncos,136,-162,nflverse
+2023,4,Cleveland Browns,Baltimore Ravens,114,-135,nflverse
+2023,4,Houston Texans,Pittsburgh Steelers,136,-162,nflverse
+2023,4,Indianapolis Colts,Los Angeles Rams,-105,-115,nflverse
+2023,4,New Orleans Saints,Tampa Bay Buccaneers,-205,170,nflverse
+2023,4,Philadelphia Eagles,Washington Commanders,-455,350,nflverse
+2023,4,Tennessee Titans,Cincinnati Bengals,136,-162,nflverse
+2023,4,Los Angeles Chargers,Las Vegas Raiders,-310,250,nflverse
+2023,4,Dallas Cowboys,New England Patriots,-285,230,nflverse
+2023,4,San Francisco 49ers,Arizona Cardinals,-1100,700,nflverse
+2023,4,New York Jets,Kansas City Chiefs,370,-485,nflverse
+2023,4,New York Giants,Seattle Seahawks,120,-142,nflverse
+2023,5,Washington Commanders,Chicago Bears,-258,210,nflverse
+2023,5,Buffalo Bills,Jacksonville Jaguars,-250,205,nflverse
+2023,5,Atlanta Falcons,Houston Texans,-142,120,nflverse
+2023,5,Detroit Lions,Carolina Panthers,-455,350,nflverse
+2023,5,Indianapolis Colts,Tennessee Titans,120,-142,nflverse
+2023,5,Miami Dolphins,New York Giants,-750,525,nflverse
+2023,5,New England Patriots,New Orleans Saints,-135,114,nflverse
+2023,5,Pittsburgh Steelers,Baltimore Ravens,190,-230,nflverse
+2023,5,Arizona Cardinals,Cincinnati Bengals,142,-170,nflverse
+2023,5,Los Angeles Rams,Philadelphia Eagles,160,-192,nflverse
+2023,5,Denver Broncos,New York Jets,-135,114,nflverse
+2023,5,Minnesota Vikings,Kansas City Chiefs,150,-180,nflverse
+2023,5,San Francisco 49ers,Dallas Cowboys,-180,150,nflverse
+2023,5,Las Vegas Raiders,Green Bay Packers,-118,-102,nflverse
+2023,6,Kansas City Chiefs,Denver Broncos,-650,470,nflverse
+2023,6,Tennessee Titans,Baltimore Ravens,205,-250,nflverse
+2023,6,Atlanta Falcons,Washington Commanders,-125,105,nflverse
+2023,6,Chicago Bears,Minnesota Vikings,140,-166,nflverse
+2023,6,Cincinnati Bengals,Seattle Seahawks,-155,130,nflverse
+2023,6,Cleveland Browns,San Francisco 49ers,360,-470,nflverse
+2023,6,Houston Texans,New Orleans Saints,110,-130,nflverse
+2023,6,Jacksonville Jaguars,Indianapolis Colts,-205,170,nflverse
+2023,6,Miami Dolphins,Carolina Panthers,-1100,700,nflverse
+2023,6,Las Vegas Raiders,New England Patriots,-148,124,nflverse
+2023,6,Los Angeles Rams,Arizona Cardinals,-340,270,nflverse
+2023,6,New York Jets,Philadelphia Eagles,245,-305,nflverse
+2023,6,Tampa Bay Buccaneers,Detroit Lions,136,-162,nflverse
+2023,6,Buffalo Bills,New York Giants,-1200,750,nflverse
+2023,6,Los Angeles Chargers,Dallas Cowboys,110,-130,nflverse
+2023,7,New Orleans Saints,Jacksonville Jaguars,-148,124,nflverse
+2023,7,Baltimore Ravens,Detroit Lions,-162,136,nflverse
+2023,7,Chicago Bears,Las Vegas Raiders,120,-142,nflverse
+2023,7,Indianapolis Colts,Cleveland Browns,150,-180,nflverse
+2023,7,New England Patriots,Buffalo Bills,310,-395,nflverse
+2023,7,New York Giants,Washington Commanders,136,-162,nflverse
+2023,7,Tampa Bay Buccaneers,Atlanta Falcons,-148,124,nflverse
+2023,7,Los Angeles Rams,Pittsburgh Steelers,-175,145,nflverse
+2023,7,Seattle Seahawks,Arizona Cardinals,-455,350,nflverse
+2023,7,Denver Broncos,Green Bay Packers,-118,-102,nflverse
+2023,7,Kansas City Chiefs,Los Angeles Chargers,-265,215,nflverse
+2023,7,Philadelphia Eagles,Miami Dolphins,-155,130,nflverse
+2023,7,Minnesota Vikings,San Francisco 49ers,260,-325,nflverse
+2023,8,Buffalo Bills,Tampa Bay Buccaneers,-485,370,nflverse
+2023,8,Carolina Panthers,Houston Texans,136,-162,nflverse
+2023,8,Dallas Cowboys,Los Angeles Rams,-310,250,nflverse
+2023,8,Green Bay Packers,Minnesota Vikings,-108,-112,nflverse
+2023,8,Indianapolis Colts,New Orleans Saints,110,-130,nflverse
+2023,8,Miami Dolphins,New England Patriots,-380,300,nflverse
+2023,8,New York Giants,New York Jets,136,-162,nflverse
+2023,8,Pittsburgh Steelers,Jacksonville Jaguars,114,-135,nflverse
+2023,8,Tennessee Titans,Atlanta Falcons,110,-130,nflverse
+2023,8,Washington Commanders,Philadelphia Eagles,245,-305,nflverse
+2023,8,Seattle Seahawks,Cleveland Browns,-198,164,nflverse
+2023,8,Arizona Cardinals,Baltimore Ravens,380,-500,nflverse
+2023,8,Denver Broncos,Kansas City Chiefs,270,-340,nflverse
+2023,8,San Francisco 49ers,Cincinnati Bengals,-205,170,nflverse
+2023,8,Los Angeles Chargers,Chicago Bears,-440,340,nflverse
+2023,8,Detroit Lions,Las Vegas Raiders,-340,270,nflverse
+2023,9,Pittsburgh Steelers,Tennessee Titans,-175,145,nflverse
+2023,9,Kansas City Chiefs,Miami Dolphins,-115,-105,nflverse
+2023,9,Atlanta Falcons,Minnesota Vikings,-192,160,nflverse
+2023,9,Baltimore Ravens,Seattle Seahawks,-270,220,nflverse
+2023,9,Cleveland Browns,Arizona Cardinals,-750,525,nflverse
+2023,9,Green Bay Packers,Los Angeles Rams,-198,160,nflverse
+2023,9,Houston Texans,Tampa Bay Buccaneers,-148,124,nflverse
+2023,9,New England Patriots,Washington Commanders,-155,130,nflverse
+2023,9,New Orleans Saints,Chicago Bears,-440,340,nflverse
+2023,9,Carolina Panthers,Indianapolis Colts,110,-130,nflverse
+2023,9,Las Vegas Raiders,New York Giants,-118,-102,nflverse
+2023,9,Philadelphia Eagles,Dallas Cowboys,-175,145,nflverse
+2023,9,Cincinnati Bengals,Buffalo Bills,-125,105,nflverse
+2023,9,New York Jets,Los Angeles Chargers,142,-170,nflverse
+2023,10,Chicago Bears,Carolina Panthers,-180,150,nflverse
+2023,10,New England Patriots,Indianapolis Colts,-102,-118,nflverse
+2023,10,Baltimore Ravens,Cleveland Browns,-258,210,nflverse
+2023,10,Cincinnati Bengals,Houston Texans,-250,205,nflverse
+2023,10,Jacksonville Jaguars,San Francisco 49ers,142,-170,nflverse
+2023,10,Minnesota Vikings,New Orleans Saints,130,-155,nflverse
+2023,10,Pittsburgh Steelers,Green Bay Packers,-166,140,nflverse
+2023,10,Tampa Bay Buccaneers,Tennessee Titans,-142,120,nflverse
+2023,10,Arizona Cardinals,Atlanta Falcons,110,-130,nflverse
+2023,10,Los Angeles Chargers,Detroit Lions,120,-142,nflverse
+2023,10,Dallas Cowboys,New York Giants,-2100,1100,nflverse
+2023,10,Seattle Seahawks,Washington Commanders,-270,220,nflverse
+2023,10,Las Vegas Raiders,New York Jets,-105,-115,nflverse
+2023,10,Buffalo Bills,Denver Broncos,-395,310,nflverse
+2023,11,Baltimore Ravens,Cincinnati Bengals,-205,170,nflverse
+2023,11,Carolina Panthers,Dallas Cowboys,470,-650,nflverse
+2023,11,Cleveland Browns,Pittsburgh Steelers,-142,120,nflverse
+2023,11,Detroit Lions,Chicago Bears,-440,340,nflverse
+2023,11,Green Bay Packers,Los Angeles Chargers,136,-162,nflverse
+2023,11,Houston Texans,Arizona Cardinals,-250,205,nflverse
+2023,11,Jacksonville Jaguars,Tennessee Titans,-290,235,nflverse
+2023,11,Miami Dolphins,Las Vegas Raiders,-1100,700,nflverse
+2023,11,Washington Commanders,New York Giants,-395,310,nflverse
+2023,11,San Francisco 49ers,Tampa Bay Buccaneers,-950,625,nflverse
+2023,11,Buffalo Bills,New York Jets,-395,310,nflverse
+2023,11,Los Angeles Rams,Seattle Seahawks,-135,114,nflverse
+2023,11,Denver Broncos,Minnesota Vikings,-142,120,nflverse
+2023,11,Kansas City Chiefs,Philadelphia Eagles,-148,124,nflverse
+2023,12,Detroit Lions,Green Bay Packers,-425,330,nflverse
+2023,12,Dallas Cowboys,Washington Commanders,-800,550,nflverse
+2023,12,Seattle Seahawks,San Francisco 49ers,280,-355,nflverse
+2023,12,New York Jets,Miami Dolphins,380,-500,nflverse
+2023,12,Atlanta Falcons,New Orleans Saints,110,-130,nflverse
+2023,12,Cincinnati Bengals,Pittsburgh Steelers,114,-135,nflverse
+2023,12,Houston Texans,Jacksonville Jaguars,-105,-115,nflverse
+2023,12,Indianapolis Colts,Tampa Bay Buccaneers,-155,130,nflverse
+2023,12,New York Giants,New England Patriots,180,-218,nflverse
+2023,12,Tennessee Titans,Carolina Panthers,-175,145,nflverse
+2023,12,Arizona Cardinals,Los Angeles Rams,124,-148,nflverse
+2023,12,Denver Broncos,Cleveland Browns,-125,105,nflverse
+2023,12,Las Vegas Raiders,Kansas City Chiefs,380,-500,nflverse
+2023,12,Philadelphia Eagles,Buffalo Bills,-148,124,nflverse
+2023,12,Los Angeles Chargers,Baltimore Ravens,142,-170,nflverse
+2023,12,Minnesota Vikings,Chicago Bears,-166,140,nflverse
+2023,13,Dallas Cowboys,Seattle Seahawks,-500,380,nflverse
+2023,13,Houston Texans,Denver Broncos,-170,142,nflverse
+2023,13,New England Patriots,Los Angeles Chargers,185,-225,nflverse
+2023,13,New Orleans Saints,Detroit Lions,164,-198,nflverse
+2023,13,New York Jets,Atlanta Falcons,105,-125,nflverse
+2023,13,Pittsburgh Steelers,Arizona Cardinals,-285,230,nflverse
+2023,13,Tennessee Titans,Indianapolis Colts,102,-122,nflverse
+2023,13,Washington Commanders,Miami Dolphins,350,-455,nflverse
+2023,13,Tampa Bay Buccaneers,Carolina Panthers,-198,164,nflverse
+2023,13,Los Angeles Rams,Cleveland Browns,-192,160,nflverse
+2023,13,Philadelphia Eagles,San Francisco 49ers,124,-148,nflverse
+2023,13,Green Bay Packers,Kansas City Chiefs,215,-265,nflverse
+2023,13,Jacksonville Jaguars,Cincinnati Bengals,-550,410,nflverse
+2023,14,Pittsburgh Steelers,New England Patriots,-270,220,nflverse
+2023,14,Atlanta Falcons,Tampa Bay Buccaneers,-125,105,nflverse
+2023,14,Baltimore Ravens,Los Angeles Rams,-360,285,nflverse
+2023,14,Chicago Bears,Detroit Lions,142,-170,nflverse
+2023,14,Cincinnati Bengals,Indianapolis Colts,-148,124,nflverse
+2023,14,Cleveland Browns,Jacksonville Jaguars,-142,120,nflverse
+2023,14,New Orleans Saints,Carolina Panthers,-245,200,nflverse
+2023,14,New York Jets,Houston Texans,145,-175,nflverse
+2023,14,Las Vegas Raiders,Minnesota Vikings,130,-155,nflverse
+2023,14,San Francisco 49ers,Seattle Seahawks,-1000,650,nflverse
+2023,14,Kansas City Chiefs,Buffalo Bills,-125,105,nflverse
+2023,14,Los Angeles Chargers,Denver Broncos,-162,136,nflverse
+2023,14,Dallas Cowboys,Philadelphia Eagles,-175,145,nflverse
+2023,14,Miami Dolphins,Tennessee Titans,-950,625,nflverse
+2023,14,New York Giants,Green Bay Packers,215,-265,nflverse
+2023,15,Las Vegas Raiders,Los Angeles Chargers,-162,136,nflverse
+2023,15,Cincinnati Bengals,Minnesota Vikings,-175,145,nflverse
+2023,15,Indianapolis Colts,Pittsburgh Steelers,-122,102,nflverse
+2023,15,Detroit Lions,Denver Broncos,-258,210,nflverse
+2023,15,Carolina Panthers,Atlanta Falcons,130,-155,nflverse
+2023,15,Cleveland Browns,Chicago Bears,-148,124,nflverse
+2023,15,Green Bay Packers,Tampa Bay Buccaneers,-218,180,nflverse
+2023,15,Miami Dolphins,New York Jets,-345,275,nflverse
+2023,15,New England Patriots,Kansas City Chiefs,370,-485,nflverse
+2023,15,New Orleans Saints,New York Giants,-250,205,nflverse
+2023,15,Tennessee Titans,Houston Texans,-170,142,nflverse
+2023,15,Arizona Cardinals,San Francisco 49ers,525,-750,nflverse
+2023,15,Los Angeles Rams,Washington Commanders,-298,240,nflverse
+2023,15,Buffalo Bills,Dallas Cowboys,-135,114,nflverse
+2023,15,Jacksonville Jaguars,Baltimore Ravens,185,-225,nflverse
+2023,15,Seattle Seahawks,Philadelphia Eagles,195,-238,nflverse
+2023,16,Los Angeles Rams,New Orleans Saints,-218,180,nflverse
+2023,16,Pittsburgh Steelers,Cincinnati Bengals,130,-155,nflverse
+2023,16,Los Angeles Chargers,Buffalo Bills,550,-800,nflverse
+2023,16,Atlanta Falcons,Indianapolis Colts,-155,130,nflverse
+2023,16,Carolina Panthers,Green Bay Packers,164,-198,nflverse
+2023,16,Houston Texans,Cleveland Browns,136,-162,nflverse
+2023,16,Minnesota Vikings,Detroit Lions,124,-148,nflverse
+2023,16,New York Jets,Washington Commanders,-166,140,nflverse
+2023,16,Tennessee Titans,Seattle Seahawks,140,-166,nflverse
+2023,16,Tampa Bay Buccaneers,Jacksonville Jaguars,105,-125,nflverse
+2023,16,Chicago Bears,Arizona Cardinals,-218,180,nflverse
+2023,16,Miami Dolphins,Dallas Cowboys,-122,102,nflverse
+2023,16,Denver Broncos,New England Patriots,-340,270,nflverse
+2023,16,Kansas City Chiefs,Las Vegas Raiders,-600,440,nflverse
+2023,16,Philadelphia Eagles,New York Giants,-900,600,nflverse
+2023,16,San Francisco 49ers,Baltimore Ravens,-345,275,nflverse
+2023,17,Cleveland Browns,New York Jets,-345,270,nflverse
+2023,17,Dallas Cowboys,Detroit Lions,-238,195,nflverse
+2023,17,Baltimore Ravens,Miami Dolphins,-180,150,nflverse
+2023,17,Buffalo Bills,New England Patriots,-1200,750,nflverse
+2023,17,Chicago Bears,Atlanta Falcons,-155,130,nflverse
+2023,17,Houston Texans,Tennessee Titans,-230,190,nflverse
+2023,17,Indianapolis Colts,Las Vegas Raiders,-180,150,nflverse
+2023,17,Jacksonville Jaguars,Carolina Panthers,-192,160,nflverse
+2023,17,New York Giants,Los Angeles Rams,240,-298,nflverse
+2023,17,Philadelphia Eagles,Arizona Cardinals,-750,525,nflverse
+2023,17,Tampa Bay Buccaneers,New Orleans Saints,-148,124,nflverse
+2023,17,Washington Commanders,San Francisco 49ers,675,-1050,nflverse
+2023,17,Seattle Seahawks,Pittsburgh Steelers,-225,185,nflverse
+2023,17,Denver Broncos,Los Angeles Chargers,-198,164,nflverse
+2023,17,Kansas City Chiefs,Cincinnati Bengals,-345,275,nflverse
+2023,17,Minnesota Vikings,Green Bay Packers,-112,-108,nflverse
+2023,18,Baltimore Ravens,Pittsburgh Steelers,130,-155,nflverse
+2023,18,Indianapolis Colts,Houston Texans,105,-125,nflverse
+2023,18,Carolina Panthers,Tampa Bay Buccaneers,200,-245,nflverse
+2023,18,Cincinnati Bengals,Cleveland Browns,-360,285,nflverse
+2023,18,Detroit Lions,Minnesota Vikings,-205,170,nflverse
+2023,18,New England Patriots,New York Jets,-142,120,nflverse
+2023,18,New Orleans Saints,Atlanta Falcons,-175,145,nflverse
+2023,18,Tennessee Titans,Jacksonville Jaguars,154,-185,nflverse
+2023,18,Arizona Cardinals,Seattle Seahawks,130,-155,nflverse
+2023,18,Green Bay Packers,Chicago Bears,-148,124,nflverse
+2023,18,Los Angeles Chargers,Kansas City Chiefs,-185,154,nflverse
+2023,18,Las Vegas Raiders,Denver Broncos,-175,145,nflverse
+2023,18,New York Giants,Philadelphia Eagles,190,-238,nflverse
+2023,18,San Francisco 49ers,Los Angeles Rams,-245,200,nflverse
+2023,18,Washington Commanders,Dallas Cowboys,575,-850,nflverse
+2023,18,Miami Dolphins,Buffalo Bills,130,-155,nflverse
+2023,100,Houston Texans,Cleveland Browns,124,-148,nflverse
+2023,100,Kansas City Chiefs,Miami Dolphins,-230,190,nflverse
+2023,100,Dallas Cowboys,Green Bay Packers,-345,275,nflverse
+2023,100,Detroit Lions,Los Angeles Rams,-162,136,nflverse
+2023,100,Buffalo Bills,Pittsburgh Steelers,-485,370,nflverse
+2023,100,Tampa Bay Buccaneers,Philadelphia Eagles,136,-162,nflverse
+2023,101,Baltimore Ravens,Houston Texans,-425,330,nflverse
+2023,101,San Francisco 49ers,Green Bay Packers,-470,360,nflverse
+2023,101,Detroit Lions,Tampa Bay Buccaneers,-278,225,nflverse
+2023,101,Buffalo Bills,Kansas City Chiefs,-142,120,nflverse
+2023,102,Baltimore Ravens,Kansas City Chiefs,-218,180,nflverse
+2023,102,San Francisco 49ers,Detroit Lions,-325,260,nflverse
+2023,103,Kansas City Chiefs,San Francisco 49ers,100,-120,nflverse
+2024,1,Kansas City Chiefs,Baltimore Ravens,-148,124,nflverse
+2024,1,Philadelphia Eagles,Green Bay Packers,-130,110,nflverse
+2024,1,Atlanta Falcons,Pittsburgh Steelers,-192,160,nflverse
+2024,1,Buffalo Bills,Arizona Cardinals,-310,250,nflverse
+2024,1,Chicago Bears,Tennessee Titans,-198,164,nflverse
+2024,1,Cincinnati Bengals,New England Patriots,-375,295,nflverse
+2024,1,Indianapolis Colts,Houston Texans,130,-155,nflverse
+2024,1,Miami Dolphins,Jacksonville Jaguars,-180,150,nflverse
+2024,1,New Orleans Saints,Carolina Panthers,-192,160,nflverse
+2024,1,New York Giants,Minnesota Vikings,-105,-115,nflverse
+2024,1,Los Angeles Chargers,Las Vegas Raiders,-155,130,nflverse
+2024,1,Seattle Seahawks,Denver Broncos,-278,225,nflverse
+2024,1,Cleveland Browns,Dallas Cowboys,-130,110,nflverse
+2024,1,Tampa Bay Buccaneers,Washington Commanders,-198,164,nflverse
+2024,1,Detroit Lions,Los Angeles Rams,-225,185,nflverse
+2024,1,San Francisco 49ers,New York Jets,-180,150,nflverse
+2024,2,Miami Dolphins,Buffalo Bills,-135,114,nflverse
+2024,2,Baltimore Ravens,Las Vegas Raiders,-455,350,nflverse
+2024,2,Carolina Panthers,Los Angeles Chargers,185,-225,nflverse
+2024,2,Dallas Cowboys,New Orleans Saints,-290,235,nflverse
+2024,2,Detroit Lions,Tampa Bay Buccaneers,-375,295,nflverse
+2024,2,Green Bay Packers,Indianapolis Colts,120,-142,nflverse
+2024,2,Jacksonville Jaguars,Cleveland Browns,-170,142,nflverse
+2024,2,Minnesota Vikings,San Francisco 49ers,180,-218,nflverse
+2024,2,New England Patriots,Seattle Seahawks,142,-170,nflverse
+2024,2,Tennessee Titans,New York Jets,150,-180,nflverse
+2024,2,Washington Commanders,New York Giants,-125,105,nflverse
+2024,2,Arizona Cardinals,Los Angeles Rams,-108,-112,nflverse
+2024,2,Denver Broncos,Pittsburgh Steelers,130,-155,nflverse
+2024,2,Kansas City Chiefs,Cincinnati Bengals,-290,235,nflverse
+2024,2,Houston Texans,Chicago Bears,-258,210,nflverse
+2024,2,Philadelphia Eagles,Atlanta Falcons,-265,215,nflverse
+2024,3,New York Jets,New England Patriots,-285,230,nflverse
+2024,3,Cleveland Browns,New York Giants,-270,220,nflverse
+2024,3,Indianapolis Colts,Chicago Bears,-125,105,nflverse
+2024,3,Minnesota Vikings,Houston Texans,114,-135,nflverse
+2024,3,New Orleans Saints,Philadelphia Eagles,-142,120,nflverse
+2024,3,Pittsburgh Steelers,Los Angeles Chargers,-148,124,nflverse
+2024,3,Tampa Bay Buccaneers,Denver Broncos,-245,200,nflverse
+2024,3,Tennessee Titans,Green Bay Packers,-162,136,nflverse
+2024,3,Las Vegas Raiders,Carolina Panthers,-245,200,nflverse
+2024,3,Seattle Seahawks,Miami Dolphins,-205,170,nflverse
+2024,3,Arizona Cardinals,Detroit Lions,124,-148,nflverse
+2024,3,Dallas Cowboys,Baltimore Ravens,100,-120,nflverse
+2024,3,Los Angeles Rams,San Francisco 49ers,210,-258,nflverse
+2024,3,Atlanta Falcons,Kansas City Chiefs,142,-170,nflverse
+2024,3,Buffalo Bills,Jacksonville Jaguars,-218,180,nflverse
+2024,3,Cincinnati Bengals,Washington Commanders,-355,280,nflverse
+2024,4,New York Giants,Dallas Cowboys,205,-250,nflverse
+2024,4,Atlanta Falcons,New Orleans Saints,-142,120,nflverse
+2024,4,Carolina Panthers,Cincinnati Bengals,170,-205,nflverse
+2024,4,Chicago Bears,Los Angeles Rams,-162,136,nflverse
+2024,4,Green Bay Packers,Minnesota Vikings,-135,114,nflverse
+2024,4,Houston Texans,Jacksonville Jaguars,-238,195,nflverse
+2024,4,Indianapolis Colts,Pittsburgh Steelers,110,-130,nflverse
+2024,4,New York Jets,Denver Broncos,-425,330,nflverse
+2024,4,Tampa Bay Buccaneers,Philadelphia Eagles,-105,-115,nflverse
+2024,4,Arizona Cardinals,Washington Commanders,-180,150,nflverse
+2024,4,San Francisco 49ers,New England Patriots,-550,410,nflverse
+2024,4,Los Angeles Chargers,Kansas City Chiefs,275,-345,nflverse
+2024,4,Las Vegas Raiders,Cleveland Browns,114,-135,nflverse
+2024,4,Baltimore Ravens,Buffalo Bills,-135,114,nflverse
+2024,4,Miami Dolphins,Tennessee Titans,-135,114,nflverse
+2024,4,Detroit Lions,Seattle Seahawks,-185,154,nflverse
+2024,5,Atlanta Falcons,Tampa Bay Buccaneers,-142,120,nflverse
+2024,5,Minnesota Vikings,New York Jets,-142,120,nflverse
+2024,5,Chicago Bears,Carolina Panthers,-198,164,nflverse
+2024,5,Cincinnati Bengals,Baltimore Ravens,124,-148,nflverse
+2024,5,Houston Texans,Buffalo Bills,-118,-102,nflverse
+2024,5,Jacksonville Jaguars,Indianapolis Colts,-185,154,nflverse
+2024,5,New England Patriots,Miami Dolphins,110,-130,nflverse
+2024,5,Washington Commanders,Cleveland Browns,-155,130,nflverse
+2024,5,Denver Broncos,Las Vegas Raiders,-155,130,nflverse
+2024,5,San Francisco 49ers,Arizona Cardinals,-325,260,nflverse
+2024,5,Los Angeles Rams,Green Bay Packers,130,-155,nflverse
+2024,5,Seattle Seahawks,New York Giants,-310,250,nflverse
+2024,5,Pittsburgh Steelers,Dallas Cowboys,-135,114,nflverse
+2024,5,Kansas City Chiefs,New Orleans Saints,-230,190,nflverse
+2024,6,Seattle Seahawks,San Francisco 49ers,164,-198,nflverse
+2024,6,Chicago Bears,Jacksonville Jaguars,100,-120,nflverse
+2024,6,Baltimore Ravens,Washington Commanders,-285,230,nflverse
+2024,6,Green Bay Packers,Arizona Cardinals,-238,195,nflverse
+2024,6,New England Patriots,Houston Texans,215,-265,nflverse
+2024,6,New Orleans Saints,Tampa Bay Buccaneers,145,-175,nflverse
+2024,6,Philadelphia Eagles,Cleveland Browns,-425,330,nflverse
+2024,6,Tennessee Titans,Indianapolis Colts,-135,114,nflverse
+2024,6,Denver Broncos,Los Angeles Chargers,130,-155,nflverse
+2024,6,Las Vegas Raiders,Pittsburgh Steelers,150,-180,nflverse
+2024,6,Carolina Panthers,Atlanta Falcons,210,-258,nflverse
+2024,6,Dallas Cowboys,Detroit Lions,150,-180,nflverse
+2024,6,New York Giants,Cincinnati Bengals,190,-230,nflverse
+2024,6,New York Jets,Buffalo Bills,102,-122,nflverse
+2024,7,New Orleans Saints,Denver Broncos,124,-148,nflverse
+2024,7,Jacksonville Jaguars,New England Patriots,-298,240,nflverse
+2024,7,Atlanta Falcons,Seattle Seahawks,-162,136,nflverse
+2024,7,Buffalo Bills,Tennessee Titans,-535,400,nflverse
+2024,7,Cleveland Browns,Cincinnati Bengals,190,-230,nflverse
+2024,7,Green Bay Packers,Houston Texans,-170,142,nflverse
+2024,7,Indianapolis Colts,Miami Dolphins,-155,130,nflverse
+2024,7,Minnesota Vikings,Detroit Lions,-118,-102,nflverse
+2024,7,New York Giants,Philadelphia Eagles,140,-166,nflverse
+2024,7,Los Angeles Rams,Las Vegas Raiders,-355,280,nflverse
+2024,7,Washington Commanders,Carolina Panthers,-535,400,nflverse
+2024,7,San Francisco 49ers,Kansas City Chiefs,-142,120,nflverse
+2024,7,Pittsburgh Steelers,New York Jets,140,-166,nflverse
+2024,7,Tampa Bay Buccaneers,Baltimore Ravens,185,-225,nflverse
+2024,7,Arizona Cardinals,Los Angeles Chargers,102,-122,nflverse
+2024,8,Los Angeles Rams,Minnesota Vikings,130,-155,nflverse
+2024,8,Cincinnati Bengals,Philadelphia Eagles,-148,124,nflverse
+2024,8,Cleveland Browns,Baltimore Ravens,300,-380,nflverse
+2024,8,Detroit Lions,Tennessee Titans,-800,550,nflverse
+2024,8,Houston Texans,Indianapolis Colts,-225,185,nflverse
+2024,8,Jacksonville Jaguars,Green Bay Packers,160,-192,nflverse
+2024,8,Miami Dolphins,Arizona Cardinals,-198,164,nflverse
+2024,8,New England Patriots,New York Jets,245,-305,nflverse
+2024,8,Tampa Bay Buccaneers,Atlanta Falcons,102,-122,nflverse
+2024,8,Los Angeles Chargers,New Orleans Saints,-310,250,nflverse
+2024,8,Seattle Seahawks,Buffalo Bills,142,-170,nflverse
+2024,8,Denver Broncos,Carolina Panthers,-750,525,nflverse
+2024,8,Las Vegas Raiders,Kansas City Chiefs,340,-440,nflverse
+2024,8,Washington Commanders,Chicago Bears,-122,102,nflverse
+2024,8,San Francisco 49ers,Dallas Cowboys,-238,195,nflverse
+2024,8,Pittsburgh Steelers,New York Giants,-270,220,nflverse
+2024,9,New York Jets,Houston Texans,-148,124,nflverse
+2024,9,Atlanta Falcons,Dallas Cowboys,-166,140,nflverse
+2024,9,Baltimore Ravens,Denver Broncos,-440,330,nflverse
+2024,9,Buffalo Bills,Miami Dolphins,-285,230,nflverse
+2024,9,Carolina Panthers,New Orleans Saints,275,-345,nflverse
+2024,9,Cincinnati Bengals,Las Vegas Raiders,-410,320,nflverse
+2024,9,Cleveland Browns,Los Angeles Chargers,110,-130,nflverse
+2024,9,New York Giants,Washington Commanders,180,-218,nflverse
+2024,9,Tennessee Titans,New England Patriots,-162,136,nflverse
+2024,9,Arizona Cardinals,Chicago Bears,-120,100,nflverse
+2024,9,Philadelphia Eagles,Jacksonville Jaguars,-340,270,nflverse
+2024,9,Green Bay Packers,Detroit Lions,130,-155,nflverse
+2024,9,Seattle Seahawks,Los Angeles Rams,105,-125,nflverse
+2024,9,Minnesota Vikings,Indianapolis Colts,-298,240,nflverse
+2024,9,Kansas City Chiefs,Tampa Bay Buccaneers,-425,330,nflverse
+2024,10,Baltimore Ravens,Cincinnati Bengals,-270,220,nflverse
+2024,10,Carolina Panthers,New York Giants,240,-298,nflverse
+2024,10,Chicago Bears,New England Patriots,-325,260,nflverse
+2024,10,Indianapolis Colts,Buffalo Bills,190,-230,nflverse
+2024,10,Jacksonville Jaguars,Minnesota Vikings,280,-345,nflverse
+2024,10,Kansas City Chiefs,Denver Broncos,-380,300,nflverse
+2024,10,New Orleans Saints,Atlanta Falcons,160,-192,nflverse
+2024,10,Tampa Bay Buccaneers,San Francisco 49ers,240,-298,nflverse
+2024,10,Washington Commanders,Pittsburgh Steelers,-122,102,nflverse
+2024,10,Los Angeles Chargers,Tennessee Titans,-380,300,nflverse
+2024,10,Arizona Cardinals,New York Jets,110,-130,nflverse
+2024,10,Dallas Cowboys,Philadelphia Eagles,285,-360,nflverse
+2024,10,Houston Texans,Detroit Lions,190,-230,nflverse
+2024,10,Los Angeles Rams,Miami Dolphins,-142,120,nflverse
+2024,11,Philadelphia Eagles,Washington Commanders,-230,190,nflverse
+2024,11,Chicago Bears,Green Bay Packers,215,-265,nflverse
+2024,11,Detroit Lions,Jacksonville Jaguars,-1000,650,nflverse
+2024,11,Miami Dolphins,Las Vegas Raiders,-425,330,nflverse
+2024,11,New England Patriots,Los Angeles Rams,164,-198,nflverse
+2024,11,New Orleans Saints,Cleveland Browns,-105,-115,nflverse
+2024,11,New York Jets,Indianapolis Colts,-205,170,nflverse
+2024,11,Pittsburgh Steelers,Baltimore Ravens,145,-175,nflverse
+2024,11,Tennessee Titans,Minnesota Vikings,235,-290,nflverse
+2024,11,Denver Broncos,Atlanta Falcons,-135,114,nflverse
+2024,11,San Francisco 49ers,Seattle Seahawks,-265,215,nflverse
+2024,11,Buffalo Bills,Kansas City Chiefs,-142,120,nflverse
+2024,11,Los Angeles Chargers,Cincinnati Bengals,-110,-110,nflverse
+2024,11,Dallas Cowboys,Houston Texans,285,-360,nflverse
+2024,12,Cleveland Browns,Pittsburgh Steelers,170,-205,nflverse
+2024,12,Carolina Panthers,Kansas City Chiefs,500,-700,nflverse
+2024,12,Chicago Bears,Minnesota Vikings,145,-175,nflverse
+2024,12,Houston Texans,Tennessee Titans,-375,295,nflverse
+2024,12,Indianapolis Colts,Detroit Lions,295,-375,nflverse
+2024,12,Miami Dolphins,New England Patriots,-360,285,nflverse
+2024,12,New York Giants,Tampa Bay Buccaneers,240,-298,nflverse
+2024,12,Washington Commanders,Dallas Cowboys,-625,455,nflverse
+2024,12,Las Vegas Raiders,Denver Broncos,225,-278,nflverse
+2024,12,Green Bay Packers,San Francisco 49ers,-290,235,nflverse
+2024,12,Seattle Seahawks,Arizona Cardinals,-105,-115,nflverse
+2024,12,Los Angeles Rams,Philadelphia Eagles,142,-170,nflverse
+2024,12,Los Angeles Chargers,Baltimore Ravens,140,-166,nflverse
+2024,13,Detroit Lions,Chicago Bears,-520,390,nflverse
+2024,13,Dallas Cowboys,New York Giants,-218,185,nflverse
+2024,13,Green Bay Packers,Miami Dolphins,-175,145,nflverse
+2024,13,Kansas City Chiefs,Las Vegas Raiders,-800,550,nflverse
+2024,13,Atlanta Falcons,Los Angeles Chargers,-102,-118,nflverse
+2024,13,Cincinnati Bengals,Pittsburgh Steelers,-155,130,nflverse
+2024,13,Jacksonville Jaguars,Houston Texans,160,-192,nflverse
+2024,13,Minnesota Vikings,Arizona Cardinals,-185,154,nflverse
+2024,13,New England Patriots,Indianapolis Colts,114,-135,nflverse
+2024,13,New York Jets,Seattle Seahawks,-115,-105,nflverse
+2024,13,Washington Commanders,Tennessee Titans,-250,205,nflverse
+2024,13,Carolina Panthers,Tampa Bay Buccaneers,235,-290,nflverse
+2024,13,New Orleans Saints,Los Angeles Rams,120,-142,nflverse
+2024,13,Baltimore Ravens,Philadelphia Eagles,-162,136,nflverse
+2024,13,Buffalo Bills,San Francisco 49ers,-340,270,nflverse
+2024,13,Denver Broncos,Cleveland Browns,-290,235,nflverse
+2024,14,Detroit Lions,Green Bay Packers,-170,142,nflverse
+2024,14,Miami Dolphins,New York Jets,-298,240,nflverse
+2024,14,Minnesota Vikings,Atlanta Falcons,-250,205,nflverse
+2024,14,New York Giants,New Orleans Saints,200,-245,nflverse
+2024,14,Philadelphia Eagles,Carolina Panthers,-950,625,nflverse
+2024,14,Pittsburgh Steelers,Cleveland Browns,-258,210,nflverse
+2024,14,Tampa Bay Buccaneers,Las Vegas Raiders,-325,260,nflverse
+2024,14,Tennessee Titans,Jacksonville Jaguars,-170,142,nflverse
+2024,14,Arizona Cardinals,Seattle Seahawks,-175,145,nflverse
+2024,14,Los Angeles Rams,Buffalo Bills,160,-192,nflverse
+2024,14,San Francisco 49ers,Chicago Bears,-162,136,nflverse
+2024,14,Kansas City Chiefs,Los Angeles Chargers,-238,195,nflverse
+2024,14,Dallas Cowboys,Cincinnati Bengals,190,-230,nflverse
+2024,15,San Francisco 49ers,Los Angeles Rams,-155,130,nflverse
+2024,15,Carolina Panthers,Dallas Cowboys,-142,120,nflverse
+2024,15,Cleveland Browns,Kansas City Chiefs,190,-230,nflverse
+2024,15,Houston Texans,Miami Dolphins,-155,130,nflverse
+2024,15,Jacksonville Jaguars,New York Jets,145,-175,nflverse
+2024,15,New Orleans Saints,Washington Commanders,295,-375,nflverse
+2024,15,New York Giants,Baltimore Ravens,1000,-1800,nflverse
+2024,15,Tennessee Titans,Cincinnati Bengals,205,-250,nflverse
+2024,15,Arizona Cardinals,New England Patriots,-258,210,nflverse
+2024,15,Denver Broncos,Indianapolis Colts,-238,195,nflverse
+2024,15,Detroit Lions,Buffalo Bills,-130,110,nflverse
+2024,15,Los Angeles Chargers,Tampa Bay Buccaneers,-162,136,nflverse
+2024,15,Philadelphia Eagles,Pittsburgh Steelers,-265,215,nflverse
+2024,15,Seattle Seahawks,Green Bay Packers,136,-162,nflverse
+2024,15,Minnesota Vikings,Chicago Bears,-325,260,nflverse
+2024,15,Las Vegas Raiders,Atlanta Falcons,275,-345,nflverse
+2024,16,Los Angeles Chargers,Denver Broncos,-148,124,nflverse
+2024,16,Kansas City Chiefs,Houston Texans,-180,150,nflverse
+2024,16,Baltimore Ravens,Pittsburgh Steelers,-345,275,nflverse
+2024,16,Atlanta Falcons,New York Giants,-550,410,nflverse
+2024,16,Carolina Panthers,Arizona Cardinals,200,-245,nflverse
+2024,16,Chicago Bears,Detroit Lions,270,-340,nflverse
+2024,16,Cincinnati Bengals,Cleveland Browns,-575,425,nflverse
+2024,16,Indianapolis Colts,Tennessee Titans,-198,164,nflverse
+2024,16,New York Jets,Los Angeles Rams,136,-162,nflverse
+2024,16,Washington Commanders,Philadelphia Eagles,180,-218,nflverse
+2024,16,Seattle Seahawks,Minnesota Vikings,124,-148,nflverse
+2024,16,Buffalo Bills,New England Patriots,-1100,700,nflverse
+2024,16,Las Vegas Raiders,Jacksonville Jaguars,-130,110,nflverse
+2024,16,Miami Dolphins,San Francisco 49ers,105,-125,nflverse
+2024,16,Dallas Cowboys,Tampa Bay Buccaneers,180,-218,nflverse
+2024,16,Green Bay Packers,New Orleans Saints,-950,625,nflverse
+2024,17,Pittsburgh Steelers,Kansas City Chiefs,136,-162,nflverse
+2024,17,Houston Texans,Baltimore Ravens,200,-245,nflverse
+2024,17,Chicago Bears,Seattle Seahawks,160,-192,nflverse
+2024,17,New England Patriots,Los Angeles Chargers,245,-305,nflverse
+2024,17,Cincinnati Bengals,Denver Broncos,-175,145,nflverse
+2024,17,Los Angeles Rams,Arizona Cardinals,-340,270,nflverse
+2024,17,Buffalo Bills,New York Jets,-520,390,nflverse
+2024,17,Jacksonville Jaguars,Tennessee Titans,-112,-108,nflverse
+2024,17,New Orleans Saints,Las Vegas Raiders,105,-125,nflverse
+2024,17,New York Giants,Indianapolis Colts,320,-410,nflverse
+2024,17,Philadelphia Eagles,Dallas Cowboys,-325,260,nflverse
+2024,17,Tampa Bay Buccaneers,Carolina Panthers,-500,380,nflverse
+2024,17,Cleveland Browns,Miami Dolphins,142,-170,nflverse
+2024,17,Minnesota Vikings,Green Bay Packers,-108,-112,nflverse
+2024,17,Washington Commanders,Atlanta Falcons,-192,160,nflverse
+2024,17,San Francisco 49ers,Detroit Lions,190,-230,nflverse
+2024,18,Baltimore Ravens,Cleveland Browns,-2400,1200,nflverse
+2024,18,Pittsburgh Steelers,Cincinnati Bengals,124,-148,nflverse
+2024,18,Atlanta Falcons,Carolina Panthers,-380,300,nflverse
+2024,18,Dallas Cowboys,Washington Commanders,250,-310,nflverse
+2024,18,Green Bay Packers,Chicago Bears,-410,320,nflverse
+2024,18,Indianapolis Colts,Jacksonville Jaguars,-180,150,nflverse
+2024,18,New England Patriots,Buffalo Bills,140,-166,nflverse
+2024,18,Philadelphia Eagles,New York Giants,-155,130,nflverse
+2024,18,Tampa Bay Buccaneers,New Orleans Saints,-1050,675,nflverse
+2024,18,Tennessee Titans,Houston Texans,-142,120,nflverse
+2024,18,Arizona Cardinals,San Francisco 49ers,-192,160,nflverse
+2024,18,Denver Broncos,Kansas City Chiefs,-485,370,nflverse
+2024,18,Los Angeles Rams,Seattle Seahawks,285,-360,nflverse
+2024,18,Las Vegas Raiders,Los Angeles Chargers,275,-345,nflverse
+2024,18,New York Jets,Miami Dolphins,-122,102,nflverse
+2024,18,Detroit Lions,Minnesota Vikings,-148,124,nflverse
+2024,100,Houston Texans,Los Angeles Chargers,136,-162,nflverse
+2024,100,Baltimore Ravens,Pittsburgh Steelers,-520,390,nflverse
+2024,100,Buffalo Bills,Denver Broncos,-425,330,nflverse
+2024,100,Philadelphia Eagles,Green Bay Packers,-250,205,nflverse
+2024,100,Tampa Bay Buccaneers,Washington Commanders,-162,136,nflverse
+2024,100,Los Angeles Rams,Minnesota Vikings,120,-142,nflverse
+2024,101,Kansas City Chiefs,Houston Texans,-550,410,nflverse
+2024,101,Detroit Lions,Washington Commanders,-520,390,nflverse
+2024,101,Philadelphia Eagles,Los Angeles Rams,-325,260,nflverse
+2024,101,Buffalo Bills,Baltimore Ravens,-102,-118,nflverse
+2024,102,Philadelphia Eagles,Washington Commanders,-250,205,nflverse
+2024,102,Kansas City Chiefs,Buffalo Bills,-118,-102,nflverse
+2024,103,Philadelphia Eagles,Kansas City Chiefs,100,-120,nflverse

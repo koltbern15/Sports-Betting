@@ -67,7 +67,7 @@ Outputs price-level diagnostics + per-bucket ROI comparison (derived vs real). C
 
 ### Headline finding
 
-The Slice 2 `ml_heavy_fav` headline (derived ROI +0.63%) does NOT hold under real prices. On the 2020–2024 nflverse sample (n=237 heavy-fav bets), derived ROI was +1.56% but real ROI was **−0.95%** — the apparent edge was an artifact of the spread→ML derivation.
+The Slice 2 `ml_heavy_fav` headline (derived ROI +0.63%) does NOT hold under real prices. On the 2020–2024 nflverse sample (n=252 heavy-fav bets), derived ROI was +2.51% but real ROI was **−0.12%** — the apparent edge was an artifact of the spread→ML derivation.
 
 **Update after audit fix:** the apparent `ml_small_fav` +1.03% real-ROI edge was an artifact of missing playoff games (Kaggle week 100–103 vs nflverse 18–22 numbering mismatch). After remapping (`fix(real_ml_source)` commit `16c555f`), all 1,408 games load. The corrected real ROI for `ml_small_fav` is **−0.36%** (n=588) — the edge is gone. Derived prices still systematically overshade underdogs (e.g., `ml_heavy_dog` derived −25.61% vs real −12.97%, Δ +12.64 pp).
 

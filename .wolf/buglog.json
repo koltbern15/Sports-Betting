@@ -449,6 +449,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-30T02:29:40.844Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-05-31T00:53:07.908Z",
+      "error_message": "Significant refactor of ",
+      "file": ".gitignore",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 7→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "unknown"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T00:53:07.908Z"
     }
   ]
 }

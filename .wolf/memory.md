@@ -537,3 +537,8 @@
 | 18:32 | Created docs/superpowers/notes/2026-05-30-clv-findings.md | — | ~1784 |
 | 18:32 | Edited README.md | modified finding() | ~903 |
 | 2026-05-30 slice7-T4 | Ran CLV engine on real DB (4570 spread + 4569 total bets); WIN RATE MONOTONIC in both markets — spread 39.9%→44.7%→51.9%→55.3%→57.6%, total 36.4%→47.4%→51.7%→53.9%→57.2%; positive-CLV buckets clear 52.38% breakeven in both; effect is real but borderline underpowered at tails (mde80~12% vs observed ~10% ROI for clv_gt_2); wrote clv findings note + README Slice 7 section + bookkeeping; 312 tests pass, ruff clean; committed | docs/superpowers/notes/2026-05-30-clv-findings.md, README.md, .wolf/memory.md, .wolf/cerebrum.md | ~3000 |
+| 18:37 | Session end: 85 writes across 35 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 59 reads | ~176035 tok |
+| 20:44 | Adversarial re-audit of CLV engine (Slice7): re-ran engine+tests, verified open-vs-close grading (trend vanishes at close = genuine signal), confirmed signs/clamp/push/breakeven/Wilson math, continuous corr r=0.115 p=1.3e-14 | engine/clv.py, docs/.../clv-findings.md | VERDICT: finding genuine, if anything understated | ~16k |
+| 20:53 | Edited .gitignore | 7→6 lines | ~61 |
+| 20:53 | Edited .gitignore | 2→1 lines | ~14 |
+| 20:53 | Edited README.md | inline fix | ~46 |

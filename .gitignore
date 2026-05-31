@@ -9,9 +9,8 @@ venv/
 .ruff_cache/
 .pytest_cache/
 
-# Data (large + non-reproducible artifacts)
-data/raw/*
-!data/raw/.gitkeep
+# Data — raw INPUTS are tracked for reproducibility (rebuild the DB + reports
+# from these). Derived artifacts (the SQLite DB, processed CSVs) stay ignored.
 data/processed/*
 !data/processed/.gitkeep
 data/db/*
@@ -23,5 +22,4 @@ data/db/*
 .DS_Store
 Thumbs.db
 
-# uv
-uv.lock
+# uv (lockfile tracked for reproducible installs)
