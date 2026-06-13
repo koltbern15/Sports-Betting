@@ -40,6 +40,15 @@ def _price_line(ml: MarketLean) -> str:
     )
 
 
+def _market_row(label: str, ml: MarketLean) -> str:
+    """HTML for one market row. Price line is omitted only when there is no line."""
+    head = _lean_headline(ml)
+    price = "" if ml.state == "no_line" else (
+        f'<br><span class="twg-ctx">{_price_line(ml)}</span>'
+    )
+    return f'<div style="margin-top:8px"><b>{label}</b> — {head}{price}</div>'
+
+
 def render(
     board: list[ThisWeekGame], spread_rates: RatesMap, total_rates: RatesMap
 ) -> None:
@@ -59,9 +68,6 @@ def render(
         st.markdown(
             f'<div class="twg-card"><div class="twg-matchup">{g.matchup}</div>'
             f'<div class="twg-time">{g.commence_time}</div>'
-            f'<div style="margin-top:8px"><b>Spread</b> — {_lean_headline(sp)}<br>'
-            f'<span class="twg-ctx">{_price_line(sp)}</span></div>'
-            f'<div style="margin-top:6px"><b>Total</b> — {_lean_headline(tot)}<br>'
-            f'<span class="twg-ctx">{_price_line(tot)}</span></div></div>',
+            f'{_market_row("Spread", sp)}{_market_row("Total", tot)}</div>',
             unsafe_allow_html=True,
         )
