@@ -62,12 +62,12 @@ def spread_lean(game: ThisWeekGame, spread_rates: RatesMap | None) -> MarketLean
     is_pickem = bucket == "pickem"
     home_is_fav = cons < 0
 
-    if _enough(n) and not is_pickem and home_rate >= BREAKEVEN_AT_NEG_110:
+    if _enough(n) and not is_pickem and home_rate > BREAKEVEN_AT_NEG_110:
         kind = "home favorite" if home_is_fav else "home dog"
         label = f"{home_team} {cons:+g} · {kind}"
         return MarketLean("spread", "lean", label, home_rate, n, home_best, home_best, away_best)
 
-    if _enough(n) and not is_pickem and away_rate >= BREAKEVEN_AT_NEG_110:
+    if _enough(n) and not is_pickem and away_rate > BREAKEVEN_AT_NEG_110:
         kind = "away dog" if home_is_fav else "away favorite"
         label = f"{away_team} {-cons:+g} · {kind}"
         return MarketLean("spread", "lean", label, away_rate, n, away_best, home_best, away_best)
@@ -89,10 +89,10 @@ def total_lean(game: ThisWeekGame, total_rates: RatesMap | None) -> MarketLean:
     under_rate = 1.0 - over_rate
     n = ctx.get("n", 0)
 
-    if _enough(n) and over_rate >= BREAKEVEN_AT_NEG_110:
+    if _enough(n) and over_rate > BREAKEVEN_AT_NEG_110:
         label = f"OVER {cons:g}"
         return MarketLean("total", "lean", label, over_rate, n, over_best, over_best, under_best)
-    if _enough(n) and under_rate >= BREAKEVEN_AT_NEG_110:
+    if _enough(n) and under_rate > BREAKEVEN_AT_NEG_110:
         label = f"UNDER {cons:g}"
         return MarketLean("total", "lean", label, under_rate, n, under_best, over_best, under_best)
 
