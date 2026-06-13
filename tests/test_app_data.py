@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import sqlite3
 
-from app import data
 from app import data as appdata
 from engine.db import connect, init_schema
 
@@ -107,10 +106,10 @@ def test_spread_bucket_rates_filters_by_season(monkeypatch):
     conn = sqlite3.connect(":memory:")
     conn.row_factory = sqlite3.Row
     _seed(conn)
-    monkeypatch.setattr(data, "_open_db", lambda: conn)
-    full = data.spread_bucket_rates.__wrapped__(season_range=(2000, 2030))
+    monkeypatch.setattr(appdata, "_open_db", lambda: conn)
+    full = appdata.spread_bucket_rates.__wrapped__(season_range=(2000, 2030))
     assert full["home_fav_3.5_7"]["n"] == 2
-    narrow = data.spread_bucket_rates.__wrapped__(season_range=(2019, 2019))
+    narrow = appdata.spread_bucket_rates.__wrapped__(season_range=(2019, 2019))
     assert narrow["home_fav_3.5_7"]["n"] == 1
 
 
@@ -118,8 +117,8 @@ def test_total_bucket_rates_filters_by_season(monkeypatch):
     conn = sqlite3.connect(":memory:")
     conn.row_factory = sqlite3.Row
     _seed(conn)
-    monkeypatch.setattr(data, "_open_db", lambda: conn)
-    full = data.total_bucket_rates.__wrapped__(season_range=(2000, 2030))
+    monkeypatch.setattr(appdata, "_open_db", lambda: conn)
+    full = appdata.total_bucket_rates.__wrapped__(season_range=(2000, 2030))
     assert full["total_43_45_5"]["n"] == 2
-    narrow = data.total_bucket_rates.__wrapped__(season_range=(2019, 2019))
+    narrow = appdata.total_bucket_rates.__wrapped__(season_range=(2019, 2019))
     assert narrow["total_43_45_5"]["n"] == 1

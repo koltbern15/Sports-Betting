@@ -66,3 +66,4 @@ def _smoke_script():
 def test_render_smoke_does_not_crash():
     at = AppTest.from_function(_smoke_script).run()
     assert not at.exception
+    assert at.markdown
