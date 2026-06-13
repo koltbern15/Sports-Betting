@@ -98,3 +98,25 @@ def test_totals_aggregator_total_counts_sum_to_20(tmp_path: Path):
         conn.close()
     total_n = sum(r.n for r in report.rows)
     assert total_n == 20
+
+
+def test_totals_season_filter_narrows_sample(memory_db):
+    init_schema(memory_db)
+    memory_db.executemany(
+        "INSERT INTO games(game_id,season,week,game_date,home_team,away_team,home_score,away_score)"
+        " VALUES (?,?,?,?,?,?,?,?)",
+        [("g1", 2019, 1, "2019-09-08", "A", "B", 30, 20),
+         ("g2", 2023, 1, "2023-09-10", "C", "D", 30, 20)],
+    )
+    memory_db.executemany(
+        "INSERT INTO betting_lines"
+        "(game_id,spread_home_close,total_close,home_spread_result,total_result)"
+        " VALUES (?,?,?,?,?)",
+        [("g1", -6.5, 44.5, "cover", "over"),
+         ("g2", -6.5, 44.5, "cover", "over")],
+    )
+    memory_db.commit()
+    full = {r.bucket: r for r in totals_by_line_bucket(memory_db).rows}
+    assert full["total_43_45_5"].n == 2
+    narrow = {r.bucket: r for r in totals_by_line_bucket(memory_db, (2019, 2019)).rows}
+    assert narrow["total_43_45_5"].n == 1
