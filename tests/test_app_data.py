@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import sqlite3
+
+from app import data
 from app import data as appdata
 from engine.db import connect, init_schema
 
@@ -80,3 +83,43 @@ def test_charts_build_without_error():
     })
     assert charts.clv_ladder_chart(ladder) is not None
     assert charts.ci_errorbar_chart(edge) is not None
+
+
+def _seed(conn):
+    init_schema(conn)
+    conn.executemany(
+        "INSERT INTO games(game_id,season,week,game_date,home_team,away_team,home_score,away_score)"
+        " VALUES (?,?,?,?,?,?,?,?)",
+        [("g1", 2019, 1, "2019-09-08", "A", "B", 27, 17),
+         ("g2", 2023, 1, "2023-09-10", "C", "D", 27, 17)],
+    )
+    conn.executemany(
+        "INSERT INTO betting_lines"
+        "(game_id,spread_home_close,total_close,home_spread_result,total_result)"
+        " VALUES (?,?,?,?,?)",
+        [("g1", -6.5, 44.5, "cover", "over"),
+         ("g2", -6.5, 44.5, "cover", "over")],
+    )
+    conn.commit()
+
+
+def test_spread_bucket_rates_filters_by_season(monkeypatch):
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    _seed(conn)
+    monkeypatch.setattr(data, "_open_db", lambda: conn)
+    full = data.spread_bucket_rates.__wrapped__(season_range=(2000, 2030))
+    assert full["home_fav_3.5_7"]["n"] == 2
+    narrow = data.spread_bucket_rates.__wrapped__(season_range=(2019, 2019))
+    assert narrow["home_fav_3.5_7"]["n"] == 1
+
+
+def test_total_bucket_rates_filters_by_season(monkeypatch):
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    _seed(conn)
+    monkeypatch.setattr(data, "_open_db", lambda: conn)
+    full = data.total_bucket_rates.__wrapped__(season_range=(2000, 2030))
+    assert full["total_43_45_5"]["n"] == 2
+    narrow = data.total_bucket_rates.__wrapped__(season_range=(2019, 2019))
+    assert narrow["total_43_45_5"]["n"] == 1
