@@ -1,4 +1,4 @@
-from engine.leans import spread_lean
+from engine.leans import game_leans, spread_lean, total_lean
 from engine.this_week import ThisWeekGame
 
 
@@ -68,3 +68,36 @@ def test_spread_home_dog_lean():
     assert "Los Angeles Rams" in ml.side_label and "+6.5" in ml.side_label
     assert "home dog" in ml.side_label
     assert ml.best_for_lean == ("FanDuel", -6.5, -105)
+
+
+def test_total_over_lean():
+    ml = total_lean(_game(cons_total=47.5), {"total_46_48_5": {"win_rate": 0.55, "n": 300}})
+    assert ml.state == "lean"
+    assert ml.side_label == "OVER 47.5"
+    assert ml.best_for_lean == ("DK", 44.5, -108)
+
+
+def test_total_under_lean():
+    ml = total_lean(_game(cons_total=47.5), {"total_46_48_5": {"win_rate": 0.44, "n": 300}})
+    assert ml.state == "lean"
+    assert ml.side_label == "UNDER 47.5"
+    assert ml.best_for_lean == ("BetMGM", 44.5, -105)
+
+
+def test_total_below_breakeven_is_no_lean():
+    ml = total_lean(_game(cons_total=47.5), {"total_46_48_5": {"win_rate": 0.515, "n": 600}})
+    assert ml.state == "no_lean"
+    assert ml.rate == 0.515
+
+
+def test_total_no_data_and_no_line():
+    assert total_lean(_game(cons_total=47.5), {}).state == "no_data"
+    assert total_lean(_game(cons_total=None), {"x": {"win_rate": 0.6, "n": 99}}).state == "no_line"
+
+
+def test_game_leans_returns_spread_then_total():
+    sp_rates = {"home_fav_3.5_7": {"win_rate": 0.531, "n": 612}}
+    tot_rates = {"total_43_45_5": {"win_rate": 0.55, "n": 300}}
+    sp, tot = game_leans(_game(), sp_rates, tot_rates)
+    assert sp.market == "spread" and tot.market == "total"
+    assert sp.state == "lean" and tot.state == "lean"

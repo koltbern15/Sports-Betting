@@ -15,6 +15,7 @@ from engine.ats import bucket_spread
 from engine.bucket_analysis import INSUFFICIENT_SAMPLE_THRESHOLD
 from engine.stats_utils import BREAKEVEN_AT_NEG_110
 from engine.this_week import ThisWeekGame
+from engine.totals import bucket_total
 from ingestion.live_odds import BestLine
 
 # A rates map is {bucket_name: {"win_rate": float, "n": int}} for the selected
@@ -72,3 +73,34 @@ def spread_lean(game: ThisWeekGame, spread_rates: RatesMap | None) -> MarketLean
         return MarketLean("spread", "lean", label, away_rate, n, away_best, home_best, away_best)
 
     return MarketLean("spread", "no_lean", None, home_rate, n, None, home_best, away_best)
+
+
+def total_lean(game: ThisWeekGame, total_rates: RatesMap | None) -> MarketLean:
+    cons = game.cons_total
+    over_best, under_best = game.best_total_over, game.best_total_under
+    if cons is None:
+        return MarketLean("total", "no_line", None, None, None, None, over_best, under_best)
+    bucket = bucket_total(cons)
+    ctx = (total_rates or {}).get(bucket)
+    if ctx is None or ctx.get("n", 0) == 0:
+        return MarketLean("total", "no_data", None, None, None, None, over_best, under_best)
+
+    over_rate = ctx.get("win_rate", 0.0)
+    under_rate = 1.0 - over_rate
+    n = ctx.get("n", 0)
+
+    if _enough(n) and over_rate >= BREAKEVEN_AT_NEG_110:
+        label = f"OVER {cons:g}"
+        return MarketLean("total", "lean", label, over_rate, n, over_best, over_best, under_best)
+    if _enough(n) and under_rate >= BREAKEVEN_AT_NEG_110:
+        label = f"UNDER {cons:g}"
+        return MarketLean("total", "lean", label, under_rate, n, under_best, over_best, under_best)
+
+    return MarketLean("total", "no_lean", None, over_rate, n, None, over_best, under_best)
+
+
+def game_leans(
+    game: ThisWeekGame, spread_rates: RatesMap | None, total_rates: RatesMap | None
+) -> tuple[MarketLean, MarketLean]:
+    """The spread read and the total read for one game, in that order."""
+    return spread_lean(game, spread_rates), total_lean(game, total_rates)
