@@ -235,6 +235,7 @@ A refined-dark Streamlit app that shows the current NFL odds board for the upcom
 The app is now a 5-tab dashboard. **This Week** leads (the live odds board from Slice 8); the four showcase tabs surface the historical analysis built in Slices 1–7.
 
 - **The Finding** — the CLV story: win-rate ladder (Altair line+points, no truncated-bar distortion) showing perfect monotonic rise across all 5 CLV buckets, plus an open-vs-close proof panel (rising win-rate curve vs flat baseline) demonstrating that the close is sharper than the open.
+- **Leans** — per game, an honest spread + total read: the historically-favored side *only* when its bucket cleared the -110 breakeven (52.4%) with n≥50, else "no lean", always paired with the best available price across books. Recomputes from the sidebar season range (narrowing it → more "no lean"). Historical context + best price, never a prediction. No moneyline.
 - **Edge Report** — the honest-metrics table from Slice 5: every bucket ranked by point-estimate ROI, with 95% CI error bars and MDE/power columns making detectability explicit. No certified edges; the data is shown straight.
 - **CLV Explorer** — interactive: filter by market (spread/total) and season range, re-bucket live. Built on the `clv_report.csv` produced by `engine.clv`.
 - **Data & Audit** — coverage (games/seasons loaded), cross-source agreement (Kaggle vs nflverse, AUS vs SBR), and data provenance for every table in the pipeline.
