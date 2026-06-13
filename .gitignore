@@ -25,6 +25,10 @@ data/db/*
 .DS_Store
 Thumbs.db
 
+# Obsidian per-machine UI state (notes/plugin config can still be tracked)
+.obsidian/workspace.json
+.obsidian/workspace*.json
+
 # uv (lockfile tracked for reproducible installs)
 
 # Secrets
@@ -33,9 +37,13 @@ Thumbs.db
 
 # Live odds cache (churny artifact written by fetch_odds; data/raw is otherwise tracked)
 data/raw/odds_api_latest.json
+# Derived board artifact (regenerate via scripts/build_board_artifact.py; embeds the cache above)
+this_week_dashboard.html
 
 # Design-QC screenshots (regenerable via `openwolf designqc`)
 .wolf/designqc-captures/
+# OpenWolf runtime logs (regenerated on every daemon launch)
+.wolf/*.log
 
 # Playwright MCP + ad-hoc screenshots (QC artifacts)
 .playwright-mcp/

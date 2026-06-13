@@ -32,6 +32,7 @@ _COL_DATE = 0
 _COL_VH = 2
 _COL_TEAM = 3
 _COL_OPEN = 9
+_COL_CLOSE = 10
 _COL_ML = 11
 
 # Values <= this magnitude are spreads; values above are game totals.
@@ -91,32 +92,86 @@ def _parse_open_value(raw: object) -> float:
     return float(s)
 
 
-def _classify_pair(v_open: float, h_open: float) -> tuple[float, float]:
+def _try_parse_open_value(raw: object) -> float | None:
+    """Like _parse_open_value but returns None for an unparseable cell.
+
+    Used for the Close column, which is only a disambiguation hint: a missing
+    or malformed Close must not raise — it just means Close cannot resolve an
+    ambiguous Open pair.
+    """
+    try:
+        return _parse_open_value(raw)
+    except (ValueError, TypeError):
+        return None
+
+
+def _classify_pair(
+    v_open: float,
+    h_open: float,
+    v_close: float | None = None,
+    h_close: float | None = None,
+) -> tuple[float, float] | None:
     """Split the two Open values of a game-pair into (spread_magnitude, total).
 
     The value above _SPREAD_MAX is the game total; the other is the home-side
     spread magnitude. 'pk' (0.0) is always the spread.
+
+    When exactly one Open value is > _SPREAD_MAX the split is unambiguous. When
+    BOTH are <= _SPREAD_MAX or BOTH are > _SPREAD_MAX the Open column alone
+    cannot tell total from spread (e.g. a real pickem paired with a freak low
+    value), so fall back to the game's Close column: the close total is
+    unambiguously large while the close spread stays <= _SPREAD_MAX. The Close
+    column tells us WHICH ROW (away or home) is the total; we then read that
+    row's Open as the opening total. But the Open total slot itself must still
+    look like a real NFL total (> _SPREAD_MAX) — if that Open cell is garbage
+    (e.g. 'pk'/0.0, meaning the opening total was never recorded), the opening
+    line is unrecoverable. In every such case, and whenever Close is missing or
+    also ambiguous, return None so the caller skips the pair rather than
+    fabricating a wrong (spread, total). Empirically all 4 ambiguous game-pairs
+    across the 2007-2021 archive fall here (garbage Open total) and are skipped.
     """
+    # Unambiguous: exactly one Open value reads as a total.
     if v_open > _SPREAD_MAX and h_open <= _SPREAD_MAX:
         return h_open, v_open
     if h_open > _SPREAD_MAX and v_open <= _SPREAD_MAX:
         return v_open, h_open
-    # Both look like spreads (e.g. a pickem game with a small total is
-    # impossible in the NFL) or both look like totals — pick the larger as the
-    # total and the smaller as the spread.
-    if v_open >= h_open:
-        return h_open, v_open
-    return v_open, h_open
+
+    # Ambiguous (both <= _SPREAD_MAX or both > _SPREAD_MAX): use the Close
+    # column (same dual-use total/spread layout per the SBR probe note) to
+    # decide which row is the total, then trust that row's Open only if it is
+    # itself a plausible total.
+    if v_close is not None and h_close is not None:
+        if v_close > _SPREAD_MAX and h_close <= _SPREAD_MAX:
+            # Close says the away row is the total -> away Open is the total.
+            if v_open > _SPREAD_MAX:
+                return h_open, v_open
+        elif h_close > _SPREAD_MAX and v_close <= _SPREAD_MAX:
+            # Close says the home row is the total -> home Open is the total.
+            if h_open > _SPREAD_MAX:
+                return v_open, h_open
+
+    # Close is unavailable/ambiguous, or the Open total slot is garbage:
+    # cannot recover a correct opening (spread, total) -> skip.
+    return None
 
 
 def _select_games_table(tables: list[pd.DataFrame]) -> pd.DataFrame:
-    """Pick the odds table: the one whose header row contains 'Open' and 'VH'."""
+    """Pick the odds table: the one whose header row contains 'Open' and 'VH'.
+
+    Fail loud if no table matches the expected SBR signature. Silently grabbing
+    the widest table would let a layout change (or the wrong page) parse into
+    garbage records. The sole caller (scripts/load_opening_lines.py) wraps the
+    parse in try/except and prints a per-season warning, so this raise is
+    surfaced as a skipped season, not swallowed.
+    """
     for df in tables:
         header = [str(x).strip() for x in df.iloc[0].tolist()]
         if "Open" in header and "VH" in header and "Team" in header:
             return df
-    # Fall back to the widest table.
-    return max(tables, key=lambda d: d.shape[1])
+    raise ValueError(
+        "No SBR odds table found: no header row contains 'Open', 'VH', and "
+        f"'Team' (saw {len(tables)} table(s)). SBR page layout may have changed."
+    )
 
 
 def parse_sbr_html(html: str | bytes, season: int) -> list[OpeningLineRecord]:
@@ -157,8 +212,27 @@ def parse_sbr_html(html: str | bytes, season: int) -> list[OpeningLineRecord]:
 
             v_open = _parse_open_value(away.iloc[_COL_OPEN])
             h_open = _parse_open_value(home.iloc[_COL_OPEN])
-            spread_mag, total = _classify_pair(v_open, h_open)
+            # Close is dual-use like Open; used only to disambiguate the
+            # ambiguous Open case. A bad/missing Close cell -> None (no resolve).
+            v_close = _try_parse_open_value(away.iloc[_COL_CLOSE])
+            h_close = _try_parse_open_value(home.iloc[_COL_CLOSE])
+            classified = _classify_pair(v_open, h_open, v_close, h_close)
+            if classified is None:
+                # Open is ambiguous and Close could not resolve it: skip-count.
+                continue
+            spread_mag, total = classified
 
+            # FIX 2 (defense-in-depth): an impossible home spread magnitude must
+            # never be emitted, even if classification picked it as the spread.
+            if spread_mag > _SPREAD_MAX:
+                continue
+
+            # open_spread_home sign (source='sbr'): SBR shows spread magnitudes
+            # only, so the sign is derived from the home row's single ML column
+            # (the opening ML per the 2026-05-29 probe note) — home favorite
+            # (ML < 0) -> negative home spread. For 2013+ the aussportsbetting
+            # source is canonical (it carries a pre-signed Home Line Open); SBR
+            # here is the independent cross-check.
             home_ml = float(str(home.iloc[_COL_ML]).strip())
             home_is_favorite = home_ml < 0
             open_spread_home = normalize_spread_sign(
@@ -201,7 +275,7 @@ def fetch_season(season: int) -> str:
 
     url = f"{_BASE_URL}/nfl-odds-{season}-{(season + 1) % 100:02d}/"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req) as resp:  # noqa: S310 (trusted host)
+    with urllib.request.urlopen(req, timeout=30) as resp:  # noqa: S310 (trusted host)
         text = resp.read().decode("utf-8", errors="replace")
 
     cache.parent.mkdir(parents=True, exist_ok=True)

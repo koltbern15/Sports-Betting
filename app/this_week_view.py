@@ -52,18 +52,20 @@ def render(board: list[ThisWeekGame]) -> None:
     plural = "game" if len(games) == 1 else "games"
     st.caption(f"{len(games)} {plural} · sorted by biggest line move")
     for g in games:
-        spread_ctx = (f" · historical: {g.spread_ctx['win_rate']:.1%} cover "
-                      f"(n={g.spread_ctx['n']}, not certified)") if g.spread_ctx else ""
+        spread_ctx = (f" · historical home cover: {g.spread_ctx['win_rate']:.1%} "
+                      f"(n={g.spread_ctx['n']}, -110, not certified)") if g.spread_ctx else ""
+        cs = f"{g.cons_spread_home:+g}" if g.cons_spread_home is not None else "—"
+        ct = f"{g.cons_total:g}" if g.cons_total is not None else "—"
         st.markdown(
             f'<div class="twg-card">'
             f'<div class="twg-matchup">{g.matchup}</div>'
             f'<div class="twg-time">{g.commence_time}</div>'
             f'<div style="margin-top:8px">'
-            f'<b>Spread</b> (home): consensus {g.cons_spread_home:+g} · '
+            f'<b>Spread</b> (home): consensus {cs} · '
             f'best home <span class="twg-best">{_fmt_best(g.best_spread_home)}</span> · '
             f'best away <span class="twg-best">{_fmt_best(g.best_spread_away)}</span> · '
             f'{_move_html(g.spread_move)}<span class="twg-ctx">{spread_ctx}</span></div>'
-            f'<div><b>Total</b>: consensus {g.cons_total:g} · '
+            f'<div><b>Total</b>: consensus {ct} · '
             f'best over <span class="twg-best">{_fmt_best(g.best_total_over)}</span> · '
             f'best under <span class="twg-best">{_fmt_best(g.best_total_under)}</span></div>'
             f'<div><b>Moneyline</b>: best home '

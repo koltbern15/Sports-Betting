@@ -137,6 +137,7 @@ class LoadReport:
     rows_inserted: int = 0
     rows_skipped_missing_score: int = 0
     rows_skipped_missing_spread: int = 0
+    rows_skipped_bad_date: int = 0
     by_season: dict[int, int] = field(default_factory=dict)
 
 
@@ -221,7 +222,13 @@ def load_csv_to_db(
         for _, row in df.iterrows():
             season = int(row["schedule_season"])
             week = parse_week(row["schedule_week"])
-            game_date = pd.to_datetime(row["schedule_date"]).date()
+            dt = pd.to_datetime(row["schedule_date"], errors="coerce")
+            if pd.isna(dt):
+                # Blank or unparseable schedule_date: skip the row rather than
+                # persisting a 'NaT' game_date or letting pd.to_datetime raise.
+                report.rows_skipped_bad_date += 1
+                continue
+            game_date = dt.date()
             home = canonicalize_team_name(row["team_home"])
             away = canonicalize_team_name(row["team_away"])
             home_score = _to_int_or_none(row["score_home"])
@@ -299,6 +306,7 @@ def _main(argv: list[str]) -> int:
     print(f"By season: {dict(sorted(report.by_season.items()))}")
     print(f"Missing scores  in inserted rows: {report.rows_skipped_missing_score}")
     print(f"Missing spreads in inserted rows: {report.rows_skipped_missing_spread}")
+    print(f"Skipped (bad schedule_date):       {report.rows_skipped_bad_date}")
     return 0
 
 

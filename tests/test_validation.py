@@ -135,7 +135,9 @@ def test_compare_ml_prices_mean_error_matches_handcalc():
     load_csv_to_db(conn, "tests/fixtures/real_ml_5.csv")
 
     report = compare_ml_prices(conn)
-    assert -0.2 < report.price_stats["mean_error_prob"] < 0.2
+    # Pinned to the actual computed value (~-0.004846) so a regression in the
+    # error math can't hide inside a wide band.
+    assert report.price_stats["mean_error_prob"] == pytest.approx(-0.0048, abs=1e-3)
     conn.close()
 
 

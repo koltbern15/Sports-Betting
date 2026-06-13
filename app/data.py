@@ -51,6 +51,7 @@ def clv_ladder(
         "clv_bucket": r.clv_bucket, "n": r.n, "mean_clv": r.mean_clv,
         "win_rate": r.win_rate, "roi": r.roi, "p_value": r.p_value,
         "mde80": r.mde80, "ci_low": r.ci_low, "ci_high": r.ci_high,
+        "low_n": r.insufficient_sample,
     } for r in rows])
     df["_order"] = df["clv_bucket"].map(CLV_BUCKET_ORDER.index)
     return df.sort_values("_order").drop(columns="_order").reset_index(drop=True)
@@ -69,6 +70,43 @@ def opening_line_coverage() -> pd.DataFrame:
         )
     except Exception:
         return pd.DataFrame()
+
+
+@st.cache_data(show_spinner=False)
+def clv_result_correlation(
+    *, market: str, season_range: tuple[int, int]
+) -> tuple[float, float, int]:
+    """Live point-biserial correlation between per-bet CLV and the win/loss outcome.
+
+    Drops pushes, maps win->1 / loss->0, and runs scipy.stats.pearsonr over the
+    opener-graded reference bets for `market` in the season range. Returns
+    (r, p_value, n_decided). Returns (nan, nan, 0) when data is absent or n < 3.
+    This replaces a previously hardcoded stat card so the figure tracks the data.
+    """
+    try:
+        conn = _open_db()
+    except Exception:
+        return float("nan"), float("nan"), 0
+    bets = build_bets_from_db(conn, grade_at="open")
+    lo, hi = season_range
+    pairs = [
+        (b["clv"], 1.0 if b["result"] == "win" else 0.0)
+        for b in bets
+        if b["market"] == market
+        and lo <= b["season"] <= hi
+        and b["result"] in ("win", "loss")
+    ]
+    if len(pairs) < 3:
+        return float("nan"), float("nan"), len(pairs)
+    clvs = [c for c, _ in pairs]
+    outcomes = [o for _, o in pairs]
+    # Degenerate guard: pearsonr needs variance on both axes.
+    if len(set(clvs)) < 2 or len(set(outcomes)) < 2:
+        return float("nan"), float("nan"), len(pairs)
+    from scipy.stats import pearsonr
+
+    r, p = pearsonr(clvs, outcomes)
+    return float(r), float(p), len(pairs)
 
 
 def season_bounds() -> tuple[int, int]:

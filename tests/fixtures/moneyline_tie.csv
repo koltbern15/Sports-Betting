@@ -1,0 +1,4 @@
+schedule_date,schedule_season,schedule_week,schedule_playoff,team_home,team_away,team_favorite_id,score_home,score_away,spread_favorite,over_under_line,weather_temperature,weather_wind_mph,weather_humidity,stadium,stadium_neutral
+2022-09-11,2022,1,FALSE,Buffalo Bills,Tampa Bay Buccaneers,PICK,20,20,0.0,45.0,72,5,55,Highmark Stadium,FALSE
+2022-09-18,2022,2,FALSE,Kansas City Chiefs,Carolina Panthers,PICK,27,17,0.0,45.0,72,5,55,Arrowhead Stadium,FALSE
+2022-09-25,2022,3,FALSE,Philadelphia Eagles,Houston Texans,PHI,30,10,-3.0,45.0,72,5,55,Lincoln Financial Field,FALSE

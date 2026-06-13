@@ -62,6 +62,17 @@ def test_decimal_to_american_none_passthrough():
     assert decimal_to_american(None) is None
 
 
+def test_decimal_to_american_at_boundary_raises():
+    # decimal odds of exactly 1.0 mean no payout -> invalid (opening_line_common.py:63-64)
+    with pytest.raises(ValueError):
+        decimal_to_american(1.0)
+
+
+def test_decimal_to_american_below_boundary_raises():
+    with pytest.raises(ValueError):
+        decimal_to_american(0.5)
+
+
 def test_record_is_frozen():
     import dataclasses
 

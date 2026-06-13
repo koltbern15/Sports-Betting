@@ -5,7 +5,7 @@ description = "NFL historical betting analytics engine (Slice 1: ingestion + ATS
 requires-python = ">=3.11"
 dependencies = [
     "pandas>=2.2",
-    "numpy>=1.26",
+    "numpy>=1.26",  # transitive floor for the pandas/scipy stack; not imported directly
     "scipy>=1.13",
     "tabulate>=0.9",
     "nfl-data-py>=0.3.2",
@@ -32,3 +32,8 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# The board artifact embeds a long HTML/CSS/JS template string; those lines are
+# intentionally over the 100-col limit and not real Python to wrap.
+"scripts/build_board_artifact.py" = ["E501"]

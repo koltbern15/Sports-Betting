@@ -3,6 +3,18 @@ import pytest
 from engine.db import connect
 from ingestion.loader import LoadReport, load_csv_to_db
 
+# Columns the loader reads, in the same order as the real Kaggle CSV.
+_CSV_HEADER = (
+    "schedule_date,schedule_season,schedule_week,schedule_playoff,"
+    "team_home,team_away,team_favorite_id,score_home,score_away,"
+    "spread_favorite,over_under_line,weather_temperature,weather_wind_mph,"
+    "weather_humidity,stadium,stadium_neutral"
+)
+_GOOD_ROW = (
+    "2024-10-14,2024,6,FALSE,Kansas City Chiefs,New Orleans Saints,KAN,"
+    "26,13,-6.0,46.0,72,5,55,Arrowhead Stadium,FALSE"
+)
+
 
 @pytest.fixture
 def loaded_db(tmp_db_path, fixtures_dir):
@@ -123,3 +135,45 @@ def test_load_respects_season_filter(tmp_db_path, fixtures_dir):
         fixtures_dir / "games_5.csv", tmp_db_path, season_min=2024, season_max=2024
     )
     assert report.rows_inserted == 4
+
+
+@pytest.mark.parametrize(
+    "bad_date",
+    [
+        "",  # blank schedule_date → pd.to_datetime yields NaT (silent corruption)
+        "garbage",  # non-date string → pd.to_datetime would otherwise RAISE
+    ],
+)
+def test_load_skips_unparseable_schedule_date(tmp_path, tmp_db_path, bad_date):
+    # One good row + one row with a blank/garbage schedule_date (same season as the
+    # good row so the season filter doesn't account for the drop). The bad row must be
+    # skipped and counted — never inserted as a 'NaT' date, never raising.
+    bad_row = (
+        f"{bad_date},2024,7,FALSE,Green Bay Packers,Minnesota Vikings,MIN,"
+        "25,27,-3.0,40.0,18,12,60,Lambeau Field,FALSE"
+    )
+    csv_path = tmp_path / "one_good_one_bad.csv"
+    csv_path.write_text(f"{_CSV_HEADER}\n{_GOOD_ROW}\n{bad_row}\n", encoding="utf-8")
+
+    report = load_csv_to_db(csv_path, tmp_db_path, season_min=2024, season_max=2024)
+
+    # Both rows pass the season filter; exactly one is inserted, one is skipped+counted.
+    assert report.rows_read == 2
+    assert report.rows_inserted == 1
+    assert report.rows_skipped_bad_date == 1
+
+    conn = connect(tmp_db_path)
+    try:
+        # Only the good row landed.
+        n = conn.execute("SELECT COUNT(*) AS c FROM games").fetchone()["c"]
+        assert n == 1
+        good = conn.execute("SELECT game_date, home_team FROM games").fetchone()
+        assert good["home_team"] == "Kansas City Chiefs"
+        assert good["game_date"] == "2024-10-14"
+        # No 'NaT' (or any variant) ever persisted.
+        nat = conn.execute(
+            "SELECT COUNT(*) AS c FROM games WHERE game_date LIKE '%NaT%'"
+        ).fetchone()["c"]
+        assert nat == 0
+    finally:
+        conn.close()

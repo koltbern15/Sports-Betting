@@ -1,12 +1,13 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-31T05:06:35.921Z
-> Files: 18 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-06-13T22:03:19.370Z
+> Files: 23 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~205 tok)
-- `README.md` — Project documentation (~4510 tok)
+- `.gitignore` — Git ignore rules (~322 tok)
+- `pyproject.toml` — NFL historical betting analytics engine (Slice 1: ingestion + ATS) (~262 tok)
+- `README.md` — Project documentation (~4581 tok)
 
 ## .claude/
 
@@ -193,40 +194,47 @@
 
 ## app/
 
-- `charts.py` — Altair chart builders for the dashboard (refined-dark friendly). (~561 tok)
-- `data.py` — Cached data-access layer for the dashboard. Thin wrappers over engine functions (~1096 tok)
-- `main.py` — NFL Betting Analytics — live This Week odds board (Streamlit entry point). (~610 tok)
-- `tab_clv.py` — CLV Explorer — interactive: filter by market + season range, re-bucket live. (~289 tok)
-- `tab_data.py` — Data & Audit — coverage, cross-source agreement, and data provenance. (~402 tok)
-- `tab_edge.py` — Edge Report — the honest-metrics table (Slice 5): no certified static edge. (~358 tok)
-- `tab_finding.py` — The Finding — narrative hero: the CLV signal, with the open-vs-close proof panel. (~600 tok)
-- `theme.py` — Refined-dark CSS polish injected into the Streamlit app. (~400 tok)
+- `charts.py` — Altair chart builders for the dashboard (refined-dark friendly). (~755 tok)
+- `data.py` — Cached data-access layer for the dashboard. Thin wrappers over engine functions (~1546 tok)
+- `tab_clv.py` — CLV Explorer — interactive: filter by market + season range, re-bucket live. (~434 tok)
+- `tab_finding.py` — The Finding — narrative hero: the CLV signal, with the open-vs-close proof panel. (~919 tok)
+- `this_week_view.py` — Render the This Week board (thin view over engine.this_week.build_board). (~968 tok)
 
 ## data/raw/
 
 
 ## docs/superpowers/plans/
 
-- `2026-05-31-nfl-betting-slice9.md` — NFL Betting Analytics — Slice 9: Historical Showcase Tabs — Implementation Plan (~7415 tok)
 
 ## docs/superpowers/specs/
 
-- `2026-05-31-nfl-betting-slice9-design.md` — NFL Betting Analytics — Slice 9: Historical Showcase Tabs (~2223 tok)
 
 ## engine/
 
-- `clv.py` — Closing-line value (CLV) engine. (~3072 tok)
+- `clv.py` — Closing-line value (CLV) engine. (~3322 tok)
 
 ## ingestion/
 
-- `live_odds.py` — The Odds API client for live NFL odds. (~2007 tok)
+- `live_odds.py` — The Odds API client for live NFL odds. (~2153 tok)
+- `loader.py` — CSV → SQLite loader for NFL betting data. (~3304 tok)
+- `opening_line_sbr.py` — Parse SportsbookReviewsOnline (SBR) NFL season odds pages into records. (~3390 tok)
+
+## scripts/
+
+- `build_board_artifact.py` — Build the self-contained 'This Week' odds-board HTML from the latest odds snapshot. (~3346 tok)
 
 ## tests/
 
-- `test_app_data.py` — Tests for app.data — cached data-access loaders (logic tested without Streamlit cache). (~987 tok)
-- `test_app_smoke.py` — Smoke test: the Streamlit app boots and renders without error (no live network). (~165 tok)
-- `test_clv.py` — Tests for engine.clv — pure CLV math, grading, bucketing. (~2119 tok)
-- `test_live_odds.py` — Tests for ingestion.live_odds — parse a saved Odds API payload (no network). (~524 tok)
+- `test_ats.py` — test_bucket_spread_known_values, test_bucket_spread_none_returns_none, test_metrics_basic_case, test (~1995 tok)
+- `test_live_odds.py` — Tests for ingestion.live_odds — parse a saved Odds API payload (no network). (~1892 tok)
+- `test_loader.py` — Columns the loader reads, in the same order as the real Kaggle CSV. (~1950 tok)
+- `test_moneyline.py` — Tests for engine.moneyline. (~2758 tok)
+- `test_opening_line_aus.py` — Tests for ingestion.opening_line_aus — parse the xlsx fixture. (~1228 tok)
+- `test_opening_line_common.py` — Tests for ingestion.opening_line_common — pure record + normalization helpers. (~707 tok)
+- `test_opening_line_sbr.py` — Tests for ingestion.opening_line_sbr — parse the SBR HTML fixture (offline). (~1711 tok)
+- `test_this_week_view.py` — Tests for app.this_week_view team-filter helpers (pure, no Streamlit). (~805 tok)
+- `test_validation.py` — Tests for engine.validation — pure helpers. (~2016 tok)
 
 ## tests/fixtures/
 
+- `moneyline_tie.csv` (~152 tok)

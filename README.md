@@ -227,6 +227,7 @@ A refined-dark Streamlit app that shows the current NFL odds board for the upcom
 
 - The live pull requires `ODDS_API_KEY`. The rest of the app (all tests, the board rendering with a local seed file) works without it.
 - `data/raw/odds_api_latest.json` is gitignored. It holds the most recent API response and is regenerated each pull.
+- **Offline board artifact:** `uv run python scripts/build_board_artifact.py` reads that snapshot and writes a self-contained `this_week_dashboard.html` (no server/network needed to view). The HTML is gitignored — it embeds a point-in-time odds snapshot and is fully regenerable.
 - Historical showcase tabs (Slices 1–7 findings in the UI) are deferred to Slice 9.
 
 ## Slice 9 — Historical showcase tabs

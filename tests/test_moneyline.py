@@ -74,6 +74,21 @@ def test_derive_ml_steep_spread_price_floors_near_minus_10000():
     assert _payout_for_bet(ml_away2, True) > 0.001
 
 
+def test_derive_ml_extreme_dog_floors_at_plus_10000():
+    """Coverage for the _MIN_IMPLIED_PROB (heavy-DOG) clamp branch (~moneyline.py:62).
+
+    The steep-favorite _MAX branch is exercised at -26.5 above, but the dog-side _MIN
+    clamp only triggers at far steeper spreads (~-32.5+). At -33.0 the home no-vig prob
+    is essentially 1.0, so the AWAY (dog) vigged prob is floored at _MIN_IMPLIED_PROB
+    (= 100/10100), which maps to +10000 American via _prob_to_american.
+    """
+    ml_home, ml_away = derive_ml_from_spread(-33.0)
+    # Dog side floors at the +10000 implied-prob clamp.
+    assert ml_away == pytest.approx(10000, abs=5)
+    # And the heavy favorite floors at the mirror -10000 clamp.
+    assert ml_home == pytest.approx(-10000, abs=5)
+
+
 @pytest.mark.parametrize(
     "ml,expected",
     [
@@ -194,3 +209,44 @@ def test_moneyline_payout_helper_win_at_plus_150_pays_1_50():
 def test_moneyline_payout_helper_push_returns_zero():
     from engine.moneyline import _payout_for_bet
     assert _payout_for_bet(ml_price=-110, won=None) == 0.0
+
+
+def test_moneyline_aggregator_handles_nfl_tie_push(tmp_path: Path):
+    """End-to-end coverage for aggregator-level push handling (moneyline.py:185).
+
+    The moneyline_20.csv fixture has zero ties, so the push branch is never exercised
+    end-to-end. This dedicated fixture has one 20-20 tie at a pick'em (spread 0.0) plus
+    one decided pick'em game; both pick'em games derive to -110/-110, so all four of
+    their bets land in ml_slight_fav (derive_ml_from_spread(0.0) == (-110, -110), which
+    bucket_ml maps to ml_slight_fav). Domain convention under test:
+      - a push inflates n AND the dollar-weighted ROI denominator (the 0.0 push payout
+        is appended to the payouts list), and is counted in n on BOTH sides,
+      - but a push is EXCLUDED from the win_rate denominator.
+    """
+    db = _build_db_from_fixture(tmp_path, "tests/fixtures/moneyline_tie.csv")
+    conn = connect(db)
+    try:
+        report = moneyline_by_odds_bucket(conn)
+    finally:
+        conn.close()
+    by = {r.bucket: r for r in report.rows}
+
+    # The tie game (-110/-110) contributes two push bets (home + away), and the
+    # decided pick'em game (-110/-110) contributes one win (home) + one loss (away).
+    m = by["ml_slight_fav"]
+    assert m.pushes == 2, "tie pushes on both home and away sides must be counted"
+    # n includes the push on both sides: 2 pushes + 1 win + 1 loss = 4.
+    assert m.n == 4
+    assert m.wins == 1
+    assert m.losses == 1
+
+    # win_rate's denominator EXCLUDES the pushes: 1 win / (1 win + 1 loss) == 0.5,
+    # NOT 1 / 4 (which is what counting pushes in the denominator would yield).
+    assert m.win_rate == pytest.approx(0.5)
+
+    # roi_neg110 is dollar-weighted and DILUTED by the two 0.0 push payouts: the
+    # payouts list is [100/110 (win), -1.0 (loss), 0.0 (push), 0.0 (push)] divided by
+    # n=4, not n=2. Excluding the pushes would give -0.0455; including them gives half.
+    expected_roi = (100.0 / 110.0 - 1.0) / 4.0
+    assert m.roi_neg110 == pytest.approx(expected_roi)
+    assert m.roi_neg110 == pytest.approx(-0.022727272727272735)

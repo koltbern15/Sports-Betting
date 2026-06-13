@@ -114,6 +114,9 @@ class ClvRow:
     profitable_seasons_pct: float
     mde80: float  # smallest detectable edge at this n (ROI)
     breakeven_needed: float  # observed edge needed to clear breakeven CI (ROI)
+    # decided (wins+losses) < INSUFFICIENT_SAMPLE_THRESHOLD; win_rate/p_value are noise.
+    # Defaulted so positional ClvRow(...) construction (e.g. in tests) stays valid.
+    insufficient_sample: bool = False
 
 
 def aggregate_clv(bets: list[dict]) -> list[ClvRow]:
@@ -122,6 +125,14 @@ def aggregate_clv(bets: list[dict]) -> list[ClvRow]:
     Each bet dict: {market, clv (float), result ('win'|'loss'|'push'), season (int)}.
     Reuses compute_metrics for win rate / ROI / CI / p-value / by-season, then adds
     mean_clv and the Slice 5 power columns. CIs are expressed in ROI for comparability.
+
+    Basis note: `roi` is roi_neg110 (push-INCLUSIVE denominator, per spec), while
+    `ci_low/ci_high` are roi_from_win_prob() of Wilson bounds on the push-EXCLUDED
+    win rate. Algebraically roi_neg110 == roi_from_win_prob(win_rate) * (1 - push_rate),
+    so the point estimate sits slightly toward zero from the CI's natural center by the
+    push rate. The gap is sub-CI-noise in this data (point never escapes its own CI),
+    but the two are not strictly the same basis — kept as-is to preserve the
+    spec-mandated push-inclusive ROI; do not "fix" by silently re-centering either one.
     """
     groups: dict[tuple[str, str], list[dict]] = {}
     for b in bets:
@@ -159,6 +170,7 @@ def aggregate_clv(bets: list[dict]) -> list[ClvRow]:
                 profitable_seasons_pct=m.profitable_seasons_pct,
                 mde80=roi_from_win_prob(mde_winrate_at_power(m.n)),
                 breakeven_needed=roi_from_win_prob(winrate_needed_for_ci(m.n)),
+                insufficient_sample=m.insufficient_sample,
             )
         )
 

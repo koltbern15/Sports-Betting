@@ -3,6 +3,9 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 2026-06-13 sbr-classify-robustness | Hardened ingestion/opening_line_sbr.py per probe note (4 fixes, no other files touched, timeout=30 preserved). FIX1: _classify_pair now takes v_close/h_close; ambiguous Open branch (both<=25 or both>25) uses Close to pick the total row AND requires that row's Open to itself be >25 — else returns None (skip). Caller threads Close via new _try_parse_open_value (None on bad cell) and skips on None. FIX2: caller skips when chosen spread_mag > _SPREAD_MAX (defense-in-depth). FIX3: _select_games_table raises ValueError instead of widest-table fallback (caller load_opening_lines.py wraps parse in try/except → surfaced as skipped season). FIX4: doc note on open_spread_home sign (derived from home ML; AUS canonical 2013+). Empirically all 4 archive ambiguous games have garbage Open totals → skipped; record count 3477→3473, zero impossible totals/spreads emitted. Added 11 _classify_pair unit tests (incl. real 2017 IND@BUF row). 17 SBR tests + full suite 370 pass, ruff clean. Not committed. | ingestion/opening_line_sbr.py, tests/test_opening_line_sbr.py | ~3500 |
+| 2026-06-13 moneyline-test-coverage | Added 2 confirmed-missing tests to tests/test_moneyline.py (no source changes). GAP1: test_moneyline_aggregator_handles_nfl_tie_push — new fixture tests/fixtures/moneyline_tie.csv (3 games incl. one 20-20 tie at pick'em) exercises aggregator push branch (moneyline.py:185) end-to-end; asserts ml_slight_fav bucket has pushes=2, n=4 (push counted both sides), win_rate=0.5 (pushes excluded from denom), roi_neg110=-0.0227 (diluted by two 0.0 push payouts over n=4). GAP2: test_derive_ml_extreme_dog_floors_at_plus_10000 — covers the _MIN_IMPLIED_PROB heavy-dog clamp (moneyline.py:62) at spread -33.0, asserts away floors at +10000, home at -10000. 48 test_moneyline tests pass, ruff clean. Not committed. | tests/test_moneyline.py, tests/fixtures/moneyline_tie.csv | ~1100 |
+| 2026-06-13 loader-date-guard | Fixed missing-guard bug (bug-046): ingestion/loader.py:223 unguarded pd.to_datetime(schedule_date) → now errors="coerce" + pd.isna skip-and-count (new LoadReport.rows_skipped_bad_date, surfaced in _main). Added parametrized regression test (blank + "garbage") to tests/test_loader.py asserting good row inserted, bad row skipped+counted, no raise, no 'NaT' persisted. 41 loader tests pass, ruff clean. Not committed. | ingestion/loader.py, tests/test_loader.py | ~1200 |
 | 2026-05-31 slice9-docs | Slice 9 complete: README updated (Slices 1–9 intro, Slice 9 section, Scope bullet); .gitignore .playwright-mcp/+screenshot ignores committed; cerebrum Decision Log entry (showcase tabs, grade_at=close proof, CLV ladder line+points); 337 tests pass, ruff clean; committed | README.md, .gitignore, .wolf/memory.md, .wolf/cerebrum.md | ~600 |
 | 04:00 | Slice9 Task2: created app/data.py (cached data-access layer) + tests/test_app_data.py (4 tests) | app/data.py, tests/test_app_data.py | 4/4 tests pass, full suite green, ruff clean, committed 71fe323 | ~2800 |
 | 04:15 | Slice9 Task3: created app/charts.py (clv_ladder_chart + ci_errorbar_chart); appended test_charts_build_without_error to tests/test_app_data.py; fixed ruff I001 via auto-fix; full suite green, ruff clean; committed dadf50d | app/charts.py, tests/test_app_data.py | ~800 |
@@ -653,3 +656,92 @@
 | 01:01 | Edited README.md | modified 1() | ~411 |
 | 01:01 | Edited README.md | expanded (+13 lines) | ~316 |
 | 01:06 | Edited app/tab_data.py | games() → overlap() | ~64 |
+| 01:07 | Session end: 160 writes across 66 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 98 reads | ~231755 tok |
+| 01:08 | Session end: 160 writes across 66 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 98 reads | ~231755 tok |
+| 01:11 | Edited app/charts.py | expanded (+10 lines) | ~93 |
+| 01:11 | Edited app/charts.py | 10→13 lines | ~194 |
+| 01:13 | Session end: 162 writes across 66 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 100 reads | ~232042 tok |
+| 01:15 | Edited app/charts.py | 2→3 lines | ~57 |
+| 01:16 | Session end: 163 writes across 66 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 102 reads | ~232099 tok |
+| 01:19 | Edited app/this_week_view.py | modified game_teams() | ~191 |
+| 01:19 | Edited app/this_week_view.py | 6→9 lines | ~139 |
+| 01:19 | Created tests/test_this_week_view.py | — | ~423 |
+| 01:21 | Session end: 166 writes across 67 files (2026-05-29-nfl-betting-slice5-design.md, 2026-05-29-nfl-betting-slice5.md, test_stats_utils.py, stats_utils.py, test_moneyline.py) | 104 reads | ~232162 tok |
+
+## Session: 2026-06-13 17:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-06-13 17:29
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:42 | Edited ingestion/live_odds.py | int() → round() | ~53 |
+| 17:42 | Edited ingestion/opening_line_sbr.py | inline fix | ~25 |
+| 17:42 | Edited .gitignore | 5→9 lines | ~47 |
+| 17:42 | Edited .gitignore | 2→4 lines | ~65 |
+| 20:00 | Full 7-dim multi-agent audit (45 agents, verified) — 35 confirmed/3 refuted; auto-fixed 4 safe items (int→round, SBR timeout, junk files, gitignore), logged bug-042..045 | engine/ingestion/app/tests | 340 tests pass, ruff clean | ~2.7M |
+| 17:45 | Session end: 4 writes across 3 files (live_odds.py, opening_line_sbr.py, .gitignore) | 77 reads | ~2304 tok |
+| 17:51 | Edited ingestion/live_odds.py | modified get() | ~113 |
+| 17:51 | Edited app/this_week_view.py | modified markdown() | ~268 |
+| 17:51 | Edited tests/test_this_week_view.py | added 1 import(s) | ~71 |
+| 17:51 | Edited ingestion/live_odds.py | modified except() | ~558 |
+| 17:51 | Edited ingestion/opening_line_sbr.py | 9→10 lines | ~72 |
+| 17:51 | Edited tests/test_this_week_view.py | modified test_render_handles_none_consensus_without_crashing() | ~240 |
+| 17:51 | Edited tests/test_live_odds.py | modified _valid_event() | ~314 |
+| 17:51 | Edited ingestion/opening_line_sbr.py | modified _classify_pair() | ~523 |
+| 17:51 | Edited ingestion/loader.py | 7→8 lines | ~73 |
+| 17:51 | Edited tests/test_live_odds.py | modified test_outcome_missing_price_is_skipped_not_crash() | ~888 |
+| 17:52 | Edited ingestion/opening_line_sbr.py | modified 2() | ~274 |
+| 17:52 | Edited tests/test_opening_line_aus.py | added 2 import(s) | ~88 |
+| 17:52 | Created tests/fixtures/moneyline_tie.csv | — | ~152 |
+| 17:52 | Edited ingestion/loader.py | modified isna() | ~151 |
+| 17:52 | Edited tests/test_this_week_view.py | modified _render_none_consensus_script() | ~377 |
+| 17:52 | Edited ingestion/loader.py | modified print() | ~75 |
+| 17:52 | Edited ingestion/opening_line_sbr.py | modified _parse_open_value() | ~184 |
+| 17:52 | Edited tests/test_this_week_view.py | inline fix | ~20 |
+| 17:52 | Edited tests/test_opening_line_aus.py | modified test_super_bowl_season_rolls_back() | ~945 |
+| 17:52 | Edited tests/test_loader.py | expanded (+12 lines) | ~169 |
+| 17:52 | Edited ingestion/opening_line_sbr.py | modified _select_games_table() | ~252 |
+| 17:52 | Edited tests/test_opening_line_common.py | modified test_decimal_to_american_none_passthrough() | ~124 |
+| 17:52 | Edited tests/test_ats.py | 6→8 lines | ~67 |
+| 17:52 | Edited ingestion/opening_line_sbr.py | modified sign() | ~195 |
+| 17:52 | Edited tests/test_loader.py | modified test_load_respects_season_filter() | ~578 |
+| 17:52 | Edited tests/test_validation.py | modified test_compare_ml_prices_mean_error_matches_handcalc() | ~135 |
+| 17:52 | Edited tests/test_moneyline.py | modified test_derive_ml_steep_spread_price_floors_near_minus_10000() | ~445 |
+| 17:52 | Edited tests/test_opening_line_sbr.py | added 1 import(s) | ~84 |
+| 17:52 | Edited tests/test_moneyline.py | modified test_moneyline_payout_helper_push_returns_zero() | ~642 |
+| 17:53 | Edited tests/test_opening_line_sbr.py | modified test_flipped_san_francisco_detroit() | ~897 |
+| 17:53 | Added test coverage: AUS bad-row exception-skip path + decimal_to_american <=1.0 ValueError branch | tests/test_opening_line_aus.py, tests/test_opening_line_common.py | 19 tests pass, ruff clean | ~6k |
+| 17:53 | Edited tests/test_opening_line_sbr.py | modified test_classify_both_high_resolved_by_close() | ~395 |
+| 17:52 | Fixed bug-043 None-consensus crash in render() + AppTest regression test | app/this_week_view.py, tests/test_this_week_view.py | 4 passed, ruff clean | ~9k |
+| 2026-06-13 test-strengthen | Strengthened 2 weak tests: test_ats.py added pickem-band outer-edge parametrize cases (0.6 -> home_dog_1_3, -0.6 -> home_fav_1_3); test_validation.py pinned mean_error_prob from wide band (-0.2..0.2) to pytest.approx(-0.0048, abs=1e-3) — real observed value -0.004846329. ruff clean, 48 tests in the two files pass. No engine/ edits. | tests/test_ats.py, tests/test_validation.py | ~400 |
+| 17:53 | Edited tests/test_opening_line_sbr.py | modified test_classify_both_low_resolved_by_close_home_total() | ~146 |
+| 17:55 | Edited ingestion/opening_line_sbr.py | modified Ambiguous() | ~675 |
+| 17:55 | Edited tests/test_opening_line_sbr.py | modified test_classify_both_low_garbage_open_total_skips() | ~761 |
+
+## Session: 2026-06-13 17:56
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-06-13 17:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:58 | Edited engine/clv.py | 3→6 lines | ~110 |
+| 17:58 | Edited engine/clv.py | 3→4 lines | ~63 |
+| 17:59 | Edited engine/clv.py | expanded (+8 lines) | ~246 |
+| 17:59 | Edited app/data.py | 5→6 lines | ~84 |
+| 17:59 | Edited app/data.py | modified clv_result_correlation() | ~406 |
+| 17:59 | Edited app/tab_finding.py | added 2 import(s) | ~41 |
+| 17:59 | Edited app/tab_finding.py | modified isnan() | ~366 |
+| 18:00 | Edited app/tab_clv.py | modified any() | ~204 |
+| 18:00 | Edited app/this_week_view.py | 2→2 lines | ~51 |
+| 18:01 | Edited scripts/build_board_artifact.py | 6→6 lines | ~88 |
+| 18:02 | Edited scripts/build_board_artifact.py | modified best_ml() | ~304 |
+| 18:02 | Edited pyproject.toml | 3→3 lines | ~34 |
+| 18:02 | Edited pyproject.toml | 2→7 lines | ~76 |
+| 18:02 | Edited .gitignore | 2→4 lines | ~43 |
+| 18:03 | Edited README.md | 2→3 lines | ~142 |

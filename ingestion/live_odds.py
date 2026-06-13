@@ -71,8 +71,11 @@ def _collect(bookmakers: list[dict], market_key: str, outcome_name: str) -> list
                 continue
             for o in m.get("outcomes", []):
                 if o.get("name") == outcome_name:
+                    price = o.get("price")
+                    if price is None:
+                        continue  # skip outcomes with missing/None price
                     title = bk.get("title", bk.get("key", "?"))
-                    out.append((title, o.get("point"), int(o["price"])))
+                    out.append((title, o.get("point"), int(price)))
     return out
 
 
@@ -100,38 +103,41 @@ def parse_odds_payload(payload: list[dict]) -> list[GameOdds]:
     """Parse The Odds API JSON into GameOdds. Unknown teams skip the game."""
     games: list[GameOdds] = []
     for evt in payload:
+        # Skip-and-continue: one malformed event must not sink the whole snapshot.
+        # Covers unknown teams (canonicalize KeyError) plus missing/None
+        # commence_time and any bad outcome that slips past _collect.
         try:
             home = canonicalize_team_name(evt["home_team"])
             away = canonicalize_team_name(evt["away_team"])
-        except KeyError:
+            bks = evt.get("bookmakers", [])
+            raw_home, raw_away = evt["home_team"], evt["away_team"]
+
+            sp_home = _collect(bks, "spreads", raw_home)
+            sp_away = _collect(bks, "spreads", raw_away)
+            tot_over = _collect(bks, "totals", "Over")
+            tot_under = _collect(bks, "totals", "Under")
+            ml_home = _collect(bks, "h2h", raw_home)
+            ml_away = _collect(bks, "h2h", raw_away)
+
+            games.append(GameOdds(
+                game_key=_game_key(evt["commence_time"], away, home),
+                commence_time=evt["commence_time"],
+                home_team=home,
+                away_team=away,
+                cons_spread_home=_median_or_none([p for _b, p, _pr in sp_home if p is not None]),
+                cons_total=_median_or_none([p for _b, p, _pr in tot_over if p is not None]),
+                cons_ml_home=round(median([pr for _b, _p, pr in ml_home])) if ml_home else None,
+                cons_ml_away=round(median([pr for _b, _p, pr in ml_away])) if ml_away else None,
+                best_spread_home=_best(sp_home, by_point="max"),
+                best_spread_away=_best(sp_away, by_point="max"),
+                best_total_over=_best(tot_over, by_point="min"),
+                best_total_under=_best(tot_under, by_point="max"),
+                best_ml_home=_best(ml_home, by_point=None),
+                best_ml_away=_best(ml_away, by_point=None),
+                n_books=len(bks),
+            ))
+        except (KeyError, ValueError, TypeError):
             continue
-        bks = evt.get("bookmakers", [])
-        raw_home, raw_away = evt["home_team"], evt["away_team"]
-
-        sp_home = _collect(bks, "spreads", raw_home)
-        sp_away = _collect(bks, "spreads", raw_away)
-        tot_over = _collect(bks, "totals", "Over")
-        tot_under = _collect(bks, "totals", "Under")
-        ml_home = _collect(bks, "h2h", raw_home)
-        ml_away = _collect(bks, "h2h", raw_away)
-
-        games.append(GameOdds(
-            game_key=_game_key(evt["commence_time"], away, home),
-            commence_time=evt["commence_time"],
-            home_team=home,
-            away_team=away,
-            cons_spread_home=_median_or_none([p for _b, p, _pr in sp_home if p is not None]),
-            cons_total=_median_or_none([p for _b, p, _pr in tot_over if p is not None]),
-            cons_ml_home=int(median([pr for _b, _p, pr in ml_home])) if ml_home else None,
-            cons_ml_away=int(median([pr for _b, _p, pr in ml_away])) if ml_away else None,
-            best_spread_home=_best(sp_home, by_point="max"),
-            best_spread_away=_best(sp_away, by_point="max"),
-            best_total_over=_best(tot_over, by_point="min"),
-            best_total_under=_best(tot_under, by_point="max"),
-            best_ml_home=_best(ml_home, by_point=None),
-            best_ml_away=_best(ml_away, by_point=None),
-            n_books=len(bks),
-        ))
     return games
 
 

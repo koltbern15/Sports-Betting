@@ -625,6 +625,231 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-31T05:06:35.956Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-05-31T05:11:23.529Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/charts.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 10→13 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T05:11:23.529Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-05-31T05:19:33.416Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/this_week_view.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 6→9 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T05:19:33.416Z"
+    },
+    {
+      "timestamp": "2026-06-13T19:16:00Z",
+      "error_message": "sqlite3.OperationalError: disk I/O error / database disk image is malformed when init_schema+store_snapshot during `python -m ingestion.live_odds`",
+      "file": "data/db/nfl_betting.sqlite",
+      "root_cause": "Pre-existing DB corruption from an interrupted transaction (stale nfl_betting.sqlite-journal dated Jun 6); PRAGMA integrity_check reports invalid page numbers. Compounded by sqlite locking/fsync limitations over the mounted filesystem.",
+      "fix": "Live odds JSON pull (data/raw/odds_api_latest.json) and board build are unaffected and succeeded. DB consensus-snapshot write skipped this run; left project DB untouched to avoid worsening corruption. Recommend rebuilding nfl_betting.sqlite from source ingestion or restoring a backup; remove stale -journal.",
+      "tags": [
+        "sqlite",
+        "db-corruption",
+        "scheduled-task",
+        "ingestion",
+        "non-blocking"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T19:16:00Z"
+    },
+    {
+      "id": "bug-042",
+      "timestamp": "2026-06-13T20:00:00Z",
+      "error_message": "Live-odds parser aborts the entire snapshot on one malformed book/outcome (KeyError 'price' / 'commence_time', TypeError on price=None)",
+      "file": "ingestion/live_odds.py",
+      "root_cause": "parse_odds_payload wraps ONLY the home/away canonicalize_team_name calls in try/except KeyError. int(o['price']) in _collect and evt['commence_time'] run unguarded, so one bad event/outcome propagates out and discards all games. _main only catches RuntimeError, so it escapes to a raw traceback and store_snapshot never runs.",
+      "fix": "FIXED: (a) _collect now reads o.get('price') and skips outcomes with missing/None price instead of int(o['price']). (b) The per-event body of parse_odds_payload is wrapped in try/except (KeyError, ValueError, TypeError): continue, so commence_time and any leftover bad outcome can't sink the whole snapshot — mirrors opening_line_aus.py:74 / opening_line_sbr.py:185 skip-and-count. Unknown-team skip preserved. Added 4 regression tests (missing price, price=None, missing commence_time, valid+malformed mix) plus 4 get_api_key tests. 15 tests pass in test_live_odds.py, ruff clean.",
+      "tags": [
+        "audit-2026-06-13",
+        "live-odds",
+        "crash",
+        "robustness",
+        "high",
+        "fixed"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T20:30:00Z"
+    },
+    {
+      "id": "bug-043",
+      "timestamp": "2026-06-13T20:00:00Z",
+      "error_message": "This Week board raises TypeError: unsupported format string passed to NoneType.__format__ when a game has no consensus spread/total",
+      "file": "app/this_week_view.py",
+      "root_cause": "render() formats g.cons_spread_home ({:+g}) and g.cons_total ({:g}) directly with no None guard, but both are float|None and set to None by _median_or_none when no book posted a spread/total point (freshly listed game or ML-only). The whole tab crashes instead of degrading.",
+      "fix": "FIXED: app/this_week_view.py pre-formats cs = f'{g.cons_spread_home:+g}' if not None else '—' and ct = f'{g.cons_total:g}' if not None else '—' (mirrors _fmt_best), then interpolates {cs}/{ct} in the markdown f-string. Regression test test_render_handles_none_consensus_without_crashing in tests/test_this_week_view.py drives render() via streamlit.testing.v1.AppTest.from_function with a None-consensus board and asserts no at.exception plus the '—' fallback. Verified the buggy version raises TypeError under AppTest; fixed version: 4 passed, ruff clean.",
+      "tags": [
+        "audit-2026-06-13",
+        "streamlit",
+        "this-week",
+        "crash",
+        "none-guard",
+        "high",
+        "fixed"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T20:30:00Z"
+    },
+    {
+      "id": "bug-044",
+      "timestamp": "2026-06-13T20:00:00Z",
+      "error_message": "Consensus moneyline median int()-truncated toward zero (-107.5 -> -107), a direction-dependent rounding bias inconsistent with round() used elsewhere",
+      "file": "ingestion/live_odds.py",
+      "root_cause": "cons_ml_home/away = int(median(...)). For an even book count the median can be a .5 value; int() truncates toward zero rather than rounding to nearest. decimal_to_american and moneyline.py both use round().",
+      "fix": "FIXED: changed int(median(...)) to round(median(...)) on live_odds.py:125-126. round() of a float returns int, matches the int|None annotation and INTEGER column. 340 tests pass, ruff clean (existing tests use integer-valued medians so they were unaffected).",
+      "tags": [
+        "audit-2026-06-13",
+        "live-odds",
+        "rounding",
+        "fixed",
+        "low"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T20:00:00Z"
+    },
+    {
+      "id": "bug-045",
+      "timestamp": "2026-06-13T20:00:00Z",
+      "error_message": "SBR HTML fetch (urllib.request.urlopen) has no network timeout; a slow/half-open host stalls ingest indefinitely",
+      "file": "ingestion/opening_line_sbr.py",
+      "root_cause": "fetch_season called urlopen(req) with no timeout, inconsistent with live_odds.py:148 (timeout=30) and the slice6 plan which specified timeout=30. Only hit on a cache miss (2007-2021 HTML is cached).",
+      "fix": "FIXED: added timeout=30 to urlopen on opening_line_sbr.py:204. 340 tests pass, ruff clean.",
+      "tags": [
+        "audit-2026-06-13",
+        "ingestion",
+        "sbr",
+        "network",
+        "timeout",
+        "fixed",
+        "low"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T20:00:00Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-06-13T21:51:52.125Z",
+      "error_message": "Significant refactor of ",
+      "file": "ingestion/opening_line_sbr.py",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 16→38 lines (5 removed) | Also: \"\"\"Pick the odds table: the one whose header row c; # Fall back to the widest table. | Also: unambiguously large while the close spread stays <; Close column is also unavailable or ambiguous, ret",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-06-13T21:55:11.283Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-06-13T21:52:06.523Z",
+      "error_message": "Significant refactor of ",
+      "file": "tests/test_this_week_view.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 9→26 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T21:52:06.523Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-06-13T22:00:00Z",
+      "error_message": "Per-row load loop parsed game_date = pd.to_datetime(row['schedule_date']).date() with no guard: a blank schedule_date silently persisted game_date='NaT', and non-date garbage made pd.to_datetime RAISE, aborting the whole batch.",
+      "file": "ingestion/loader.py",
+      "root_cause": "Every other cell in the per-row loop is defensively coerced (_to_int_or_none / _to_float_or_none) but the date was not. The static Kaggle CSV is clean so it never triggered in practice, but it was the one uncoerced cell.",
+      "fix": "FIXED: parse with dt = pd.to_datetime(row['schedule_date'], errors='coerce'); if pd.isna(dt): increment new LoadReport.rows_skipped_bad_date and continue (skip the row) instead of inserting 'NaT' or raising. Counter surfaced in _main output, mirroring the existing rows_skipped_missing_* tallies. Added a parametrized regression test (blank + 'garbage') to tests/test_loader.py asserting good row inserted, bad row skipped+counted, no exception, no 'NaT' persisted. 41 loader tests pass, ruff clean.",
+      "tags": [
+        "ingestion",
+        "loader",
+        "none-guard",
+        "date",
+        "fixed",
+        "low"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T22:00:00Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-06-13T21:59:55.758Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/tab_finding.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 5→27 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T21:59:55.758Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-06-13T22:00:21.816Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/this_week_view.py",
+      "root_cause": "Had \" · historical: {g.spread_ctx['",
+      "fix": "Changed to \" · historical home cover: {g.spread_ctx['",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T22:00:21.816Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-06-13T22:02:04.398Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/build_board_artifact.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 17→22 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-13T22:02:04.399Z"
     }
   ]
 }
