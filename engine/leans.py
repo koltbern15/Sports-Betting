@@ -51,12 +51,12 @@ def spread_lean(game: ThisWeekGame, spread_rates: RatesMap | None) -> MarketLean
         return MarketLean("spread", "no_line", None, None, None, None, home_best, away_best)
     bucket = bucket_spread(cons)
     ctx = (spread_rates or {}).get(bucket)
-    if ctx is None or ctx["n"] == 0:
+    if ctx is None or ctx.get("n", 0) == 0:
         return MarketLean("spread", "no_data", None, None, None, None, home_best, away_best)
 
-    home_rate = ctx["win_rate"]
+    home_rate = ctx.get("win_rate", 0.0)
     away_rate = 1.0 - home_rate
-    n = ctx["n"]
+    n = ctx.get("n", 0)
     away_team, home_team = _teams(game.matchup)
     is_pickem = bucket == "pickem"
     home_is_fav = cons < 0

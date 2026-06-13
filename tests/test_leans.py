@@ -58,3 +58,13 @@ def test_spread_no_data_and_no_line():
                        {"home_fav_3.5_7": {"win_rate": 0.0, "n": 0}}).state == "no_data"
     no_line = spread_lean(_game(cons_spread_home=None), {"x": {"win_rate": 0.6, "n": 99}})
     assert no_line.state == "no_line"
+
+
+def test_spread_home_dog_lean():
+    # Home team is the underdog (+6.5) but covers historically at a high rate.
+    rates = {"home_dog_3.5_7": {"win_rate": 0.56, "n": 200}}
+    ml = spread_lean(_game(cons_spread_home=6.5), rates)
+    assert ml.state == "lean"
+    assert "Los Angeles Rams" in ml.side_label and "+6.5" in ml.side_label
+    assert "home dog" in ml.side_label
+    assert ml.best_for_lean == ("FanDuel", -6.5, -105)
