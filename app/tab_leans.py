@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import streamlit as st
 
-from app.this_week_view import _fmt_best
+from app.this_week_view import _fmt_best, board_teams, filter_board
 from engine.leans import MarketLean, RatesMap, game_leans
 from engine.this_week import ThisWeekGame
 
@@ -49,6 +49,11 @@ def _market_row(label: str, ml: MarketLean) -> str:
     return f'<div style="margin-top:8px"><b>{label}</b> — {head}{price}</div>'
 
 
+def _has_lean(sp: MarketLean, tot: MarketLean) -> bool:
+    """True if either market produced an actual lean (not no_lean/no_data/no_line)."""
+    return sp.state == "lean" or tot.state == "lean"
+
+
 def render(
     board: list[ThisWeekGame], spread_rates: RatesMap, total_rates: RatesMap
 ) -> None:
@@ -59,12 +64,23 @@ def render(
             "`uv run python -m ingestion.live_odds` (needs ODDS_API_KEY)."
         )
         return
+    pick = st.selectbox("Team", ["All teams", *board_teams(board)], key="leans_team")
+    games = board if pick == "All teams" else filter_board(board, pick)
+    leans_only = st.checkbox("Show only games with a lean", key="leans_only")
     st.caption(
         "Leans reflect the season range in the sidebar — narrowing it shrinks samples, "
         "so more games show 'no lean'."
     )
-    for g in board:
-        sp, tot = game_leans(g, spread_rates, total_rates)
+    rows = [(g, *game_leans(g, spread_rates, total_rates)) for g in games]
+    if leans_only:
+        rows = [r for r in rows if _has_lean(r[1], r[2])]
+        if not rows:
+            st.info(
+                "No leans in this slate at the -110 breakeven — every game's a coin flip. "
+                "Uncheck to see all games + best prices."
+            )
+            return
+    for g, sp, tot in rows:
         st.markdown(
             f'<div class="twg-card"><div class="twg-matchup">{g.matchup}</div>'
             f'<div class="twg-time">{g.commence_time}</div>'

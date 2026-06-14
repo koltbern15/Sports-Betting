@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
+from pathlib import Path
+
 import streamlit as st
 
 from app.theme import HONESTY_BANNER
 from engine.this_week import ThisWeekGame
+
+_ODDS_TS_FILE = Path("data/raw/odds_updated_at.txt")
 
 
 def game_teams(matchup: str) -> tuple[str, str]:
@@ -41,6 +46,32 @@ def _move_html(move) -> str:
     return f'<span class="{cls}">{arrow} {move:+g} since open</span>'
 
 
+def _humanize_ago(then: datetime, now: datetime) -> str:
+    """Relative 'X ago' string from `then` to `now`. Clock skew clamps to 'just now'."""
+    secs = max(0, int((now - then).total_seconds()))
+    if secs < 60:
+        return "just now"
+    mins = secs // 60
+    if mins < 60:
+        return f"~{mins} minute{'s' if mins != 1 else ''} ago"
+    hours = mins // 60
+    if hours < 24:
+        return f"~{hours} hour{'s' if hours != 1 else ''} ago"
+    days = hours // 24
+    return f"~{days} day{'s' if days != 1 else ''} ago"
+
+
+def _odds_freshness() -> str | None:
+    """'Odds updated X ago' from the pull-time sidecar, or None if unavailable."""
+    try:
+        ts = datetime.fromisoformat(_ODDS_TS_FILE.read_text(encoding="utf-8").strip())
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=UTC)
+        return f"Odds updated {_humanize_ago(ts, datetime.now(UTC))}"
+    except Exception:
+        return None
+
+
 def render(board: list[ThisWeekGame]) -> None:
     st.markdown(f'<div class="twg-banner">{HONESTY_BANNER}</div>', unsafe_allow_html=True)
     if not board:
@@ -50,7 +81,9 @@ def render(board: list[ThisWeekGame]) -> None:
     pick = st.selectbox("Team", ["All teams", *board_teams(board)], key="tw_team")
     games = board if pick == "All teams" else filter_board(board, pick)
     plural = "game" if len(games) == 1 else "games"
-    st.caption(f"{len(games)} {plural} · sorted by biggest line move")
+    fresh = _odds_freshness()
+    suffix = f" · ⏱ {fresh}" if fresh else ""
+    st.caption(f"{len(games)} {plural} · sorted by biggest line move{suffix}")
     for g in games:
         spread_ctx = (f" · historical home cover: {g.spread_ctx['win_rate']:.1%} "
                       f"(n={g.spread_ctx['n']}, -110, not certified)") if g.spread_ctx else ""

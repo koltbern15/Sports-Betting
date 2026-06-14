@@ -159,8 +159,14 @@ def fetch_odds(api_key: str | None = None) -> list[GameOdds]:
         raise RuntimeError(f"The Odds API returned HTTP {e.code}{hint}.") from None
     except urllib.error.URLError as e:
         raise RuntimeError(f"Could not reach The Odds API: {e.reason}") from None
+    from datetime import UTC, datetime
+
     Path("data/raw").mkdir(parents=True, exist_ok=True)
     Path("data/raw/odds_api_latest.json").write_text(json.dumps(payload), encoding="utf-8")
+    # Sidecar pull-time stamp so the dashboard can show an honest "updated X ago".
+    Path("data/raw/odds_updated_at.txt").write_text(
+        datetime.now(UTC).isoformat(), encoding="utf-8"
+    )
     return parse_odds_payload(payload)
 
 

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
+
 import pytest
 
-from app.this_week_view import board_teams, filter_board, game_teams
+from app.this_week_view import _humanize_ago, board_teams, filter_board, game_teams
 from engine.this_week import ThisWeekGame
 
 
@@ -68,3 +70,15 @@ def test_render_handles_none_consensus_without_crashing():
     assert not at.exception  # render built the HTML without raising
     # The em-dash fallback appears where consensus spread/total would be.
     assert any("—" in md.value for md in at.markdown)
+
+
+def test_humanize_ago_buckets():
+    now = datetime(2026, 9, 13, 12, 0, 0, tzinfo=UTC)
+    assert _humanize_ago(now, now) == "just now"
+    assert _humanize_ago(datetime(2026, 9, 13, 11, 58, tzinfo=UTC), now) == "~2 minutes ago"
+    assert _humanize_ago(datetime(2026, 9, 13, 11, 59, tzinfo=UTC), now) == "~1 minute ago"
+    assert _humanize_ago(datetime(2026, 9, 13, 11, 0, tzinfo=UTC), now) == "~1 hour ago"
+    assert _humanize_ago(datetime(2026, 9, 13, 8, 0, tzinfo=UTC), now) == "~4 hours ago"
+    assert _humanize_ago(datetime(2026, 9, 11, 12, 0, tzinfo=UTC), now) == "~2 days ago"
+    # Clock skew (then in the future) clamps to "just now".
+    assert _humanize_ago(datetime(2026, 9, 13, 12, 5, tzinfo=UTC), now) == "just now"

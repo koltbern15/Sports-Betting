@@ -1,4 +1,4 @@
-from app.tab_leans import _lean_headline, _market_row
+from app.tab_leans import _has_lean, _lean_headline, _market_row
 from engine.leans import MarketLean
 
 
@@ -67,3 +67,10 @@ def test_render_smoke_does_not_crash():
     at = AppTest.from_function(_smoke_script).run()
     assert not at.exception
     assert at.markdown
+
+
+def test_has_lean():
+    assert _has_lean(_ml("lean"), _ml("no_lean")) is True
+    assert _has_lean(_ml("no_lean"), _ml("lean")) is True
+    assert _has_lean(_ml("no_lean"), _ml("no_lean")) is False
+    assert _has_lean(_ml("no_data"), _ml("no_line")) is False

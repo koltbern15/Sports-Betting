@@ -40,7 +40,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/raw/odds_api_latest.json
+          git add data/raw/odds_api_latest.json data/raw/odds_updated_at.txt
           if git diff --staged --quiet; then
             echo "No odds change — nothing to commit."
           else
