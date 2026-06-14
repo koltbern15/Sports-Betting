@@ -1,13 +1,16 @@
 name: Refresh live odds
 
-# Pulls the latest NFL odds once a day and commits the snapshot so the deployed
-# Streamlit app shows fresh games. The app itself never calls the API (no
-# per-visitor calls) — only this scheduled job does, ~30 calls/month against the
-# free 500/month tier. Requires the repo secret ODDS_API_KEY.
+# Pulls the latest NFL odds every 2 hours (12x/day) and commits the snapshot so
+# the deployed Streamlit app shows fresh games. The app itself never calls the API
+# (no per-visitor calls) — only this scheduled job does. NOTE on quota: each pull
+# requests 3 markets (h2h, spreads, totals) x 1 region, ~3 credits, so 12x/day is
+# ~1,080 credits/month — above The Odds API free 500/month tier. If you hit the cap
+# the pulls just fail (site keeps the last snapshot) until the monthly reset; lower
+# the frequency or use a paid plan to avoid it. Requires the repo secret ODDS_API_KEY.
 
 on:
   schedule:
-    - cron: "0 13 * * *"   # 13:00 UTC daily (~8-9am ET)
+    - cron: "0 */2 * * *"   # every 2 hours (12x/day) at :00 UTC
   workflow_dispatch: {}      # manual "Run workflow" button in the Actions tab
 
 permissions:
