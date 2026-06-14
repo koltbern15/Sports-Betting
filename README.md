@@ -244,6 +244,24 @@ The app is now a 6-tab dashboard. **This Week** leads (the live odds board from 
 
     streamlit run app/main.py
 
+## Deploy as a live site (Streamlit Community Cloud)
+
+The app is deployable to [Streamlit Community Cloud](https://share.streamlit.io) for a free, shareable public URL.
+
+**What's shipped for the deploy:**
+
+- The prebuilt SQLite DB (`data/db/nfl_betting.sqlite`) and the CSVs the app reads (`data/processed/ats_by_bucket.csv`, `totals_by_bucket.csv`, `edge_report.csv`) are committed — the historical data is static (2004–2024), so the cloud always has its data with no rebuild step.
+- `requirements.txt` (generated from the `uv` lockfile via `uv export --no-dev --no-hashes --no-emit-project -o requirements.txt`) is what the cloud installs from.
+- `data/raw/odds_api_latest.json` (the live-odds snapshot) is committed and **refreshed daily by a GitHub Action** (`.github/workflows/refresh-odds.yml`). The deployed app only *reads* this snapshot — it never calls the odds API per-visitor.
+
+**One-time setup:**
+
+1. **Add the API key as a repo secret** (the GitHub Action needs it; the app does not): repo **Settings → Secrets and variables → Actions → New repository secret**, name `ODDS_API_KEY`, value = your [the-odds-api.com](https://the-odds-api.com) key. The key lives only here — never in the code or the deployed app.
+2. **Deploy:** sign in to [share.streamlit.io](https://share.streamlit.io) with GitHub → **New app** → pick this repo, branch `main`, main file `app/main.py` → Deploy. (Python 3.11+.)
+3. The daily Action keeps the odds fresh; Streamlit Cloud auto-redeploys on each push.
+
+To regenerate the committed artifacts after a data change: rebuild the DB (see *Ingest data* / the per-slice report commands), then `uv export --no-dev --no-hashes --no-emit-project -o requirements.txt` and commit.
+
 ## Scope
 
 - **Slice 1 (complete):** ingestion, schema, statistics utilities, ATS-by-spread-bucket analysis.

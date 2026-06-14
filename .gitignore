@@ -9,12 +9,17 @@ venv/
 .ruff_cache/
 .pytest_cache/
 
-# Data — raw INPUTS are tracked for reproducibility (rebuild the DB + reports
-# from these). Derived artifacts (the SQLite DB, processed CSVs) stay ignored.
+# Data — raw INPUTS are tracked for reproducibility. Most derived artifacts stay
+# ignored, BUT the prebuilt DB + the CSVs the deployed app reads are TRACKED so the
+# Streamlit Cloud deploy ships with its data (historical data is static, 2004-2024).
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/ats_by_bucket.csv
+!data/processed/totals_by_bucket.csv
+!data/processed/edge_report.csv
 data/db/*
 !data/db/.gitkeep
+!data/db/nfl_betting.sqlite
 
 # Brainstorm visual-companion working files
 .superpowers/
@@ -35,8 +40,8 @@ Thumbs.db
 .env
 .streamlit/secrets.toml
 
-# Live odds cache (churny artifact written by fetch_odds; data/raw is otherwise tracked)
-data/raw/odds_api_latest.json
+# Live odds snapshot — TRACKED for the deploy (refreshed daily by the GitHub Action;
+# public odds only, no secret). The app reads it; it never makes per-visitor pulls.
 # Derived board artifact (regenerate via scripts/build_board_artifact.py; embeds the cache above)
 this_week_dashboard.html
 
