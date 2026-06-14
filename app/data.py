@@ -144,12 +144,20 @@ def season_bounds() -> tuple[int, int]:
 
 
 def audit_summary() -> dict:
-    """Static data-quality facts.
-
-    Source of truth: docs/superpowers/notes/2026-05-29-opening-line-audit.md
+    """Data-quality facts. The overlap stats are static (Slice 6 cross-source audit,
+    docs/superpowers/notes/2026-05-29-opening-line-audit.md); the opening-line row
+    count is read LIVE from the DB so it never drifts from the data (falls back to
+    the audited figure if the DB is unavailable).
     """
+    try:
+        conn = _open_db()
+        opening_rows = int(
+            pd.read_sql_query("SELECT COUNT(*) AS n FROM opening_lines", conn)["n"].iloc[0]
+        )
+    except Exception:
+        opening_rows = 8616
     return {
-        "opening_rows_total": 8620,
+        "opening_rows_total": opening_rows,
         "overlap_games": 2183,
         "overlap_spread_within_1pt": 0.75,
         "overlap_total_within_1pt": 0.82,
