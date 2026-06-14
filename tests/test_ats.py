@@ -4,7 +4,7 @@ import pytest
 
 from engine.ats import ats_by_spread_bucket, bucket_spread
 from engine.bucket_analysis import BucketMetrics, compute_metrics
-from engine.db import connect
+from engine.db import connect, init_schema
 from ingestion.loader import load_csv_to_db
 
 
@@ -213,3 +213,29 @@ def test_ats_stdout_includes_disclaimer(capsys, fixtures_dir, tmp_path, monkeypa
     captured = capsys.readouterr()
     assert "Gamble responsibly." in captured.out
     assert "home_fav_3.5_7" in captured.out
+
+
+def _seed_two_seasons(conn):
+    init_schema(conn)
+    conn.executemany(
+        "INSERT INTO games(game_id,season,week,game_date,home_team,away_team,home_score,away_score)"
+        " VALUES (?,?,?,?,?,?,?,?)",
+        [("g1", 2019, 1, "2019-09-08", "A", "B", 27, 17),
+         ("g2", 2023, 1, "2023-09-10", "C", "D", 27, 17)],
+    )
+    conn.executemany(
+        "INSERT INTO betting_lines"
+        "(game_id,spread_home_close,total_close,home_spread_result,total_result)"
+        " VALUES (?,?,?,?,?)",
+        [("g1", -6.5, 44.5, "cover", "over"),
+         ("g2", -6.5, 44.5, "cover", "over")],
+    )
+    conn.commit()
+
+
+def test_ats_season_filter_narrows_sample(memory_db):
+    _seed_two_seasons(memory_db)
+    full = {r.bucket: r for r in ats_by_spread_bucket(memory_db).rows}
+    assert full["home_fav_3.5_7"].n == 2
+    narrow = {r.bucket: r for r in ats_by_spread_bucket(memory_db, (2019, 2019)).rows}
+    assert narrow["home_fav_3.5_7"].n == 1

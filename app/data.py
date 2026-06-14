@@ -11,8 +11,10 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from engine.ats import ats_by_spread_bucket
 from engine.clv import CLV_BUCKET_ORDER, aggregate_clv, build_bets_from_db
 from engine.db import connect
+from engine.totals import totals_by_line_bucket
 
 _DB = "data/db/nfl_betting.sqlite"
 _EDGE_CSV = Path("data/processed/edge_report.csv")
@@ -107,6 +109,28 @@ def clv_result_correlation(
 
     r, p = pearsonr(clvs, outcomes)
     return float(r), float(p), len(pairs)
+
+
+@st.cache_data(show_spinner=False)
+def spread_bucket_rates(season_range: tuple[int, int]) -> dict:
+    """{spread_bucket: {"win_rate" (home cover), "n"}} over the season range. {} if no DB."""
+    try:
+        conn = _open_db()
+    except Exception:
+        return {}
+    report = ats_by_spread_bucket(conn, season_range)
+    return {r.bucket: {"win_rate": r.win_rate, "n": r.n} for r in report.rows}
+
+
+@st.cache_data(show_spinner=False)
+def total_bucket_rates(season_range: tuple[int, int]) -> dict:
+    """{total_bucket: {"win_rate" (over), "n"}} over the season range. {} if no DB."""
+    try:
+        conn = _open_db()
+    except Exception:
+        return {}
+    report = totals_by_line_bucket(conn, season_range)
+    return {r.bucket: {"win_rate": r.win_rate, "n": r.n} for r in report.rows}
 
 
 def season_bounds() -> tuple[int, int]:

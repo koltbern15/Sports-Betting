@@ -74,18 +74,23 @@ class AtsReport:
     rows: list[BucketMetrics]
 
 
-def ats_by_spread_bucket(conn: sqlite3.Connection) -> AtsReport:
-    """Aggregate ATS results into the 11 home-spread buckets."""
-    df = pd.read_sql_query(
-        """
+def ats_by_spread_bucket(
+    conn: sqlite3.Connection, season_range: tuple[int, int] | None = None
+) -> AtsReport:
+    """Aggregate ATS results into the 11 home-spread buckets, optionally limited
+    to seasons in [lo, hi]."""
+    sql = """
         SELECT g.season, b.spread_home_close, b.home_spread_result
         FROM games g
         JOIN betting_lines b ON b.game_id = g.game_id
         WHERE b.spread_home_close IS NOT NULL
           AND b.home_spread_result IS NOT NULL
-        """,
-        conn,
-    )
+    """
+    params: list = []
+    if season_range is not None:
+        sql += " AND g.season BETWEEN ? AND ?"
+        params = [season_range[0], season_range[1]]
+    df = pd.read_sql_query(sql, conn, params=params or None)
     df["bucket"] = df["spread_home_close"].apply(bucket_spread)
 
     rows: list[BucketMetrics] = []

@@ -51,18 +51,23 @@ class TotalsReport:
     rows: list[BucketMetrics]
 
 
-def totals_by_line_bucket(conn: sqlite3.Connection) -> TotalsReport:
-    """Aggregate over/under results into the 6 total-line buckets."""
-    df = pd.read_sql_query(
-        """
+def totals_by_line_bucket(
+    conn: sqlite3.Connection, season_range: tuple[int, int] | None = None
+) -> TotalsReport:
+    """Aggregate over/under results into the 6 total-line buckets, optionally
+    limited to seasons in [lo, hi]."""
+    sql = """
         SELECT g.season, b.total_close, b.total_result
         FROM games g
         JOIN betting_lines b ON b.game_id = g.game_id
         WHERE b.total_close IS NOT NULL
           AND b.total_result IS NOT NULL
-        """,
-        conn,
-    )
+    """
+    params: list = []
+    if season_range is not None:
+        sql += " AND g.season BETWEEN ? AND ?"
+        params = [season_range[0], season_range[1]]
+    df = pd.read_sql_query(sql, conn, params=params or None)
     df["bucket"] = df["total_close"].apply(bucket_total)
 
     rows: list[BucketMetrics] = []

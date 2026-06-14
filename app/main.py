@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import streamlit as st  # noqa: E402
 
-from app import data, tab_clv, tab_data, tab_edge, tab_finding, theme  # noqa: E402
+from app import data, tab_clv, tab_data, tab_edge, tab_finding, tab_leans, theme  # noqa: E402
 from app.this_week_view import render as render_this_week  # noqa: E402
 from engine.db import connect  # noqa: E402
 from engine.this_week import build_board  # noqa: E402
@@ -44,17 +44,24 @@ def main() -> None:
     theme.inject()
     st.title("NFL Betting Analytics")
     lo, hi = data.season_bounds()
-    season_range = st.sidebar.slider("Season range (CLV Explorer)", lo, hi, (lo, hi))
-    tabs = st.tabs(["This Week", "The Finding", "Edge Report", "CLV Explorer", "Data & Audit"])
+    season_range = st.sidebar.slider("Season range (Leans + CLV Explorer)", lo, hi, (lo, hi))
+    board = _load_board()
+    spread_rates = data.spread_bucket_rates(season_range)
+    total_rates = data.total_bucket_rates(season_range)
+    tabs = st.tabs(
+        ["This Week", "Leans", "The Finding", "Edge Report", "CLV Explorer", "Data & Audit"]
+    )
     with tabs[0]:
-        render_this_week(_load_board())
+        render_this_week(board)
     with tabs[1]:
-        tab_finding.render()
+        tab_leans.render(board, spread_rates, total_rates)
     with tabs[2]:
-        tab_edge.render()
+        tab_finding.render()
     with tabs[3]:
-        tab_clv.render(season_range)
+        tab_edge.render()
     with tabs[4]:
+        tab_clv.render(season_range)
+    with tabs[5]:
         tab_data.render()
 
 
